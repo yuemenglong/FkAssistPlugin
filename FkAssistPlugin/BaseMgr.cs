@@ -6,7 +6,7 @@
 
 using UnityEngine;
 
-namespace ClassLibrary
+namespace FkAssistPlugin
 {
     public class BaseMgr<T> : MonoBehaviour where T : MonoBehaviour
     {

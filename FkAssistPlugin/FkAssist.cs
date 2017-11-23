@@ -3,10 +3,12 @@ using System.Security.Cryptography.X509Certificates;
 using Studio;
 using UnityEngine;
 
-namespace ClassLibrary
+namespace FkAssistPlugin
 {
     public class FkAssist : BaseMgr<FkAssist>
     {
+        private int _gap = 2;
+
         public void Init()
         {
             Logger.Log("FkAssist");
@@ -62,35 +64,41 @@ namespace ClassLibrary
 
         private void Update()
         {
-            if (Input.GetKeyDown(KeyCode.X))
+            if (Input.GetKeyDown(KeyCode.T))
             {
                 Logger.Log("FkAssist Update");
             }
-            if (Input.GetKey(KeyCode.W) && Input.GetKey(KeyCode.LeftShift))
+            if (Input.GetKey(KeyCode.X) && Input.GetMouseButton(0) ||
+                Input.GetKeyDown(KeyCode.X) && Input.GetKey(KeyCode.LeftShift))
             {
-                Rotate(1, 0, 0);
+                Rotate(_gap, 0, 0);
             }
-            if (Input.GetKey(KeyCode.S) && Input.GetKey(KeyCode.LeftShift))
+            if (Input.GetKey(KeyCode.X) && Input.GetMouseButton(1) ||
+                Input.GetKeyDown(KeyCode.X) && Input.GetKey(KeyCode.LeftControl))
             {
-                Rotate(-1, 0, 0);
+                Rotate(-_gap, 0, 0);
             }
-            if (Input.GetKey(KeyCode.A) && Input.GetKey(KeyCode.LeftShift))
+            if (Input.GetKey(KeyCode.C) && Input.GetMouseButton(0) ||
+                Input.GetKeyDown(KeyCode.C) && Input.GetKey(KeyCode.LeftShift))
             {
-                Rotate(0, 1, 0);
+                Rotate(0, _gap, 0);
             }
-            if (Input.GetKey(KeyCode.D) && Input.GetKey(KeyCode.LeftShift))
+            if (Input.GetKey(KeyCode.C) && Input.GetMouseButton(1) ||
+                Input.GetKeyDown(KeyCode.C) && Input.GetKey(KeyCode.LeftControl))
             {
-                Rotate(0, -1, 0);
+                Rotate(0, -_gap, 0);
             }
-            if (Input.GetKey(KeyCode.Q) && Input.GetKey(KeyCode.LeftShift))
+            if (Input.GetKey(KeyCode.V) && Input.GetMouseButton(0) ||
+                Input.GetKeyDown(KeyCode.V) && Input.GetKey(KeyCode.LeftShift))
             {
-                Rotate(0, 0, 1);
+                Rotate(0, 0, _gap);
             }
-            if (Input.GetKey(KeyCode.E) && Input.GetKey(KeyCode.LeftShift))
+            if (Input.GetKey(KeyCode.V) && Input.GetMouseButton(1) ||
+                Input.GetKeyDown(KeyCode.V) && Input.GetKey(KeyCode.LeftControl))
             {
-                Rotate(0, 0, -1);
+                Rotate(0, 0, -_gap);
             }
-            if (Input.GetKey(KeyCode.R) && Input.GetKey(KeyCode.LeftShift))
+            if (Input.GetKeyDown(KeyCode.R) && Input.GetKey(KeyCode.LeftShift))
             {
                 Reset();
             }

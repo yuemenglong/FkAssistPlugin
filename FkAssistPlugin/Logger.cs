@@ -1,7 +1,7 @@
 ﻿using System;
 using System.IO;
 
-namespace ClassLibrary
+namespace FkAssistPlugin
 {
     public static class Logger
     {

@@ -7,7 +7,7 @@ using IllusionPlugin;
 using UnityEngine;
 using Object = UnityEngine.Object;
 
-namespace ClassLibrary
+namespace FkAssistPlugin
 {
     public class FkPlugin : IEnhancedPlugin
     {

@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-namespace ClassLibrary
+namespace FkAssistPlugin
 {
     static class Kit
     {

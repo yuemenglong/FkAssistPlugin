@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using Studio;
 using UnityEngine;
 
-namespace ClassLibrary
+namespace FkAssistPlugin
 {
     public class Context : MonoBehaviour
     {

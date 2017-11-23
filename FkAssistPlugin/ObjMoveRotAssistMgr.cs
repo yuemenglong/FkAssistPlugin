@@ -10,7 +10,7 @@ using System.Linq;
 using Studio;
 using UnityEngine;
 
-namespace ClassLibrary
+namespace FkAssistPlugin
 {
     internal class ObjMoveRotAssistMgr : MonoBehaviour
     {

@@ -7,7 +7,7 @@ namespace ClassLibrary
 {
     public class FkAssist : BaseMgr<FkAssist>
     {
-        public void Init()
+        public override void Init()
         {
             Logger.Log("FkAssist");
         }

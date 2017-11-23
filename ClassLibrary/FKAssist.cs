@@ -39,8 +39,9 @@ namespace ClassLibrary
             {
                 if (guideObject.enableRot)
                 {
-                    Vector3 vector3 = guideObject.transformTarget.localEulerAngles += new Vector3(z, y, x);
-                    guideObject.transformTarget.localEulerAngles = vector3;
+//                    Vector3 vector3 = guideObject.transformTarget.localEulerAngles += new Vector3(z, y, x);
+//                    guideObject.transformTarget.localEulerAngles = vector3;
+                    guideObject.transformTarget.Rotate(z, y, x, Space.Self);
                     guideObject.changeAmount.rot = guideObject.transformTarget.localEulerAngles;
                 }
             }

@@ -13,11 +13,9 @@ namespace ClassLibrary
     {
         HashSet<String> _set = new HashSet<string>();
         GameObject _go = new GameObject();
-        private ObjMoveRotAssistMgr _assist;
 
         public void OnApplicationStart()
         {
-            _assist = _go.AddComponent<ObjMoveRotAssistMgr>();
             Logger.Log("YML-OnApplicationStart");
         }
 
@@ -33,6 +31,9 @@ namespace ClassLibrary
 
         public void OnLevelWasInitialized(int level)
         {
+            if (!((Object) Singleton<Studio.Studio>.Instance != (Object) null))
+                return;
+            BaseMgr<FkAssist>.Install(new GameObject("FkPlugin"));
             Logger.Log("YML-OnLevelWasInitialized, " + level);
         }
 
@@ -40,7 +41,10 @@ namespace ClassLibrary
         {
             if (Input.GetKeyDown(KeyCode.A))
             {
-                Logger.Log("Plugin A", _assist.enabled + "");
+                Logger.Log("Plugin A");
+            }
+            if (Input.GetKeyDown(KeyCode.S))
+            {
             }
         }
 

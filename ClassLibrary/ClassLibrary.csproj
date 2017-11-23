@@ -33,6 +33,8 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <ItemGroup>
+    <Compile Include="BaseMgr.cs" />
+    <Compile Include="FKAssist.cs" />
     <Compile Include="ObjMoveRotAssistMgr.cs" />
     <Compile Include="FkPlugin.cs" />
     <Compile Include="Context.cs" />

@@ -68,33 +68,33 @@ namespace FkAssistPlugin
             {
                 Logger.Log("FkAssist Update");
             }
-            if (Input.GetKey(KeyCode.X) && Input.GetMouseButton(0) ||
-                Input.GetKeyDown(KeyCode.X) && Input.GetKey(KeyCode.LeftShift))
+            if (Input.GetKey(KeyCode.P) ||
+                Input.GetKeyDown(KeyCode.P) && Input.GetKey(KeyCode.RightAlt))
             {
                 Rotate(_gap, 0, 0);
             }
-            if (Input.GetKey(KeyCode.X) && Input.GetMouseButton(1) ||
-                Input.GetKeyDown(KeyCode.X) && Input.GetKey(KeyCode.LeftControl))
+            if (Input.GetKey(KeyCode.Colon)||
+                Input.GetKeyDown(KeyCode.Colon) && Input.GetKey(KeyCode.RightAlt))
             {
                 Rotate(-_gap, 0, 0);
             }
-            if (Input.GetKey(KeyCode.C) && Input.GetMouseButton(0) ||
-                Input.GetKeyDown(KeyCode.C) && Input.GetKey(KeyCode.LeftShift))
+            if (Input.GetKey(KeyCode.L) ||
+                Input.GetKeyDown(KeyCode.L) && Input.GetKey(KeyCode.RightAlt))
             {
                 Rotate(0, _gap, 0);
             }
-            if (Input.GetKey(KeyCode.C) && Input.GetMouseButton(1) ||
-                Input.GetKeyDown(KeyCode.C) && Input.GetKey(KeyCode.LeftControl))
+            if (Input.GetKey(KeyCode.Comma)||
+                Input.GetKeyDown(KeyCode.Comma) && Input.GetKey(KeyCode.RightAlt))
             {
                 Rotate(0, -_gap, 0);
             }
-            if (Input.GetKey(KeyCode.V) && Input.GetMouseButton(0) ||
-                Input.GetKeyDown(KeyCode.V) && Input.GetKey(KeyCode.LeftShift))
+            if (Input.GetKey(KeyCode.O) ||
+                Input.GetKeyDown(KeyCode.O) && Input.GetKey(KeyCode.RightAlt))
             {
                 Rotate(0, 0, _gap);
             }
-            if (Input.GetKey(KeyCode.V) && Input.GetMouseButton(1) ||
-                Input.GetKeyDown(KeyCode.V) && Input.GetKey(KeyCode.LeftControl))
+            if (Input.GetKey(KeyCode.LeftBracket)||
+                Input.GetKeyDown(KeyCode.LeftBracket) && Input.GetKey(KeyCode.RightAlt))
             {
                 Rotate(0, 0, -_gap);
             }

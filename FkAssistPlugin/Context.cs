@@ -7,14 +7,19 @@ namespace FkAssistPlugin
 {
     public class Context : MonoBehaviour
     {
-        private Studio.Studio studio()
+        public static Studio.Studio Studio()
         {
             return Singleton<Studio.Studio>.Instance;
         }
-
-        private List<TreeNodeObject> GetCharaNodes<CharaType>()
+        
+        public static GuideObjectManager GuideObjectManager()
         {
-            var studio = this.studio();
+            return Singleton<GuideObjectManager>.Instance;
+        }
+
+        private static List<TreeNodeObject> GetCharaNodes<CharaType>()
+        {
+            var studio = Studio();
             var treeNodeCtrl = studio.treeNodeCtrl;
             List<TreeNodeObject> charaNodes = new List<TreeNodeObject>();
 

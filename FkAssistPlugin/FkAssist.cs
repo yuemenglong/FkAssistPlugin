@@ -9,7 +9,7 @@ namespace FkAssistPlugin
 {
     public class FkAssist : BaseMgr<FkAssist>
     {
-        private float _gap = 0.5f;
+        private float _gap = 1f;
         private int _counter = 0;
         private Dictionary<int, Vector3> _oldRot = null;
         private Dictionary<int, GuideObject> _targets = new Dictionary<int, GuideObject>();
@@ -189,54 +189,78 @@ namespace FkAssistPlugin
             if (Input.GetKeyDown(KeyCode.KeypadEnter))
             {
                 Logger.Log("FkAssist Update");
-                var ocichar = FindOciChar();
                 return;
             }
             _counter++;
-            float gap = _gap;
-            if (Input.GetKey(KeyCode.X) && Input.GetMouseButton(0) ||
-                Input.GetKeyDown(KeyCode.X) && Input.GetKey(KeyCode.LeftShift))
+            if (Input.GetKey(KeyCode.LeftShift))
             {
-                Rotate(gap, 0, 0);
-            }
-            else if (Input.GetKey(KeyCode.X) && Input.GetMouseButton(1) ||
-                     Input.GetKeyDown(KeyCode.X) && Input.GetKey(KeyCode.LeftControl))
-            {
-                Rotate(-gap, 0, 0);
-            }
-            else if (Input.GetKey(KeyCode.C) && Input.GetMouseButton(0) ||
-                     Input.GetKeyDown(KeyCode.C) && Input.GetKey(KeyCode.LeftShift))
-            {
-                Rotate(0, gap, 0);
-            }
-            else if (Input.GetKey(KeyCode.C) && Input.GetMouseButton(1) ||
-                     Input.GetKeyDown(KeyCode.C) && Input.GetKey(KeyCode.LeftControl))
-            {
-                Rotate(0, -gap, 0);
-            }
-            else if (Input.GetKey(KeyCode.V) && Input.GetMouseButton(0) ||
-                     Input.GetKeyDown(KeyCode.V) && Input.GetKey(KeyCode.LeftShift))
-            {
-                Rotate(0, 0, gap);
-            }
-            else if (Input.GetKey(KeyCode.V) && Input.GetMouseButton(1) ||
-                     Input.GetKeyDown(KeyCode.V) && Input.GetKey(KeyCode.LeftControl))
-            {
-                Rotate(0, 0, -gap);
-            }
-            else if (Input.GetKeyDown(KeyCode.R) && Input.GetKey(KeyCode.LeftShift))
-            {
-                Reset();
+                float gap = 1;
+                if (Input.GetKey(KeyCode.X) && Input.GetMouseButtonDown(0))
+                {
+                    Rotate(gap, 0, 0);
+                }
+                else if (Input.GetKey(KeyCode.X) && Input.GetMouseButtonDown(1))
+                {
+                    Rotate(-gap, 0, 0);
+                }
+                else if (Input.GetKey(KeyCode.C) && Input.GetMouseButtonDown(0))
+                {
+                    Rotate(0, gap, 0);
+                }
+                else if (Input.GetKey(KeyCode.C) && Input.GetMouseButtonDown(1))
+                {
+                    Rotate(0, -gap, 0);
+                }
+                else if (Input.GetKey(KeyCode.V) && Input.GetMouseButtonDown(0))
+                {
+                    Rotate(0, 0, gap);
+                }
+                else if (Input.GetKey(KeyCode.V) && Input.GetMouseButtonDown(1))
+                {
+                    Rotate(0, 0, -gap);
+                }
+                else if (Input.GetKeyDown(KeyCode.R))
+                {
+                    Reset();
+                }
             }
             else
             {
-                if (_counter > 1)
+                float gap = 0.5f;
+                if (Input.GetKey(KeyCode.X) && Input.GetMouseButton(0))
                 {
-                    Logger.Log("FinishRotate");
-                    FinishRotate();
+                    Rotate(gap, 0, 0);
                 }
-                _counter = 0;
-                _oldRot = CollectOldRot();
+                else if (Input.GetKey(KeyCode.X) && Input.GetMouseButton(1))
+                {
+                    Rotate(-gap, 0, 0);
+                }
+                else if (Input.GetKey(KeyCode.C) && Input.GetMouseButton(0))
+                {
+                    Rotate(0, gap, 0);
+                }
+                else if (Input.GetKey(KeyCode.C) && Input.GetMouseButton(1))
+                {
+                    Rotate(0, -gap, 0);
+                }
+                else if (Input.GetKey(KeyCode.V) && Input.GetMouseButton(0))
+                {
+                    Rotate(0, 0, gap);
+                }
+                else if (Input.GetKey(KeyCode.V) && Input.GetMouseButton(1))
+                {
+                    Rotate(0, 0, -gap);
+                }
+                else
+                {
+                    if (_counter > 1)
+                    {
+                        Logger.Log("FinishRotate");
+                        FinishRotate();
+                    }
+                    _counter = 0;
+                    _oldRot = CollectOldRot();
+                }
             }
         }
     }

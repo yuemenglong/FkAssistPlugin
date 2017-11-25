@@ -17,6 +17,11 @@ namespace FkAssistPlugin
             return Singleton<GuideObjectManager>.Instance;
         }
 
+        public static UndoRedoManager UndoRedoManager()
+        {
+            return Singleton<UndoRedoManager>.Instance;
+        }
+
         private static List<TreeNodeObject> GetCharaNodes<CharaType>()
         {
             var studio = Studio();

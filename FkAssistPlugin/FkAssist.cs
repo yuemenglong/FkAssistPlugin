@@ -3,12 +3,16 @@ using System.Collections.Generic;
 using IllusionUtility.GetUtility;
 using Studio;
 using UnityEngine;
+using Valve.VR;
 
 namespace FkAssistPlugin
 {
     public class FkAssist : BaseMgr<FkAssist>
     {
-        private float _gap = 0.3f;
+        private float _gap = 0.5f;
+        private int _counter = 0;
+        private Dictionary<int, Vector3> _oldRot = null;
+        private Dictionary<int, GuideObject> _targets = new Dictionary<int, GuideObject>();
 
         public override void Init()
         {
@@ -140,46 +144,99 @@ namespace FkAssistPlugin
             return null;
         }
 
+        private void FinishRotate()
+        {
+            GuideObjectManager instance = Singleton<GuideObjectManager>.Instance;
+            var list = new List<GuideCommand.EqualsInfo>();
+            foreach (var kv in _targets)
+            {
+                var info = new GuideCommand.EqualsInfo();
+                info.dicKey = kv.Key;
+                info.oldValue = _oldRot[kv.Key];
+                info.newValue = kv.Value.changeAmount.rot;
+                list.Add(info);
+            }
+            var arr = list.ToArray();
+            Context.UndoRedoManager().Push(new GuideCommand.RotationEqualsCommand(arr));
+//            Singleton<UndoRedoManager>.Instance.Push((ICommand) new GuideCommand.RotationEqualsCommand(_targets
+//                .Select<KeyValuePair<int, GuideObject>, GuideCommand.EqualsInfo>(
+//                    (System.Func<KeyValuePair<int, GuideObject>, GuideCommand.EqualsInfo>) (v =>
+//                        new GuideCommand.EqualsInfo()
+//                        {
+//                            dicKey = v.Key,
+//                            oldValue = this._oldRot[v.Key],
+//                            newValue = v.Value.changeAmount.rot
+//                        })).ToArray<GuideCommand.EqualsInfo>()));
+        }
+
+        private Dictionary<int, Vector3> CollectOldRot()
+        {
+            Dictionary<int, Vector3> dictionary = new Dictionary<int, Vector3>();
+            _targets = new Dictionary<int, GuideObject>();
+            foreach (GuideObject selectObject in Singleton<GuideObjectManager>.Instance.selectObjects)
+            {
+                if (selectObject.enableRot)
+                {
+                    dictionary.Add(selectObject.dicKey, selectObject.changeAmount.rot);
+                    _targets.Add(selectObject.dicKey, selectObject);
+                }
+            }
+            return dictionary;
+        }
+
         private void Update()
         {
             if (Input.GetKeyDown(KeyCode.KeypadEnter))
             {
                 Logger.Log("FkAssist Update");
                 var ocichar = FindOciChar();
+                return;
             }
+            _counter++;
+            float gap = _gap;
             if (Input.GetKey(KeyCode.X) && Input.GetMouseButton(0) ||
                 Input.GetKeyDown(KeyCode.X) && Input.GetKey(KeyCode.LeftShift))
             {
-                Rotate(_gap, 0, 0);
+                Rotate(gap, 0, 0);
             }
-            if (Input.GetKey(KeyCode.X) && Input.GetMouseButton(1) ||
-                Input.GetKeyDown(KeyCode.X) && Input.GetKey(KeyCode.LeftControl))
+            else if (Input.GetKey(KeyCode.X) && Input.GetMouseButton(1) ||
+                     Input.GetKeyDown(KeyCode.X) && Input.GetKey(KeyCode.LeftControl))
             {
-                Rotate(-_gap, 0, 0);
+                Rotate(-gap, 0, 0);
             }
-            if (Input.GetKey(KeyCode.C) && Input.GetMouseButton(0) ||
-                Input.GetKeyDown(KeyCode.C) && Input.GetKey(KeyCode.LeftShift))
+            else if (Input.GetKey(KeyCode.C) && Input.GetMouseButton(0) ||
+                     Input.GetKeyDown(KeyCode.C) && Input.GetKey(KeyCode.LeftShift))
             {
-                Rotate(0, _gap, 0);
+                Rotate(0, gap, 0);
             }
-            if (Input.GetKey(KeyCode.C) && Input.GetMouseButton(1) ||
-                Input.GetKeyDown(KeyCode.C) && Input.GetKey(KeyCode.LeftControl))
+            else if (Input.GetKey(KeyCode.C) && Input.GetMouseButton(1) ||
+                     Input.GetKeyDown(KeyCode.C) && Input.GetKey(KeyCode.LeftControl))
             {
-                Rotate(0, -_gap, 0);
+                Rotate(0, -gap, 0);
             }
-            if (Input.GetKey(KeyCode.V) && Input.GetMouseButton(0) ||
-                Input.GetKeyDown(KeyCode.V) && Input.GetKey(KeyCode.LeftShift))
+            else if (Input.GetKey(KeyCode.V) && Input.GetMouseButton(0) ||
+                     Input.GetKeyDown(KeyCode.V) && Input.GetKey(KeyCode.LeftShift))
             {
-                Rotate(0, 0, _gap);
+                Rotate(0, 0, gap);
             }
-            if (Input.GetKey(KeyCode.V) && Input.GetMouseButton(1) ||
-                Input.GetKeyDown(KeyCode.V) && Input.GetKey(KeyCode.LeftControl))
+            else if (Input.GetKey(KeyCode.V) && Input.GetMouseButton(1) ||
+                     Input.GetKeyDown(KeyCode.V) && Input.GetKey(KeyCode.LeftControl))
             {
-                Rotate(0, 0, -_gap);
+                Rotate(0, 0, -gap);
             }
-            if (Input.GetKeyDown(KeyCode.R) && Input.GetKey(KeyCode.LeftShift))
+            else if (Input.GetKeyDown(KeyCode.R) && Input.GetKey(KeyCode.LeftShift))
             {
                 Reset();
+            }
+            else
+            {
+                if (_counter > 1)
+                {
+                    Logger.Log("FinishRotate");
+                    FinishRotate();
+                }
+                _counter = 0;
+                _oldRot = CollectOldRot();
             }
         }
     }

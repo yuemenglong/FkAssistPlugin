@@ -53,6 +53,15 @@ namespace FkAssistPlugin
             }
         }
 
+        private void Rotate(GuideObject guideObject, float z, float y, float x)
+        {
+            if (guideObject.enableRot)
+            {
+                guideObject.transformTarget.Rotate(z, y, x, Space.Self);
+                guideObject.changeAmount.rot = guideObject.transformTarget.localEulerAngles;
+            }
+        }
+
         private void Reset()
         {
             GuideObjectManager instance = Singleton<GuideObjectManager>.Instance;
@@ -117,7 +126,6 @@ namespace FkAssistPlugin
                 }
             }
         }
-
 
         public OCIChar FindOciChar()
         {
@@ -189,6 +197,21 @@ namespace FkAssistPlugin
             if (Input.GetKeyDown(KeyCode.KeypadEnter))
             {
                 Logger.Log("FkAssist Update");
+                Logger.Log(Context.GuideObjectManager().selectObjects.Length + "");
+                var ociCharchar = FindOciChar();
+                var bone = ociCharchar.listBones[0];
+                Context.GuideObjectManager().AddObject(bone.guideObject);
+                Logger.Log(Context.GuideObjectManager().selectObjects.Length + "");
+                Rotate(bone.guideObject, 10, 10, 10);
+//                ociCharchar.listBones.ForEach(b =>
+//                {
+//                    Logger.Log("===============================================================");
+//                    Logger.Log(Kit.GetGameObjectPathAndPos(b.guideObject.gameObject));
+//                    Logger.Log(Kit.GetGameObjectPathAndPos(b.guideObject.transformTarget.gameObject));
+//                    Logger.Log(b.guideObject.enablePos + "", b.guideObject.enableRot + "",
+//                        b.guideObject.enableScale + "");
+//                });
+//                Logger.Log(ociCharchar.listBones.Count + "");
                 return;
             }
             _counter++;

@@ -1,17 +1,37 @@
 ﻿using System;
 using System.Collections.Generic;
+using Harmony;
 using IllusionUtility.GetUtility;
 using Studio;
 using UnityEngine;
 
 namespace FkAssistPlugin
 {
+    public class Test
+    {
+        public static void pre()
+        {
+            Logger.Log("Pre");
+        }
+    }
+
     public class FkAssist : BaseMgr<FkAssist>
     {
         private float _gap = 0.3f;
 
         public override void Init()
         {
+            try
+            {
+                var harmony = HarmonyInstance.Create("io.github.yuemenglong.test");
+                var original = typeof(Studio.Studio).GetMethod("AddFemale", new Type[] {typeof(string)});
+                var prefix = new HarmonyMethod(typeof(Test).GetMethod("pre"));
+                harmony.Patch(original, prefix, null);
+            }
+            catch (Exception ex)
+            {
+                Logger.Log("Exception: " + ex);
+            }
             Logger.Log("FkAssist");
         }
 

@@ -1,24 +1,13 @@
 ﻿using System;
 using System.Collections.Generic;
-using Harmony;
 using IllusionUtility.GetUtility;
 using Studio;
 using UnityEngine;
-using Valve.VR;
 
 namespace FkAssistPlugin
 {
-    public class Test
-    {
-        public static void pre()
-        {
-            Logger.Log("Pre");
-        }
-    }
-
     public class FkAssist : BaseMgr<FkAssist>
     {
-        private float _gap = 1f;
         private int _counter = 0;
         private Dictionary<int, Vector3> _oldRot = null;
         private Dictionary<int, GuideObject> _targets = new Dictionary<int, GuideObject>();
@@ -27,10 +16,8 @@ namespace FkAssistPlugin
         {
             try
             {
-                var harmony = HarmonyInstance.Create("io.github.yuemenglong.test");
-                var original = typeof(Studio.Studio).GetMethod("AddFemale", new Type[] {typeof(string)});
-                var prefix = new HarmonyMethod(typeof(Test).GetMethod("pre"));
-                harmony.Patch(original, prefix, null);
+                Patch.Init();
+                Logger.Log(Kit.StackTrace());
             }
             catch (Exception ex)
             {
@@ -59,17 +46,12 @@ namespace FkAssistPlugin
             return (ObjectCtrlInfo) null;
         }
 
-
         private void Rotate(float z, float y, float x)
         {
             GuideObjectManager instance = Singleton<GuideObjectManager>.Instance;
             foreach (GuideObject guideObject in instance.selectObjects)
             {
-                if (guideObject.enableRot)
-                {
-                    guideObject.transformTarget.Rotate(z, y, x, Space.Self);
-                    guideObject.changeAmount.rot = guideObject.transformTarget.localEulerAngles;
-                }
+                Rotate(guideObject, z, y, x);
             }
         }
 

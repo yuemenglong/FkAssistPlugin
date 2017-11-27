@@ -1,5 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Diagnostics;
+using System.Linq;
 using UnityEngine;
 
 namespace FkAssistPlugin
@@ -47,6 +49,17 @@ namespace FkAssistPlugin
         public static String VecStr(Vector3 v)
         {
             return String.Format("[{0},{1},{2}]", v.x, v.y, v.z);
+        }
+
+        public static String StackTrace()
+        {
+            StackTrace st = new StackTrace();
+            var list = new List<String>();
+            foreach (var frame in st.GetFrames())
+            {
+                list.Add(String.Format("\n{0}, {1}", frame.GetMethod().DeclaringType.FullName, frame.GetMethod().Name));
+            }
+            return String.Join("", list.ToArray());
         }
 
         public static void backup()

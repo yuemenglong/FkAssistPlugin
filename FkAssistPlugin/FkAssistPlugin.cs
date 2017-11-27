@@ -16,17 +16,17 @@ namespace FkAssistPlugin
 
         public void OnApplicationStart()
         {
-            Logger.Log("YML-OnApplicationStart");
+            Logger.Log("OnApplicationStart");
         }
 
         public void OnApplicationQuit()
         {
-            Logger.Log("YML-OnApplicationQuit");
+            Logger.Log("OnApplicationQuit");
         }
 
         public void OnLevelWasLoaded(int level)
         {
-            Logger.Log("YML-OnLevelWasLoaded, " + level);
+            Logger.Log("OnLevelWasLoaded, " + level);
         }
 
         public void OnLevelWasInitialized(int level)
@@ -34,7 +34,7 @@ namespace FkAssistPlugin
             if (!((Object) Singleton<Studio.Studio>.Instance != (Object) null))
                 return;
             BaseMgr<FkAssist>.Install(new GameObject("FkPlugin"));
-            Logger.Log("YML-OnLevelWasInitialized, " + level);
+            Logger.Log("OnLevelWasInitialized, " + level);
         }
 
         public void OnUpdate()

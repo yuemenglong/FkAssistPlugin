@@ -40,6 +40,7 @@
     <Compile Include="Context.cs" />
     <Compile Include="Kit.cs" />
     <Compile Include="Logger.cs" />
+    <Compile Include="Patch.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>

@@ -63,22 +63,10 @@ namespace FkAssistPlugin
             return String.Join("", list.ToArray());
         }
 
-        public static Point ScreenPos(Vector3 world)
+        public static Vector3 ScreenPoint(Vector3 world)
         {
             Vector3 screen = Camera.main.WorldToScreenPoint(world);
-            if (screen.x < 0 || screen.x > Screen.width)
-            {
-                return null;
-            }
-            if (screen.y < 0 || screen.y > Screen.height)
-            {
-                return null;
-            }
-            if (screen.z < 0)
-            {
-                return null;
-            }
-            return new Point();
+            return new Vector3(screen.x , Screen.height - screen.y, screen.z);
         }
 
         public static void GuiButton(Vector3 world, String text, int size = 25, Callback cb = null)

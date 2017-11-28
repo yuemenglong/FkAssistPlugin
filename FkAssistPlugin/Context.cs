@@ -22,6 +22,23 @@ namespace FkAssistPlugin
             return Singleton<UndoRedoManager>.Instance;
         }
 
+        public static OCIChar[] Characters()
+        {
+            var list = new List<OCIChar>();
+            foreach (var objectCtrlInfo in Studio().dicInfo.Values)
+            {
+                if (objectCtrlInfo.kind == 0)
+                {
+                    OCIChar ocichar = objectCtrlInfo as OCIChar;
+                    if (ocichar != null)
+                    {
+                        list.Add(ocichar);
+                    }
+                }
+            }
+            return list.ToArray();
+        }
+
         private static List<TreeNodeObject> GetCharaNodes<CharaType>()
         {
             var studio = Studio();

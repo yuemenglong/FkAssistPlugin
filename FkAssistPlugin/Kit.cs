@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Diagnostics;
 using System.Linq;
+using System.Security;
 using UnityEngine;
 
 namespace FkAssistPlugin
@@ -61,6 +62,41 @@ namespace FkAssistPlugin
             }
             return String.Join("", list.ToArray());
         }
+
+        public static Point ScreenPos(Vector3 world)
+        {
+            Vector3 screen = Camera.main.WorldToScreenPoint(world);
+            if (screen.x < 0 || screen.x > Screen.width)
+            {
+                return null;
+            }
+            if (screen.y < 0 || screen.y > Screen.height)
+            {
+                return null;
+            }
+            if (screen.z < 0)
+            {
+                return null;
+            }
+            return new Point();
+        }
+
+        public static void GuiButton(Vector3 world, String text, int size = 25, Callback cb = null)
+        {
+            var height = size;
+            var width = size * text.Length;
+            Vector3 screen = Camera.main.WorldToScreenPoint(world);
+            var rect = new Rect(screen.x - width / 2f, Screen.height - screen.y - height / 2f, width, height);
+            if (screen.z > 0f && GUI.Button(rect, text))
+            {
+                if (cb != null)
+                {
+                    cb.callback();
+                }
+            }
+        }
+
+        #region backup
 
         public static void backup()
         {
@@ -132,5 +168,60 @@ namespace FkAssistPlugin
 //                }
 //            }
         }
+
+//        
+//        private static void charaBones2()
+//        {
+//            foreach (var objectCtrlInfo in Context.Studio().dicInfo.Values)
+//            {
+//                if (objectCtrlInfo.kind == 0)
+//                {
+//                    Logger.Log("has kind = 0");
+//                    OCIChar ocichar = objectCtrlInfo as OCIChar;
+//                    if (ocichar == null)
+//                    {
+//                        Logger.Log("ocichar is null");
+//                    }
+//                    else if (ocichar.charInfo == null)
+//                    {
+//                        Logger.Log("ocichar info is null");
+//                    }
+//                    else
+//                    {
+//                        var character = ocichar.charInfo;
+//                        string prefix = character is CharFemale ? "cf_" : "cm_";
+//                        List<GameObject> normalTargets = new List<GameObject>();
+//                        var list = new List<GameObject>();
+//                        character.chaBody.objBone.transform.FindLoopAll(list);
+//                        list.ForEach(item => { Logger.Log(Kit.GetGameObjectPathAndPos(item)); });
+//                        Logger.Log(list.Count + "");
+////                            foreach(string targetName in FileManager.GetNormalTargetNames())
+////                            {
+////                                GameObject bone = character.chaBody.objBone.transform.FindLoop(prefix + targetName);
+////                                if(bone) normalTargets.Add(bone);
+////                            }
+////                            return normalTargets;
+//                    }
+//                    GuideObjectManager instance = Singleton<GuideObjectManager>.Instance;
+//                    foreach (GuideObject guideObject in instance.selectObjects)
+//                    {
+//                        //                    if (guideObject.enableRot)
+//                        //                    {
+//                        var p0 = guideObject.transform.position;
+//                        var p1 = guideObject.transformTarget.position;
+//                        var g0 = guideObject.gameObject;
+//                        var g1 = guideObject.transformTarget.gameObject;
+//                        Logger.Log(Kit.VecStr(p0));
+//                        Logger.Log(Kit.GetGameObjectPathAndPos(g0));
+//                        Logger.Log(Kit.VecStr(p1));
+//                        Logger.Log(Kit.GetGameObjectPathAndPos(g1));
+//                        guideObject.transformTarget.gameObject.transform.Rotate(10, 0, 0);
+//                        //                    }
+//                    }
+//                }
+//            }
+//        }
+
+        #endregion
     }
 }

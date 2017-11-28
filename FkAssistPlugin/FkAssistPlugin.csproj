@@ -34,6 +34,7 @@
   </PropertyGroup>
   <ItemGroup>
     <Compile Include="BaseMgr.cs" />
+    <Compile Include="Callback.cs" />
     <Compile Include="FKAssist.cs" />
     <Compile Include="FkAssistPlugin.cs" />
     <Compile Include="ObjMoveRotAssistMgr.cs" />

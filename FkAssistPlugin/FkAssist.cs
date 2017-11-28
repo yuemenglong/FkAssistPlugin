@@ -77,58 +77,6 @@ namespace FkAssistPlugin
             }
         }
 
-        private void charaBones()
-        {
-            foreach (var objectCtrlInfo in Context.Studio().dicInfo.Values)
-            {
-                if (objectCtrlInfo.kind == 0)
-                {
-                    Logger.Log("has kind = 0");
-                    OCIChar ocichar = objectCtrlInfo as OCIChar;
-                    if (ocichar == null)
-                    {
-                        Logger.Log("ocichar is null");
-                    }
-                    else if (ocichar.charInfo == null)
-                    {
-                        Logger.Log("ocichar info is null");
-                    }
-                    else
-                    {
-                        var character = ocichar.charInfo;
-                        string prefix = character is CharFemale ? "cf_" : "cm_";
-                        List<GameObject> normalTargets = new List<GameObject>();
-                        var list = new List<GameObject>();
-                        character.chaBody.objBone.transform.FindLoopAll(list);
-                        list.ForEach(item => { Logger.Log(Kit.GetGameObjectPathAndPos(item)); });
-                        Logger.Log(list.Count + "");
-//                            foreach(string targetName in FileManager.GetNormalTargetNames())
-//                            {
-//                                GameObject bone = character.chaBody.objBone.transform.FindLoop(prefix + targetName);
-//                                if(bone) normalTargets.Add(bone);
-//                            }
-//                            return normalTargets;
-                    }
-                    GuideObjectManager instance = Singleton<GuideObjectManager>.Instance;
-                    foreach (GuideObject guideObject in instance.selectObjects)
-                    {
-                        //                    if (guideObject.enableRot)
-                        //                    {
-                        var p0 = guideObject.transform.position;
-                        var p1 = guideObject.transformTarget.position;
-                        var g0 = guideObject.gameObject;
-                        var g1 = guideObject.transformTarget.gameObject;
-                        Logger.Log(Kit.VecStr(p0));
-                        Logger.Log(Kit.GetGameObjectPathAndPos(g0));
-                        Logger.Log(Kit.VecStr(p1));
-                        Logger.Log(Kit.GetGameObjectPathAndPos(g1));
-                        guideObject.transformTarget.gameObject.transform.Rotate(10, 0, 0);
-                        //                    }
-                    }
-                }
-            }
-        }
-
         public OCIChar FindOciChar()
         {
             foreach (var objectCtrlInfo in Context.Studio().dicInfo.Values)
@@ -194,17 +142,43 @@ namespace FkAssistPlugin
             return dictionary;
         }
 
+        private void OnGUI()
+        {
+            Kit.GuiButton(Vector3.zero, "text");
+            if (Input.GetKey(KeyCode.KeypadEnter))
+            {
+                foreach (var ociChar in Context.Characters())
+                {
+                    ociChar.listBones.ForEach(b => { Kit.GuiButton(b.guideObject.transformTarget.position, "K"); });
+                }
+            }
+        }
+
         private void Update()
         {
-            if (Input.GetKeyDown(KeyCode.KeypadEnter))
+            if (Input.GetKey(KeyCode.KeypadEnter))
             {
-                Logger.Log("FkAssist Update");
-                Logger.Log(Context.GuideObjectManager().selectObjects.Length + "");
-                var ociCharchar = FindOciChar();
-                var bone = ociCharchar.listBones[0];
-                Context.GuideObjectManager().AddObject(bone.guideObject);
-                Logger.Log(Context.GuideObjectManager().selectObjects.Length + "");
-                Rotate(bone.guideObject, 10, 10, 10);
+//                Kit.GUIButton(new Vector3(), "AA");
+//                var rect = new Rect(40,40,40,40);
+//                GUI.Button(rect, "YML");
+//                Logger.Log("FkAssist Update");
+//                Logger.Log(Context.GuideObjectManager().selectObjects.Length + "");
+//                var ociCharchar = FindOciChar();
+//                var bone = ociCharchar.listBones[0];
+//                foreach (var b in ociCharchar.listBones)
+//                {
+//                    Logger.Log(Kit.GetGameObjectPathAndPos(b.guideObject.transformTarget.gameObject));
+//                    if (b.guideObject == null || !b.guideObject.enableRot)
+//                    {
+//                        Logger.Log("Null Or Not Rot");
+//                    }
+//                }
+//                Logger.Log(ociCharchar.listBones.Count);
+
+//                Context.GuideObjectManager().AddObject(bone.guideObject);
+//                Logger.Log(Context.GuideObjectManager().selectObjects.Length);
+//                Rotate(bone.guideObject, 10, 10, 10);
+//                bone.guideObject.isActive = false;
 //                ociCharchar.listBones.ForEach(b =>
 //                {
 //                    Logger.Log("===============================================================");

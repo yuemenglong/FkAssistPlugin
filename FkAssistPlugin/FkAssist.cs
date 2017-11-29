@@ -145,54 +145,39 @@ namespace FkAssistPlugin
 
         private void OnGUI()
         {
-            Kit.GuiButton(Vector3.zero, "text");
-            if (Input.GetKey(KeyCode.KeypadEnter))
-            {
+//            Kit.GuiButton(Vector3.zero, "text");
+//            if (Input.GetKey(KeyCode.KeypadEnter))
+//            {
+////                foreach (var ociChar in Context.Characters())
+////                {
+////                    ociChar.listBones.ForEach(b => { Kit.GuiButton(b.guideObject.transformTarget.position, "K"); });
+////                }
 //                foreach (var ociChar in Context.Characters())
 //                {
 //                    ociChar.listBones.ForEach(b => { Kit.GuiButton(b.guideObject.transformTarget.position, "K"); });
 //                }
-                foreach (var ociChar in Context.Characters())
-                {
-                    ociChar.listBones.ForEach(b => { Kit.GuiButton(b.guideObject.transformTarget.position, "K"); });
-                }
-            }
+//            }
         }
 
         private void Update()
         {
             if (Input.GetKey(KeyCode.KeypadEnter))
             {
-//                Kit.GUIButton(new Vector3(), "AA");
-//                var rect = new Rect(40,40,40,40);
-//                GUI.Button(rect, "YML");
-//                Logger.Log("FkAssist Update");
-//                Logger.Log(Context.GuideObjectManager().selectObjects.Length + "");
-//                var ociCharchar = FindOciChar();
-//                var bone = ociCharchar.listBones[0];
-//                foreach (var b in ociCharchar.listBones)
-//                {
-//                    Logger.Log(Kit.GetGameObjectPathAndPos(b.guideObject.transformTarget.gameObject));
-//                    if (b.guideObject == null || !b.guideObject.enableRot)
-//                    {
-//                        Logger.Log("Null Or Not Rot");
-//                    }
-//                }
-//                Logger.Log(ociCharchar.listBones.Count);
-
-//                Context.GuideObjectManager().AddObject(bone.guideObject);
-//                Logger.Log(Context.GuideObjectManager().selectObjects.Length);
-//                Rotate(bone.guideObject, 10, 10, 10);
-//                bone.guideObject.isActive = false;
-//                ociCharchar.listBones.ForEach(b =>
-//                {
-//                    Logger.Log("===============================================================");
-//                    Logger.Log(Kit.GetGameObjectPathAndPos(b.guideObject.gameObject));
-//                    Logger.Log(Kit.GetGameObjectPathAndPos(b.guideObject.transformTarget.gameObject));
-//                    Logger.Log(b.guideObject.enablePos + "", b.guideObject.enableRot + "",
-//                        b.guideObject.enableScale + "");
-//                });
-//                Logger.Log(ociCharchar.listBones.Count + "");
+                var go = Context.GuideObjectManager().selectObject;
+//[FkPlugin] /CommonSpace/chaF00/BodyTop/p_cf_anim/cf_J_Root/cf_N_height/cf_J_Hips/cf_J_Spine01/cf_J_Spine02/cf_J_Spine03/cf_J_ShoulderIK_L/cf_J_Shoulder_L/cf_J_ArmUp00_L/cf_J_ArmLow01_L/cf_J_Hand_L [-0.5565164,1.331407,-0.03151792]
+//[FkPlugin] /CommonSpace/chaF00/BodyTop/p_cf_anim/cf_J_Root/cf_N_height/cf_J_Hips/cf_J_Spine01/cf_J_Spine02/cf_J_Spine03/cf_J_ShoulderIK_L/cf_J_Shoulder_L/cf_J_ArmUp00_L/cf_J_ArmLow01_L [-0.3511997,1.331407,-0.03151793]
+//[FkPlugin] /CommonSpace/chaF00/BodyTop/p_cf_anim/cf_J_Root/cf_N_height/cf_J_Hips/cf_J_Spine01/cf_J_Spine02/cf_J_Spine03/cf_J_ShoulderIK_L/cf_J_Shoulder_L/cf_J_ArmUp00_L [-0.112564,1.331407,-0.03151792]
+//[FkPlugin] /CommonSpace/chaF00/BodyTop/p_cf_anim/cf_J_Root/cf_N_height/cf_J_Hips/cf_J_Kosi01/cf_J_Kosi02/cf_J_LegUp00_L/cf_J_LegLow01_L/cf_J_LegLowRoll_L/cf_J_Foot01_L [-0.07924593,0.08603691,-0.02697031]
+//[FkPlugin] /CommonSpace/chaF00/BodyTop/p_cf_anim/cf_J_Root/cf_N_height/cf_J_Hips/cf_J_Kosi01/cf_J_Kosi02/cf_J_LegUp00_L/cf_J_LegLow01_L [-0.07924539,0.5074378,-0.0270153]
+//[FkPlugin] /CommonSpace/chaF00/BodyTop/p_cf_anim/cf_J_Root/cf_N_height/cf_J_Hips/cf_J_Kosi01/cf_J_Kosi02/cf_J_LegUp00_L [-0.07924507,0.8856537,-0.02701536]
+                if (go != null)
+                {
+                    Logger.Log(go.transformTarget.gameObject);
+                }
+                else
+                {
+                    Logger.Log("NULL");
+                }
                 return;
             }
             if (Input.GetMouseButtonDown(2))

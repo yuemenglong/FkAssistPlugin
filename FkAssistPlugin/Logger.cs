@@ -18,6 +18,10 @@ namespace FkAssistPlugin
                 {
                     list.Add(Kit.VecStr((Vector3) o));
                 }
+                else if (o is GameObject)
+                {
+                    list.Add(Kit.GetGameObjectPathAndPos((GameObject)o));
+                }
                 else
                 {
                     list.Add(o.ToString());

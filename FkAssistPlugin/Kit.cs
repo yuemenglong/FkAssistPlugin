@@ -66,7 +66,7 @@ namespace FkAssistPlugin
         public static Vector3 ScreenPoint(Vector3 world)
         {
             Vector3 screen = Camera.main.WorldToScreenPoint(world);
-            return new Vector3(screen.x , Screen.height - screen.y, screen.z);
+            return new Vector3(screen.x, Screen.height - screen.y, screen.z);
         }
 
         public static void GuiButton(Vector3 world, String text, int size = 25, Callback cb = null)
@@ -83,7 +83,7 @@ namespace FkAssistPlugin
                 }
             }
         }
-        
+
         public static float Angle(float a, float b, float c)
         {
             var cos = (a * a + b * b - c * c) / Mathf.Abs(2 * a * b);
@@ -99,6 +99,36 @@ namespace FkAssistPlugin
 
         public static void backup()
         {
+            //                Kit.GUIButton(new Vector3(), "AA");
+//                var rect = new Rect(40,40,40,40);
+//                GUI.Button(rect, "YML");
+//                Logger.Log("FkAssist Update");
+//                Logger.Log(Context.GuideObjectManager().selectObjects.Length + "");
+//                var ociCharchar = FindOciChar();
+//                var bone = ociCharchar.listBones[0];
+//                foreach (var b in ociCharchar.listBones)
+//                {
+//                    Logger.Log(Kit.GetGameObjectPathAndPos(b.guideObject.transformTarget.gameObject));
+//                    if (b.guideObject == null || !b.guideObject.enableRot)
+//                    {
+//                        Logger.Log("Null Or Not Rot");
+//                    }
+//                }
+//                Logger.Log(ociCharchar.listBones.Count);
+
+//                Context.GuideObjectManager().AddObject(bone.guideObject);
+//                Logger.Log(Context.GuideObjectManager().selectObjects.Length);
+//                Rotate(bone.guideObject, 10, 10, 10);
+//                bone.guideObject.isActive = false;
+//                ociCharchar.listBones.ForEach(b =>
+//                {
+//                    Logger.Log("===============================================================");
+//                    Logger.Log(Kit.GetGameObjectPathAndPos(b.guideObject.gameObject));
+//                    Logger.Log(Kit.GetGameObjectPathAndPos(b.guideObject.transformTarget.gameObject));
+//                    Logger.Log(b.guideObject.enablePos + "", b.guideObject.enableRot + "",
+//                        b.guideObject.enableScale + "");
+//                });
+//                Logger.Log(ociCharchar.listBones.Count + "");
 //            if (Input.GetKeyDown(KeyCode.V))
 //            {
 //                Logger.Log("*************************************************************");

@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using IllusionUtility.GetUtility;
+using RootMotion.FinalIK;
 using Studio;
 using UnityEngine;
 
@@ -147,6 +148,10 @@ namespace FkAssistPlugin
             Kit.GuiButton(Vector3.zero, "text");
             if (Input.GetKey(KeyCode.KeypadEnter))
             {
+//                foreach (var ociChar in Context.Characters())
+//                {
+//                    ociChar.listBones.ForEach(b => { Kit.GuiButton(b.guideObject.transformTarget.position, "K"); });
+//                }
                 foreach (var ociChar in Context.Characters())
                 {
                     ociChar.listBones.ForEach(b => { Kit.GuiButton(b.guideObject.transformTarget.position, "K"); });
@@ -189,6 +194,14 @@ namespace FkAssistPlugin
 //                });
 //                Logger.Log(ociCharchar.listBones.Count + "");
                 return;
+            }
+            if (Input.GetMouseButtonDown(2))
+            {
+                OCIChar.BoneInfo bone = null;
+                foreach (var ociChar in Context.Characters())
+                {
+                    ociChar.listBones.ForEach(b => { });
+                }
             }
             _counter++;
             if (Input.GetKey(KeyCode.LeftShift))

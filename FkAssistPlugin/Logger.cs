@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.IO;
-using System.Linq;
+using UnityEngine;
 
 namespace FkAssistPlugin
 {
@@ -12,9 +12,16 @@ namespace FkAssistPlugin
         public static void Log(params object[] ss)
         {
             var list = new List<String>();
-            foreach (var s in ss)
+            foreach (var o in ss)
             {
-                list.Add(s.ToString());
+                if (o is Vector3)
+                {
+                    list.Add(Kit.VecStr((Vector3) o));
+                }
+                else
+                {
+                    list.Add(o.ToString());
+                }
             }
             var msg = "[FkPlugin] " + String.Join(", ", list.ToArray());
             Debug.Log(msg);

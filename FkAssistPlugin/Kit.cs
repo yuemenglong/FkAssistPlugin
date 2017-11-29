@@ -83,6 +83,17 @@ namespace FkAssistPlugin
                 }
             }
         }
+        
+        public static float Angle(float a, float b, float c)
+        {
+            var cos = (a * a + b * b - c * c) / Mathf.Abs(2 * a * b);
+            return Mathf.Acos(cos) / Mathf.PI * 180;
+        }
+
+        public static float Angle(Vector3 a, Vector3 b, Vector3 c)
+        {
+            return Angle(a.magnitude, b.magnitude, c.magnitude);
+        }
 
         #region backup
 

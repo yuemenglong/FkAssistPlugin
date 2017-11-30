@@ -46,20 +46,13 @@ namespace FkAssistPlugin
 
         private static BoneRotater BoneRotater(GuideObject go)
         {
-            if (go.IsHand())
-            {
-                var t = go.transformTarget;
-                var tp = t.parent;
-                var tpp = tp.parent;
-                var root = new TransformBone(tpp, tp);
-                var end = new TransformBone(tp, t);
-                var rotater = new BoneRotater(root, end);
-                return rotater;
-            }
-            else
-            {
-                return null;
-            }
+            var t = go.transformTarget;
+            var tp = t.parent;
+            var tpp = tp.parent;
+            var root = new TransformBone(tpp, tp);
+            var end = new TransformBone(tp, t);
+            var rotater = new BoneRotater(root, end);
+            return rotater;
         }
 
         public static void Forward(this GuideObject go, float dist)

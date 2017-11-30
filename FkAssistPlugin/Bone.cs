@@ -24,26 +24,34 @@ namespace FkAssistPlugin
             _end = end;
         }
 
-        public void Forward(float value)
+        public bool IsValid(float dist)
         {
             var vec = _root.Vector + _end.Vector;
             if (vec.magnitude >= _root.Vector.magnitude + _end.Vector.magnitude)
             {
-                Logger.Log(1, vec.magnitude, _root.Vector.magnitude, _end.Vector.magnitude);
-                return;
+                return false;
             }
-            var target = vec.magnitude + value;
+            var target = vec.magnitude + dist;
             if (target >= _root.Vector.magnitude + _end.Vector.magnitude)
             {
-                Logger.Log(2, vec.magnitude, _root.Vector.magnitude, _end.Vector.magnitude);
+                return false;
+            }
+            return true;
+        }
+
+        public void Forward(float value)
+        {
+            if (!IsValid(value))
+            {
                 return;
             }
+            var vec = _root.Vector + _end.Vector;
+            var target = vec.magnitude + value;
             {
                 var old = Kit.Angle(_root.Vector.magnitude, vec.magnitude, _end.Vector.magnitude);
                 var now = Kit.Angle(_root.Vector.magnitude, target, _end.Vector.magnitude);
                 var angle = old - now;
                 var axis = Vector3.Cross(_root.Vector, _end.Vector).normalized;
-                Logger.Log(3, angle, axis);
                 _root.RotateAround(_root.Transform.position, axis, angle);
             }
             {
@@ -51,7 +59,6 @@ namespace FkAssistPlugin
                 var now = Kit.Angle(_root.Vector.magnitude, _end.Vector.magnitude, target);
                 var angle = old - now;
                 var axis = Vector3.Cross(_root.Vector, _end.Vector).normalized;
-                Logger.Log(4, angle, axis);
                 _end.RotateAround(_end.Transform.position, axis, angle);
             }
         }

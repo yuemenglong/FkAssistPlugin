@@ -56,7 +56,7 @@ namespace FkAssistPlugin
             }
         }
 
-        public void Rotate(float angle)
+        public void Revolution(float angle)
         {
             var vec = _root.Vector + _end.Vector;
             _root.RotateAround(_root.Transform.position, vec, angle);

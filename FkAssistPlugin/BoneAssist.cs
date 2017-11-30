@@ -5,22 +5,36 @@ using UnityEngine.EventSystems;
 
 namespace FkAssistPlugin
 {
-    public static class BoneHelper
+    public static class BoneAssist
     {
-        public static bool IsHand(this Transform transform)
+        public static bool IsHand(this GuideObject go)
         {
-            var name = transform.name;
+            var name = go.transformTarget.name;
             return name == "cf_J_Hand_L"
                    || name == "cf_J_Hand_R"
                    || name == "cm_J_Hand_L"
                    || name == "cm_J_Hand_R";
         }
 
+        public static bool IsFoot(this GuideObject go)
+        {
+            var name = go.transformTarget.name;
+            return name == "cf_J_Foot01_L"
+                   || name == "cf_J_Foot01_R"
+                   || name == "cm_J_Foot01_L"
+                   || name == "cm_J_Foot01_R";
+        }
+
+        public static bool IsLimb(this GuideObject go)
+        {
+            return go.IsHand() || go.IsFoot();
+        }
+
         public static GuideObject GuideObject(this Transform transform)
         {
             return Context.DicGuideObject()[transform];
         }
-        
+
         public static void Rotate(this GuideObject guideObject, float z, float y, float x)
         {
             if (guideObject.enableRot)
@@ -28,6 +42,44 @@ namespace FkAssistPlugin
                 guideObject.transformTarget.Rotate(z, y, x, Space.Self);
                 guideObject.changeAmount.rot = guideObject.transformTarget.localEulerAngles;
             }
+        }
+
+        private static BoneRotater BoneRotater(GuideObject go)
+        {
+            if (go.IsHand())
+            {
+                var t = go.transformTarget;
+                var tp = t.parent;
+                var tpp = tp.parent;
+                var root = new TransformBone(tpp, tp);
+                var end = new TransformBone(tp, t);
+                var rotater = new BoneRotater(root, end);
+                return rotater;
+            }
+            else
+            {
+                return null;
+            }
+        }
+
+        public static void Forward(this GuideObject go, float dist)
+        {
+            BoneRotater(go).Forward(dist);
+        }
+
+        public static void Revolution(this GuideObject go, float angle)
+        {
+            BoneRotater(go).Revolution(angle);
+        }
+
+        public static void Tangent(this GuideObject go, float angle)
+        {
+            BoneRotater(go).Tangent(angle);
+        }
+
+        public static void Normals(this GuideObject go, float angle)
+        {
+            BoneRotater(go).Normals(angle);
         }
     }
 }

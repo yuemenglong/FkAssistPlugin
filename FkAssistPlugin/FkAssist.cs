@@ -91,6 +91,11 @@ namespace FkAssistPlugin
                     ociChar.listBones.ForEach(b => { });
                 }
             }
+            var go = Context.GuideObjectManager().selectObject;
+            if (go == null)
+            {
+                return;
+            }
             _counter++;
             if (Input.GetKey(KeyCode.LeftShift))
             {
@@ -101,31 +106,72 @@ namespace FkAssistPlugin
             }
             else
             {
-                float gap = 0.5f;
+                float angle = 0.5f;
+                float dist = 0.002f;
+                var isLimb = go.IsLimb();
                 if (Input.GetKey(KeyCode.E) && Input.GetMouseButton(0))
                 {
-                    Rotate(gap, 0, 0);
+                    Rotate(angle, 0, 0);
                 }
                 else if (Input.GetKey(KeyCode.E) && Input.GetMouseButton(1))
                 {
-                    Rotate(-gap, 0, 0);
+                    Rotate(-angle, 0, 0);
                 }
+                //
                 else if (Input.GetKey(KeyCode.S) && Input.GetMouseButton(0))
                 {
-                    Rotate(0, gap, 0);
+                    Rotate(0, angle, 0);
                 }
                 else if (Input.GetKey(KeyCode.S) && Input.GetMouseButton(1))
                 {
-                    Rotate(0, -gap, 0);
+                    Rotate(0, -angle, 0);
                 }
+                //
                 else if (Input.GetKey(KeyCode.D) && Input.GetMouseButton(0))
                 {
-                    Rotate(0, 0, gap);
+                    Rotate(0, 0, angle);
                 }
                 else if (Input.GetKey(KeyCode.D) && Input.GetMouseButton(1))
                 {
-                    Rotate(0, 0, -gap);
+                    Rotate(0, 0, -angle);
                 }
+                //
+                else if (Input.GetKey(KeyCode.X) && Input.GetMouseButton(0) && isLimb)
+                {
+                    BoneAssist.Forward(go, dist);
+                }
+                else if (Input.GetKey(KeyCode.X) && Input.GetMouseButton(1) && isLimb)
+                {
+                    BoneAssist.Forward(go, -dist);
+                }
+                //
+                else if (Input.GetKey(KeyCode.C) && Input.GetMouseButton(0) && isLimb)
+                {
+                    BoneAssist.Tangent(go, angle);
+                }
+                else if (Input.GetKey(KeyCode.C) && Input.GetMouseButton(1) && isLimb)
+                {
+                    BoneAssist.Tangent(go, -angle);
+                }
+                //
+                else if (Input.GetKey(KeyCode.V) && Input.GetMouseButton(0) && isLimb)
+                {
+                    BoneAssist.Normals(go, angle);
+                }
+                else if (Input.GetKey(KeyCode.V) && Input.GetMouseButton(1) && isLimb)
+                {
+                    BoneAssist.Normals(go, -angle);
+                }
+                //
+                else if (Input.GetKey(KeyCode.B) && Input.GetMouseButton(0) && isLimb)
+                {
+                    BoneAssist.Revolution(go, angle);
+                }
+                else if (Input.GetKey(KeyCode.B) && Input.GetMouseButton(1) && isLimb)
+                {
+                    BoneAssist.Revolution(go, -angle);
+                }
+                //
                 else
                 {
                     if (_counter > 1)

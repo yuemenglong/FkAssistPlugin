@@ -37,7 +37,7 @@ namespace FkAssistPlugin
             {
                 return;
             }
-            if (go.transformTarget.IsHand())
+            if (go.IsHand())
             {
 //                Logger.Log(go.transformTarget);
 //                Logger.Log(go.transformTarget.parent);

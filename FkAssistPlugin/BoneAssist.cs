@@ -43,6 +43,15 @@ namespace FkAssistPlugin
                 guideObject.changeAmount.rot = guideObject.transformTarget.localEulerAngles;
             }
         }
+        
+        public static void Reset(this GuideObject guideObject)
+        {
+            if (guideObject.enableRot)
+            {
+                guideObject.transformTarget.localEulerAngles = Vector3.zero;
+                guideObject.changeAmount.rot = guideObject.transformTarget.localEulerAngles;
+            }
+        }
 
         private static BoneRotater BoneRotater(GuideObject go)
         {

@@ -20,11 +20,17 @@ namespace FkAssistPlugin
                 }
                 else if (o is GameObject)
                 {
-                    list.Add(Kit.GetGameObjectPath((GameObject)o));
+                    list.Add(Kit.GetGameObjectPath((GameObject) o));
                 }
                 else if (o is Transform)
                 {
-                    list.Add(Kit.GetGameObjectPath(((Transform)o).gameObject));
+                    list.Add(Kit.GetGameObjectPath(((Transform) o).gameObject));
+                }
+                else if (o is Exception)
+                {
+                    var e = (Exception) o;
+                    list.Add(e.Message);
+                    list.Add(e.StackTrace);
                 }
                 else
                 {

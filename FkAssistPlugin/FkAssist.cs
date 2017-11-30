@@ -27,21 +27,12 @@ namespace FkAssistPlugin
             }
         }
 
-//        private void Rotate(GuideObject guideObject, float z, float y, float x)
-//        {
-//            if (guideObject.enableRot)
-//            {
-//                guideObject.transformTarget.Rotate(z, y, x, Space.Self);
-//                guideObject.changeAmount.rot = guideObject.transformTarget.localEulerAngles;
-//            }
-//        }
-
         private void Reset()
         {
             GuideObjectManager instance = Singleton<GuideObjectManager>.Instance;
             foreach (GuideObject guideObject in instance.selectObjects)
             {
-                guideObject.Rotate(0, 0, 0);
+                guideObject.Reset();
             }
         }
 
@@ -91,6 +82,19 @@ namespace FkAssistPlugin
                     ociChar.listBones.ForEach(b => { });
                 }
             }
+
+            try
+            {
+                InnerUpdate();
+            }
+            catch (Exception e)
+            {
+                Logger.Log(e);
+            }
+        }
+
+        private void InnerUpdate()
+        {
             var go = Context.GuideObjectManager().selectObject;
             if (go == null)
             {

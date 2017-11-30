@@ -20,5 +20,14 @@ namespace FkAssistPlugin
         {
             return Context.DicGuideObject()[transform];
         }
+        
+        public static void Rotate(this GuideObject guideObject, float z, float y, float x)
+        {
+            if (guideObject.enableRot)
+            {
+                guideObject.transformTarget.Rotate(z, y, x, Space.Self);
+                guideObject.changeAmount.rot = guideObject.transformTarget.localEulerAngles;
+            }
+        }
     }
 }

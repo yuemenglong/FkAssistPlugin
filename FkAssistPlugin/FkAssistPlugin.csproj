@@ -34,7 +34,7 @@
   </PropertyGroup>
   <ItemGroup>
     <Compile Include="BaseMgr.cs" />
-    <Compile Include="BoneHelper.cs" />
+    <Compile Include="BoneAssist.cs" />
     <Compile Include="Dynamic.cs" />
     <Compile Include="FKAssist.cs" />
     <Compile Include="FkAssistPlugin.cs" />

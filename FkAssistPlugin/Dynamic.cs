@@ -53,7 +53,7 @@ namespace FkAssistPlugin
                 var tpp = tp.parent;
                 var root = new TransformBone(tpp, tp);
                 var end = new TransformBone(tp, t);
-                var assist = new BoneAssist(root, end);
+                var assist = new BoneRotater(root, end);
                 assist.Forward(0.01f);
             }
             else

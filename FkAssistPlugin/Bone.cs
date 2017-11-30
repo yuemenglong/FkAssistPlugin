@@ -13,12 +13,12 @@ namespace FkAssistPlugin
         void RotateAround(Vector3 point, Vector3 axis, float angle);
     }
 
-    public class BoneAssist
+    public class BoneRotater
     {
         private IBone _root;
         private IBone _end;
 
-        public BoneAssist(IBone root, IBone end)
+        public BoneRotater(IBone root, IBone end)
         {
             _root = root;
             _end = end;

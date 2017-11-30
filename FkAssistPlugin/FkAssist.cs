@@ -63,15 +63,6 @@ namespace FkAssistPlugin
             }
             var arr = list.ToArray();
             Context.UndoRedoManager().Push(new GuideCommand.RotationEqualsCommand(arr));
-//            Singleton<UndoRedoManager>.Instance.Push((ICommand) new GuideCommand.RotationEqualsCommand(_targets
-//                .Select<KeyValuePair<int, GuideObject>, GuideCommand.EqualsInfo>(
-//                    (System.Func<KeyValuePair<int, GuideObject>, GuideCommand.EqualsInfo>) (v =>
-//                        new GuideCommand.EqualsInfo()
-//                        {
-//                            dicKey = v.Key,
-//                            oldValue = this._oldRot[v.Key],
-//                            newValue = v.Value.changeAmount.rot
-//                        })).ToArray<GuideCommand.EqualsInfo>()));
         }
 
         private Dictionary<int, Vector3> CollectOldRot()

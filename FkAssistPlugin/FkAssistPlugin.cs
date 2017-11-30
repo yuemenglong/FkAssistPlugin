@@ -17,7 +17,6 @@ namespace FkAssistPlugin
         public void OnApplicationStart()
         {
             Logger.Log("OnApplicationStart");
-            Dynamic.Init();
         }
 
         public void OnApplicationQuit()

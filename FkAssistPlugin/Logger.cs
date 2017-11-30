@@ -28,7 +28,7 @@ namespace FkAssistPlugin
                 }
             }
             var msg = "[FkPlugin] " + String.Join(", ", list.ToArray());
-            Debug.Log(msg);
+//            Debug.Log(msg);
 
             byte[] data = System.Text.Encoding.Default.GetBytes(msg + "\n");
             fs.Write(data, 0, data.Length);

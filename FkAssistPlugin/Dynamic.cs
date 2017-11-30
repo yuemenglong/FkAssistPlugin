@@ -3,6 +3,7 @@ using System.CodeDom.Compiler;
 using System.IO;
 using System.Reflection;
 using Microsoft.CSharp;
+using RootMotion.FinalIK;
 using Studio;
 using UnityEngine;
 
@@ -38,15 +39,22 @@ namespace FkAssistPlugin
             }
             if (go.transformTarget.IsHand())
             {
-                Logger.Log(go.transformTarget);
-                Logger.Log(go.transformTarget.parent);
-                Logger.Log(go.transformTarget.parent.parent);
-                var parent = go.transformTarget.parent;
-                parent.Rotate(10, 10, 10, Space.Self);
-                parent.GuideObject().changeAmount.rot = parent.localEulerAngles;
-                parent = parent.parent;
-                parent.Rotate(10, 10, 10, Space.Self);
-                parent.GuideObject().changeAmount.rot = parent.localEulerAngles;
+//                Logger.Log(go.transformTarget);
+//                Logger.Log(go.transformTarget.parent);
+//                Logger.Log(go.transformTarget.parent.parent);
+//                var parent = go.transformTarget.parent;
+//                parent.Rotate(10, 10, 10, Space.Self);
+//                parent.GuideObject().changeAmount.rot = parent.localEulerAngles;
+//                parent = parent.parent;
+//                parent.Rotate(10, 10, 10, Space.Self);
+//                parent.GuideObject().changeAmount.rot = parent.localEulerAngles;
+                var t = go.transformTarget;
+                var tp = t.parent;
+                var tpp = tp.parent;
+                var root = new TransformBone(tpp, tp);
+                var end = new TransformBone(tp, t);
+                var assist = new BoneAssist(root, end);
+                assist.Forward(0.01f);
             }
             else
             {

@@ -9,7 +9,7 @@ namespace FkAssistPlugin
         Transform Transform { get; }
         Vector3 Vector { get; }
 
-        void Rotate(Vector3 axis, float angle, Space relativeTo);
+        void Rotate(Vector3 axis, float angle, Space relativeTo = Space.Self);
         void RotateAround(Vector3 point, Vector3 axis, float angle);
     }
 
@@ -29,11 +29,13 @@ namespace FkAssistPlugin
             var vec = _root.Vector + _end.Vector;
             if (vec.magnitude >= _root.Vector.magnitude + _end.Vector.magnitude)
             {
+                Logger.Log(1, vec.magnitude, _root.Vector.magnitude, _end.Vector.magnitude);
                 return;
             }
             var target = vec.magnitude + value;
             if (target >= _root.Vector.magnitude + _end.Vector.magnitude)
             {
+                Logger.Log(2, vec.magnitude, _root.Vector.magnitude, _end.Vector.magnitude);
                 return;
             }
             {
@@ -41,6 +43,7 @@ namespace FkAssistPlugin
                 var now = Kit.Angle(_root.Vector.magnitude, target, _end.Vector.magnitude);
                 var angle = old - now;
                 var axis = Vector3.Cross(_root.Vector, _end.Vector).normalized;
+                Logger.Log(3, angle, axis);
                 _root.RotateAround(_root.Transform.position, axis, angle);
             }
             {
@@ -48,6 +51,7 @@ namespace FkAssistPlugin
                 var now = Kit.Angle(_root.Vector.magnitude, _end.Vector.magnitude, target);
                 var angle = old - now;
                 var axis = Vector3.Cross(_root.Vector, _end.Vector).normalized;
+                Logger.Log(4, angle, axis);
                 _end.RotateAround(_end.Transform.position, axis, angle);
             }
         }
@@ -73,12 +77,12 @@ namespace FkAssistPlugin
         }
     }
 
-    public class GuideObjectBone : IBone
+    public class TransformBone : IBone
     {
         private Transform _start;
         private Transform _end;
 
-        public GuideObjectBone(Transform start, Transform end)
+        public TransformBone(Transform start, Transform end)
         {
             _start = start;
             _end = end;

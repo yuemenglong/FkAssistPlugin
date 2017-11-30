@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Reflection;
 using Studio;
 using UnityEngine;
 
@@ -11,10 +12,15 @@ namespace FkAssistPlugin
         {
             return Singleton<Studio.Studio>.Instance;
         }
-        
+
         public static GuideObjectManager GuideObjectManager()
         {
             return Singleton<GuideObjectManager>.Instance;
+        }
+
+        public static Dictionary<Transform, GuideObject> DicGuideObject()
+        {
+            return GuideObjectManager().GetPrivateField<Dictionary<Transform, GuideObject>>("dicGuideObject");
         }
 
         public static UndoRedoManager UndoRedoManager()

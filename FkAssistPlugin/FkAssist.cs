@@ -15,15 +15,15 @@ namespace FkAssistPlugin
 
         public override void Init()
         {
-            try
-            {
-                Patch.Init();
-                Logger.Log(Kit.StackTrace());
-            }
-            catch (Exception ex)
-            {
-                Logger.Log("Exception: " + ex);
-            }
+//            try
+//            {
+//                Patch.Init();
+//                Logger.Log(Kit.StackTrace());
+//            }
+//            catch (Exception ex)
+//            {
+//                Logger.Log("Exception: " + ex);
+//            }
             Logger.Log("FkAssist");
         }
 
@@ -161,7 +161,7 @@ namespace FkAssistPlugin
 
         private void Update()
         {
-            if (Input.GetKey(KeyCode.KeypadEnter))
+            if (Input.GetKeyDown(KeyCode.KeypadEnter))
             {
                 var go = Context.GuideObjectManager().selectObject;
 //[FkPlugin] /CommonSpace/chaF00/BodyTop/p_cf_anim/cf_J_Root/cf_N_height/cf_J_Hips/cf_J_Spine01/cf_J_Spine02/cf_J_Spine03/cf_J_ShoulderIK_L/cf_J_Shoulder_L/cf_J_ArmUp00_L/cf_J_ArmLow01_L/cf_J_Hand_L [-0.5565164,1.331407,-0.03151792]
@@ -173,6 +173,44 @@ namespace FkAssistPlugin
                 if (go != null)
                 {
                     Logger.Log(go.transformTarget.gameObject);
+                    var name = go.transformTarget.name;
+                    if (name == "cf_J_Hand_L"
+                        || name == "cf_J_Hand_R"
+                        || name == "cm_J_Hand_L"
+                        || name == "cm_J_Hand_R")
+//                        || name == "cf_J_Foot01_L"
+//                        || name == "cf_J_Foot01_R"
+//                        || name == "cm_J_Foot01_L"
+//                        || name == "cm_J_Foot01_R")
+                    {
+//                        go.transformTarget.Rotate(10, 10, 10, Space.Self);
+//                        go.changeAmount.rot = go.transformTarget.localEulerAngles;
+                        var t2 = go.transformTarget;
+                        var t1 = go.transformTarget.parent;
+                        var t0 = go.transformTarget.parent.parent;
+                        var dic = Context.DicGuideObject();
+                        if (dic == null)
+                        {
+                            Logger.Log("Dic NULL");
+                            return;
+                        }
+                        Logger.Log("Dic Not NULL");
+
+                        var g1 = dic[t1];
+                        var g0 = dic[t0];
+                        if (g1 == null)
+                        {
+                            Logger.Log("G1 NULL");
+                        }
+                        if (g0 == null)
+                        {
+                            Logger.Log("G0 NULL");
+                        }
+                        Logger.Log("Forward");
+                        var root = new BoneRoot(new GuideObjectBone(g0, t1));
+                        var end = new BoneEnd(new GuideObjectBone(g0, t2), root);
+                        root.Forward(-0.01f);
+                    }
                 }
                 else
                 {

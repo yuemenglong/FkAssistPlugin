@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Diagnostics;
 using System.Linq;
+using System.Reflection;
 using System.Security;
 using UnityEngine;
 
@@ -93,6 +94,14 @@ namespace FkAssistPlugin
         public static float Angle(Vector3 a, Vector3 b, Vector3 c)
         {
             return Angle(a.magnitude, b.magnitude, c.magnitude);
+        }
+
+        public static T GetPrivateField<T>(this object instance, string fieldname)
+        {
+            BindingFlags flag = BindingFlags.Instance | BindingFlags.NonPublic;
+            Type type = instance.GetType();
+            FieldInfo field = type.GetField(fieldname, flag);
+            return (T) field.GetValue(instance);
         }
 
         #region backup

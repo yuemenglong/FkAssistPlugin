@@ -35,6 +35,7 @@
   <ItemGroup>
     <Compile Include="BaseMgr.cs" />
     <Compile Include="Callback.cs" />
+    <Compile Include="DynamicProxy.cs" />
     <Compile Include="FKAssist.cs" />
     <Compile Include="FkAssistPlugin.cs" />
     <Compile Include="IBone.cs" />

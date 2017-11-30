@@ -39,13 +39,6 @@ namespace FkAssistPlugin
 
         public void OnUpdate()
         {
-            if (Input.GetKeyDown(KeyCode.A))
-            {
-                Logger.Log("Plugin A");
-            }
-            if (Input.GetKeyDown(KeyCode.S))
-            {
-            }
         }
 
         public void OnFixedUpdate()

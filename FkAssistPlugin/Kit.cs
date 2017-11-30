@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Diagnostics;
+using System.IO;
 using System.Linq;
 using System.Reflection;
 using System.Security;
@@ -8,7 +9,7 @@ using UnityEngine;
 
 namespace FkAssistPlugin
 {
-    static class Kit
+    public static class Kit
     {
         public static string GetGameObjectPath(GameObject obj)
         {
@@ -104,7 +105,69 @@ namespace FkAssistPlugin
             return (T) field.GetValue(instance);
         }
 
+        public static Assembly LoadAssembly(String path)
+        {
+            using (FileStream fs = File.OpenRead(path))
+            {
+                var buffer = new Byte[fs.Length];
+                var pos = 0;
+                while (pos < fs.Length - 1)
+                {
+                    pos += fs.Read(buffer, pos, (int) (fs.Length - pos));
+                }
+                var assembly = Assembly.Load(buffer);
+                return assembly;
+            }
+        }
+
         #region backup
+        
+//        
+//        public OCIChar FindOciChar()
+//        {
+//            foreach (var objectCtrlInfo in Context.Studio().dicInfo.Values)
+//            {
+//                if (objectCtrlInfo.kind == 0)
+//                {
+//                    Logger.Log("has kind = 0");
+//                    OCIChar ocichar = objectCtrlInfo as OCIChar;
+//                    if (ocichar == null)
+//                    {
+//                        Logger.Log("ocichar is null");
+//                    }
+//                    else if (ocichar.charInfo == null)
+//                    {
+//                        Logger.Log("ocichar info is null");
+//                    }
+//                    else
+//                    {
+//                        return ocichar;
+//                    }
+//                }
+//            }
+//            return null;
+//        }
+
+
+//        public GuideObject GetTargetObject()
+//        {
+//            GuideObject guideObject = Singleton<GuideObjectManager>.Instance.operationTarget;
+//            if ((UnityEngine.Object) guideObject == (UnityEngine.Object) null)
+//                guideObject = Singleton<GuideObjectManager>.Instance.selectObject;
+//            return guideObject;
+//        }
+//
+//        public ObjectCtrlInfo GetFirstObject()
+//        {
+//            Studio.Studio instance = Singleton<Studio.Studio>.Instance;
+//            if ((UnityEngine.Object) instance != (UnityEngine.Object) null)
+//            {
+//                ObjectCtrlInfo[] selectObjectCtrl = instance.treeNodeCtrl.selectObjectCtrl;
+//                if (selectObjectCtrl != null && selectObjectCtrl.Length != 0)
+//                    return selectObjectCtrl[0];
+//            }
+//            return (ObjectCtrlInfo) null;
+//        }
 
         public static void backup()
         {

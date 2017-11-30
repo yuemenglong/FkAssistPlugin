@@ -15,36 +15,7 @@ namespace FkAssistPlugin
 
         public override void Init()
         {
-//            try
-//            {
-//                Patch.Init();
-//                Logger.Log(Kit.StackTrace());
-//            }
-//            catch (Exception ex)
-//            {
-//                Logger.Log("Exception: " + ex);
-//            }
-            Logger.Log("FkAssist");
-        }
-
-        public GuideObject GetTargetObject()
-        {
-            GuideObject guideObject = Singleton<GuideObjectManager>.Instance.operationTarget;
-            if ((UnityEngine.Object) guideObject == (UnityEngine.Object) null)
-                guideObject = Singleton<GuideObjectManager>.Instance.selectObject;
-            return guideObject;
-        }
-
-        public ObjectCtrlInfo GetFirstObject()
-        {
-            Studio.Studio instance = Singleton<Studio.Studio>.Instance;
-            if ((UnityEngine.Object) instance != (UnityEngine.Object) null)
-            {
-                ObjectCtrlInfo[] selectObjectCtrl = instance.treeNodeCtrl.selectObjectCtrl;
-                if (selectObjectCtrl != null && selectObjectCtrl.Length != 0)
-                    return selectObjectCtrl[0];
-            }
-            return (ObjectCtrlInfo) null;
+            Logger.Log("FkAssistPlugin Init");
         }
 
         private void Rotate(float z, float y, float x)
@@ -76,31 +47,6 @@ namespace FkAssistPlugin
                     guideObject.changeAmount.rot = guideObject.transformTarget.localEulerAngles;
                 }
             }
-        }
-
-        public OCIChar FindOciChar()
-        {
-            foreach (var objectCtrlInfo in Context.Studio().dicInfo.Values)
-            {
-                if (objectCtrlInfo.kind == 0)
-                {
-                    Logger.Log("has kind = 0");
-                    OCIChar ocichar = objectCtrlInfo as OCIChar;
-                    if (ocichar == null)
-                    {
-                        Logger.Log("ocichar is null");
-                    }
-                    else if (ocichar.charInfo == null)
-                    {
-                        Logger.Log("ocichar info is null");
-                    }
-                    else
-                    {
-                        return ocichar;
-                    }
-                }
-            }
-            return null;
         }
 
         private void FinishRotate()
@@ -141,22 +87,6 @@ namespace FkAssistPlugin
                 }
             }
             return dictionary;
-        }
-
-        private void OnGUI()
-        {
-//            Kit.GuiButton(Vector3.zero, "text");
-//            if (Input.GetKey(KeyCode.KeypadEnter))
-//            {
-////                foreach (var ociChar in Context.Characters())
-////                {
-////                    ociChar.listBones.ForEach(b => { Kit.GuiButton(b.guideObject.transformTarget.position, "K"); });
-////                }
-//                foreach (var ociChar in Context.Characters())
-//                {
-//                    ociChar.listBones.ForEach(b => { Kit.GuiButton(b.guideObject.transformTarget.position, "K"); });
-//                }
-//            }
         }
 
         private void Update()

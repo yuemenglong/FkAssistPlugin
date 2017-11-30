@@ -71,7 +71,7 @@ namespace FkAssistPlugin
             return new Vector3(screen.x, Screen.height - screen.y, screen.z);
         }
 
-        public static void GuiButton(Vector3 world, String text, int size = 25, Callback cb = null)
+        public static void GuiButton(Vector3 world, String text, int size = 25, Action action = null)
         {
             var height = size;
             var width = size * text.Length;
@@ -79,9 +79,9 @@ namespace FkAssistPlugin
             var rect = new Rect(screen.x - width / 2f, Screen.height - screen.y - height / 2f, width, height);
             if (screen.z > 0f && GUI.Button(rect, text))
             {
-                if (cb != null)
+                if (action != null)
                 {
-                    cb.callback();
+                    action();
                 }
             }
         }

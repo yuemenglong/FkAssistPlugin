@@ -9,8 +9,8 @@ namespace FkAssistPlugin
 {
     public class FkAssist : BaseMgr<FkAssist>
     {
-        private int _counter = 0;
-        private Dictionary<int, Vector3> _oldRot = null;
+        private int _counter;
+        private Dictionary<int, Vector3> _oldRot;
         private Dictionary<int, GuideObject> _targets = new Dictionary<int, GuideObject>();
 
         public override void Init()

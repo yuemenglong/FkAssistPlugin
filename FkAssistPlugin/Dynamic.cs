@@ -4,6 +4,7 @@ using System.IO;
 using System.Reflection;
 using Microsoft.CSharp;
 using Studio;
+using UnityEngine;
 
 namespace FkAssistPlugin
 {
@@ -30,7 +31,27 @@ namespace FkAssistPlugin
 
         public static void DynamicProc()
         {
-            //            var go = Context.GuideObjectManager().selectObject;
+            var go = Context.GuideObjectManager().selectObject;
+            if (go == null)
+            {
+                return;
+            }
+            if (go.transformTarget.IsHand())
+            {
+                Logger.Log(go.transformTarget);
+                Logger.Log(go.transformTarget.parent);
+                Logger.Log(go.transformTarget.parent.parent);
+                var parent = go.transformTarget.parent;
+                parent.Rotate(10, 10, 10, Space.Self);
+                parent.GuideObject().changeAmount.rot = parent.localEulerAngles;
+                parent = parent.parent;
+                parent.Rotate(10, 10, 10, Space.Self);
+                parent.GuideObject().changeAmount.rot = parent.localEulerAngles;
+            }
+            else
+            {
+                Logger.Log(go.transformTarget);
+            }
 //            Logger.Log(go.gameObject);
 ////[FkPlugin] /CommonSpace/chaF00/BodyTop/p_cf_anim/cf_J_Root/cf_N_height/cf_J_Hips/cf_J_Spine01/cf_J_Spine02/cf_J_Spine03/cf_J_ShoulderIK_L/cf_J_Shoulder_L/cf_J_ArmUp00_L/cf_J_ArmLow01_L/cf_J_Hand_L [-0.5565164,1.331407,-0.03151792]
 ////[FkPlugin] /CommonSpace/chaF00/BodyTop/p_cf_anim/cf_J_Root/cf_N_height/cf_J_Hips/cf_J_Spine01/cf_J_Spine02/cf_J_Spine03/cf_J_ShoulderIK_L/cf_J_Shoulder_L/cf_J_ArmUp00_L/cf_J_ArmLow01_L [-0.3511997,1.331407,-0.03151793]

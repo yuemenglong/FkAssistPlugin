@@ -34,11 +34,11 @@
   </PropertyGroup>
   <ItemGroup>
     <Compile Include="BaseMgr.cs" />
-    <Compile Include="Callback.cs" />
+    <Compile Include="BoneHelper.cs" />
     <Compile Include="Dynamic.cs" />
     <Compile Include="FKAssist.cs" />
     <Compile Include="FkAssistPlugin.cs" />
-    <Compile Include="IBone.cs" />
+    <Compile Include="Bone.cs" />
     <Compile Include="ObjMoveRotAssistMgr.cs" />
     <Compile Include="Context.cs" />
     <Compile Include="Kit.cs" />

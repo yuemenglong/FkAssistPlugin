@@ -74,15 +74,6 @@ namespace FkAssistPlugin
                 Dynamic.DynamicProc();
                 return;
             }
-            if (Input.GetMouseButtonDown(2))
-            {
-                OCIChar.BoneInfo bone = null;
-                foreach (var ociChar in Context.Characters())
-                {
-                    ociChar.listBones.ForEach(b => { });
-                }
-            }
-
             try
             {
                 InnerUpdate();
@@ -113,6 +104,7 @@ namespace FkAssistPlugin
             {
                 Reset();
             }
+            //
             else if (Input.GetKey(KeyCode.E) && Input.GetMouseButton(0))
             {
                 Rotate(angle, 0, 0);

@@ -24,6 +24,24 @@ namespace FkAssistPlugin
                    || name == "cm_J_Foot01_L"
                    || name == "cm_J_Foot01_R";
         }
+        
+        public static bool IsArm(this GuideObject go)
+        {
+            var name = go.transformTarget.name;
+            return name == "cf_J_ArmUp00_L"
+                   || name == "cf_J_ArmUp00_R"
+                   || name == "cm_J_ArmUp00_L"
+                   || name == "cm_J_ArmUp00_R";
+        }
+        
+        public static bool IsLeg(this GuideObject go)
+        {
+            var name = go.transformTarget.name;
+            return name == "cf_J_LegUp00_L"
+                   || name == "cf_J_LegUp00_R"
+                   || name == "cm_J_LegUp00_L"
+                   || name == "cm_J_LegUp00_R";
+        }
 
         public static bool IsLimb(this GuideObject go)
         {
@@ -53,7 +71,7 @@ namespace FkAssistPlugin
             }
         }
 
-        private static BoneRotater BoneRotater(GuideObject go)
+        private static LimbBoneRotater BoneRotater(GuideObject go)
         {
             if (go.IsHand() || go.transformTarget.name.StartsWith("cm_"))
             {
@@ -62,7 +80,7 @@ namespace FkAssistPlugin
                 var tpp = tp.parent;
                 var root = new TransformBone(tpp, tp);
                 var end = new TransformBone(tp, t);
-                var rotater = new BoneRotater(root, end);
+                var rotater = new LimbBoneRotater(root, end);
                 return rotater;
             }
             else
@@ -72,7 +90,7 @@ namespace FkAssistPlugin
                 var tpp = tp.parent;
                 var root = new TransformBone(tpp, tp);
                 var end = new TransformBone(tp, t);
-                var rotater = new BoneRotater(root, end);
+                var rotater = new LimbBoneRotater(root, end);
                 return rotater; 
             }
         }

@@ -13,12 +13,12 @@ namespace FkAssistPlugin
         void RotateAround(Vector3 point, Vector3 axis, float angle);
     }
 
-    public class BoneRotater
+    public class LimbBoneRotater
     {
         private IBone _root;
         private IBone _end;
 
-        public BoneRotater(IBone root, IBone end)
+        public LimbBoneRotater(IBone root, IBone end)
         {
             _root = root;
             _end = end;
@@ -39,14 +39,46 @@ namespace FkAssistPlugin
             return true;
         }
 
+        public bool Fix()
+        {
+            var vec = _root.Vector + _end.Vector;
+            if (vec.magnitude < _root.Vector.magnitude + _end.Vector.magnitude)
+            {
+                // not need fix
+                return false;
+            }
+            var go = Context.DicGuideObject()[_root.Transform];
+            if (go == null || !(go.IsArm() || go.IsLeg()))
+            {
+                return false;
+            }
+            if (go.IsArm() && go.transformTarget.name.Contains("_L"))
+            {
+                _end.Rotate(_end.Transform.up, 1f);
+            }
+            else if (go.IsArm() && go.transformTarget.name.Contains("_R"))
+            {
+                _end.Rotate(_end.Transform.up, -1f);
+            }
+            else if (go.IsLeg())
+            {
+                _end.Rotate(Vector3.left, -1f);
+            }
+            return true;
+        }
+
         public void Forward(float value)
         {
-            if (!IsValid(value))
+            var vec = _root.Vector + _end.Vector;
+            var target = vec.magnitude + value;
+            if (target >= _root.Vector.magnitude + _end.Vector.magnitude)
             {
                 return;
             }
-            var vec = _root.Vector + _end.Vector;
-            var target = vec.magnitude + value;
+            if (Fix())
+            {
+                return;
+            }
             {
                 var old = Kit.Angle(_root.Vector.magnitude, vec.magnitude, _end.Vector.magnitude);
                 var now = Kit.Angle(_root.Vector.magnitude, target, _end.Vector.magnitude);

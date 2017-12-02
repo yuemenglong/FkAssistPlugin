@@ -66,33 +66,15 @@ namespace FkAssistPlugin
         {
             var target = pos - _root.Transform.position;
             var max = _root.Vector.magnitude + _end.Vector.magnitude;
-            Logger.Log("Target", target);
-            Logger.Log("Max", max);
-            Logger.Log("Between Angel", Angel);
             if (max <= target.magnitude)
             {
                 Logger.Log("Reach Max");
                 return;
             }
-            {
-                //1. forward
-                var gap = target.magnitude - Vector.magnitude;
-                Forward(gap);
-                Logger.Log(gap);
-            }
-            {
-                //2. normals
-                var norm = Vector3.Cross(_root.Vector, _end.Vector);
-                var angel = 90.0f - Vector3.Angle(norm, target);
-                Logger.Log(angel);
-                Normals(angel);
-            }
-            {
-                //3. tangent
-                var angel = Vector3.Angle(Vector, target);
-                Logger.Log(angel);
-                Tangent(angel);
-            }
+            var angle = Vector3.Angle(Vector, target);
+            var axis = Vector3.Cross(Vector, target).normalized;
+            _root.RotateAround(_root.Transform.position, axis, angle);
+            Forward(target.magnitude - Vector.magnitude);
         }
 
         public void Forward(float value)

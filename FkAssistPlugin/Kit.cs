@@ -51,7 +51,11 @@ namespace FkAssistPlugin
 
         public static String VecStr(Vector3 v)
         {
-            return String.Format("[{0},{1},{2}]", v.x, v.y, v.z);
+            var xa = Vector3.Angle(new Vector3(1, 0, 0), v);
+            var ya = Vector3.Angle(new Vector3(0, 1, 0), v);
+            var za = Vector3.Angle(new Vector3(0, 0, 1), v);
+            return String.Format("({0,6:F3}, {1,6:F3}, {2,6:F3}) <{3,5:F2}, {4,5:F2}, {5,5:F2}> [{6,6:F3}]",
+                v.x, v.y, v.z, xa, ya, za, v.magnitude);
         }
 
         public static String StackTrace()
@@ -121,7 +125,7 @@ namespace FkAssistPlugin
         }
 
         #region backup
-        
+
 //        
 //        public OCIChar FindOciChar()
 //        {

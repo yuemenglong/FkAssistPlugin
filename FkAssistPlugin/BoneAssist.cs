@@ -114,5 +114,20 @@ namespace FkAssistPlugin
         {
             LimbBoneRotater(go).Normals(angle);
         }
+        
+        public static void MoveEndX(this GuideObject go, float dist)
+        {
+            LimbBoneRotater(go).MoveEndTo(go.transformTarget.position + new Vector3(dist, 0, 0));
+        }
+        
+        public static void MoveEndY(this GuideObject go, float dist)
+        {
+            LimbBoneRotater(go).MoveEndTo(go.transformTarget.position + new Vector3(0, dist, 0));
+        }
+        
+        public static void MoveEndZ(this GuideObject go, float dist)
+        {
+            LimbBoneRotater(go).MoveEndTo(go.transformTarget.position + new Vector3(0, 0, dist));
+        }
     }
 }

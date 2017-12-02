@@ -168,6 +168,33 @@ namespace FkAssistPlugin
                 BoneAssist.Revolution(go, -angle);
             }
             //
+            else if (Input.GetKey(KeyCode.G) && Input.GetMouseButton(0) && isLimb)
+            {
+                BoneAssist.MoveEndX(go, dist);
+            }
+            else if (Input.GetKey(KeyCode.G) && Input.GetMouseButton(1) && isLimb)
+            {
+                BoneAssist.MoveEndX(go, -dist);
+            }
+            //
+            else if (Input.GetKey(KeyCode.Y) && Input.GetMouseButton(0) && isLimb)
+            {
+                BoneAssist.MoveEndY(go, dist);
+            }
+            else if (Input.GetKey(KeyCode.Y) && Input.GetMouseButton(1) && isLimb)
+            {
+                BoneAssist.MoveEndY(go, -dist);
+            }
+            //
+            else if (Input.GetKey(KeyCode.H) && Input.GetMouseButton(0) && isLimb)
+            {
+                BoneAssist.MoveEndZ(go, dist);
+            }
+            else if (Input.GetKey(KeyCode.H) && Input.GetMouseButton(1) && isLimb)
+            {
+                BoneAssist.MoveEndZ(go, -dist);
+            }
+            //
             else
             {
                 if (_counter > 1)

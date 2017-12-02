@@ -24,21 +24,6 @@ namespace FkAssistPlugin
             _end = end;
         }
 
-        public bool IsValid(float dist)
-        {
-            var vec = _root.Vector + _end.Vector;
-            if (vec.magnitude >= _root.Vector.magnitude + _end.Vector.magnitude)
-            {
-                return false;
-            }
-            var target = vec.magnitude + dist;
-            if (target >= _root.Vector.magnitude + _end.Vector.magnitude)
-            {
-                return false;
-            }
-            return true;
-        }
-
         public bool Fix()
         {
             var vec = _root.Vector + _end.Vector;
@@ -65,6 +50,49 @@ namespace FkAssistPlugin
                 _end.Rotate(Vector3.left, -1f);
             }
             return true;
+        }
+
+        public Vector3 Vector
+        {
+            get { return _root.Vector + _end.Vector; }
+        }
+
+        public float Angel
+        {
+            get { return 180.0f - Vector3.Angle(_root.Vector, _end.Vector); }
+        }
+
+        public void MoveEndTo(Vector3 pos)
+        {
+            var target = pos - _root.Transform.position;
+            var max = _root.Vector.magnitude + _end.Vector.magnitude;
+            Logger.Log("Target", target);
+            Logger.Log("Max", max);
+            Logger.Log("Between Angel", Angel);
+            if (max <= target.magnitude)
+            {
+                Logger.Log("Reach Max");
+                return;
+            }
+            {
+                //1. forward
+                var gap = target.magnitude - Vector.magnitude;
+                Forward(gap);
+                Logger.Log(gap);
+            }
+            {
+                //2. normals
+                var norm = Vector3.Cross(_root.Vector, _end.Vector);
+                var angel = 90.0f - Vector3.Angle(norm, target);
+                Logger.Log(angel);
+                Normals(angel);
+            }
+            {
+                //3. tangent
+                var angel = Vector3.Angle(Vector, target);
+                Logger.Log(angel);
+                Tangent(angel);
+            }
         }
 
         public void Forward(float value)

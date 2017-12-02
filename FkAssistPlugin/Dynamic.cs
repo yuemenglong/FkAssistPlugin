@@ -39,22 +39,9 @@ namespace FkAssistPlugin
             }
             if (go.IsHand())
             {
-//                Logger.Log(go.transformTarget);
-//                Logger.Log(go.transformTarget.parent);
-//                Logger.Log(go.transformTarget.parent.parent);
-//                var parent = go.transformTarget.parent;
-//                parent.Rotate(10, 10, 10, Space.Self);
-//                parent.GuideObject().changeAmount.rot = parent.localEulerAngles;
-//                parent = parent.parent;
-//                parent.Rotate(10, 10, 10, Space.Self);
-//                parent.GuideObject().changeAmount.rot = parent.localEulerAngles;
-                var t = go.transformTarget;
-                var tp = t.parent;
-                var tpp = tp.parent;
-                var root = new TransformBone(tpp, tp);
-                var end = new TransformBone(tp, t);
-                var assist = new LimbBoneRotater(root, end);
-                assist.Forward(0.01f);
+                Logger.Log("Is Hand");
+                var bone = BoneAssist.LimbBoneRotater(go);
+                bone.MoveEndTo(go.transformTarget.position + new Vector3(0, 0, 0.004f));
             }
             else
             {

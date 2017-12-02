@@ -71,7 +71,7 @@ namespace FkAssistPlugin
             }
         }
 
-        private static LimbBoneRotater BoneRotater(GuideObject go)
+        public static LimbBoneRotater LimbBoneRotater(GuideObject go)
         {
             if (go.IsHand() || go.transformTarget.name.StartsWith("cm_"))
             {
@@ -97,22 +97,22 @@ namespace FkAssistPlugin
 
         public static void Forward(this GuideObject go, float dist)
         {
-            BoneRotater(go).Forward(dist);
+            LimbBoneRotater(go).Forward(dist);
         }
 
         public static void Revolution(this GuideObject go, float angle)
         {
-            BoneRotater(go).Revolution(angle);
+            LimbBoneRotater(go).Revolution(angle);
         }
 
         public static void Tangent(this GuideObject go, float angle)
         {
-            BoneRotater(go).Tangent(angle);
+            LimbBoneRotater(go).Tangent(angle);
         }
 
         public static void Normals(this GuideObject go, float angle)
         {
-            BoneRotater(go).Normals(angle);
+            LimbBoneRotater(go).Normals(angle);
         }
     }
 }

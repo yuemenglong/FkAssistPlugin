@@ -40,6 +40,11 @@ namespace FkAssistPlugin
             return Singleton<UndoRedoManager>.Instance;
         }
 
+        public static Camera MainCamera()
+        {
+            return Studio().cameraCtrl.mainCmaera;
+        }
+
         public static OCIChar[] Characters()
         {
             var list = new List<OCIChar>();

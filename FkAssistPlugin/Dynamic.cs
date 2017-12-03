@@ -1,13 +1,7 @@
 ﻿using System;
-using System.CodeDom.Compiler;
 using System.IO;
 using System.Reflection;
-using System.Security;
-using ADVSystem;
 using FkAssistPlugin.HSStudioNEOAddno;
-using Microsoft.CSharp;
-using RootMotion.FinalIK;
-using Studio;
 using UnityEngine;
 
 namespace FkAssistPlugin
@@ -49,10 +43,19 @@ namespace FkAssistPlugin
                     Logger.Log("Not Hit");
                 }
                 var go = Context.GuideObjectManager().selectObject;
-                if (go != null)
+//                if (go != null && go.IsLimb())
                 {
-                    BoneMarker.Create(go.transformTarget, null);
+//                    var screenPoint = Camera.main.WorldToScreenPoint(go.transformTarget.position);
+//                    Logger.Log("ScreenPoint", screenPoint);
+//                    screenPoint += new Vector3(100f, 0, 0);
+//                    var worldPoint = Camera.main.ScreenToWorldPoint(screenPoint);
+//                    Logger.Log("WorldPoint", worldPoint);
+                    var sphere = GameObject.CreatePrimitive(PrimitiveType.Sphere);
+                    sphere.transform.position = Vector3.zero;
+                    sphere.transform.localScale = new Vector3(0.01f, 0.01f, 0.01f);
+                    var marker = BoneMarker.Create(sphere.transform);
                     BoneMarkerMgr.Instance.markerEnabled = true;
+                    marker.OnDrag = (m, start, end) => { sphere.transform.position = end; };
                 }
             }
             catch (Exception e)

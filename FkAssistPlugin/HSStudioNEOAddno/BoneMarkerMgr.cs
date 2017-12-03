@@ -18,12 +18,12 @@ namespace FkAssistPlugin.HSStudioNEOAddno
             }
         }
 
-        public List<BoneMarker> CreateFor(List<Transform> transforms, Action<BoneMarker> onClick)
+        public List<BoneMarker> CreateFor(List<Transform> transforms)
         {
             this.Clear();
             foreach (Transform transform in transforms)
             {
-                BoneMarker boneMarker = BoneMarker.Create(transform, onClick);
+                BoneMarker boneMarker = BoneMarker.Create(transform);
                 boneMarker.gameObject.SetActive(this.markerEnabled);
                 this.markers.Add(boneMarker);
             }

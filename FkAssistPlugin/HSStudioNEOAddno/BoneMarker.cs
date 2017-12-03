@@ -9,9 +9,11 @@ namespace FkAssistPlugin.HSStudioNEOAddno
         public Color defaultColor = new Color(0.8f, 0.8f, 0.0f, 0.4f);
         public Color hoverColor = new Color(1f, 0.0f, 0.0f, 0.4f);
         public Action<BoneMarker> OnClick;
+        public Action<BoneMarker, Vector3, Vector3> OnDrag;
         private MeshRenderer renderer;
+        private Vector3? _mouseStartPos;
 
-        public static BoneMarker Create(Transform parent, Action<BoneMarker> onClick)
+        public static BoneMarker Create(Transform parent)
         {
             GameObject primitive = GameObject.CreatePrimitive(PrimitiveType.Sphere);
             string str = "_BoneMarker_" + parent.name;
@@ -30,7 +32,6 @@ namespace FkAssistPlugin.HSStudioNEOAddno
             component.material = material;
             component.receiveShadows = false;
             component.shadowCastingMode = ShadowCastingMode.Off;
-            boneMarker.OnClick = onClick;
             return boneMarker;
         }
 
@@ -65,15 +66,41 @@ namespace FkAssistPlugin.HSStudioNEOAddno
 //            if (this.OnClick == null)
 //                return;
 //            this.OnClick(this);
-            Logger.Log("MouseDown", Input.mousePosition);
+//            Logger.Log("MouseDown", Input.mousePosition);
+            _mouseStartPos = Input.mousePosition;
         }
-        
+
+//        private void OnMouseMove()
+//        {
+//            if (_mouseStartPos == null)
+//            {
+//                return;
+//            }
+//            if (OnDrag == null)
+//            {
+//                return;
+//            }
+//            var mouseEndPos = Input.mousePosition;
+//            var screenZ = Context.MainCamera().WorldToScreenPoint(transform.position).z;
+//            var screenStart = _mouseStartPos.Value;
+//            screenStart.z = screenZ;
+//            var screenEnd = mouseEndPos;
+//            screenEnd.z = screenZ;
+//            var worldStart = Context.MainCamera().ScreenToWorldPoint(screenStart);
+//            var worldEnd = Context.MainCamera().ScreenToWorldPoint(screenEnd);
+//            var end = transform.position + (worldEnd - worldStart);
+//            var start = _mouseStartPos.Value;
+//            _mouseStartPos = mouseEndPos;
+//            OnDrag(this, start, end);
+//        }
+
         private void OnMouseUp()
         {
 //            if (this.OnClick == null)
 //                return;
 //            this.OnClick(this);
-            Logger.Log("MouseUp", Input.mousePosition);
+//            Logger.Log("MouseUp", Input.mousePosition);
+            _mouseStartPos = null;
         }
     }
 }

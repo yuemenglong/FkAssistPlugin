@@ -1,4 +1,5 @@
 ﻿using System;
+using RootMotion.Demos;
 using UnityEngine;
 using UnityEngine.Rendering;
 
@@ -9,9 +10,11 @@ namespace FkAssistPlugin.HSStudioNEOAddno
         public Color defaultColor = new Color(0.8f, 0.8f, 0.0f, 0.4f);
         public Color hoverColor = new Color(1f, 0.0f, 0.0f, 0.4f);
         public Action<BoneMarker> OnClick;
-        public Action<BoneMarker, Vector3, Vector3> OnDrag;
+        public Action<BoneMarker> OnDrag;
         private MeshRenderer renderer;
-        private Vector3? _mouseStartPos;
+        public Vector3 MouseStartPos;
+        public Vector3 MouseEndPos;
+        private bool _isDraged;
 
         public static BoneMarker Create(Transform parent)
         {
@@ -67,32 +70,22 @@ namespace FkAssistPlugin.HSStudioNEOAddno
 //                return;
 //            this.OnClick(this);
 //            Logger.Log("MouseDown", Input.mousePosition);
-            _mouseStartPos = Input.mousePosition;
+            MouseStartPos = Input.mousePosition;
+            _isDraged = true;
         }
 
-//        private void OnMouseMove()
-//        {
-//            if (_mouseStartPos == null)
-//            {
-//                return;
-//            }
-//            if (OnDrag == null)
-//            {
-//                return;
-//            }
-//            var mouseEndPos = Input.mousePosition;
-//            var screenZ = Context.MainCamera().WorldToScreenPoint(transform.position).z;
-//            var screenStart = _mouseStartPos.Value;
-//            screenStart.z = screenZ;
-//            var screenEnd = mouseEndPos;
-//            screenEnd.z = screenZ;
-//            var worldStart = Context.MainCamera().ScreenToWorldPoint(screenStart);
-//            var worldEnd = Context.MainCamera().ScreenToWorldPoint(screenEnd);
-//            var end = transform.position + (worldEnd - worldStart);
-//            var start = _mouseStartPos.Value;
-//            _mouseStartPos = mouseEndPos;
-//            OnDrag(this, start, end);
-//        }
+        private void OnMouseDrag()
+        {
+            if (!_isDraged || OnDrag == null)
+            {
+                return;
+            }
+            MouseEndPos = Input.mousePosition;
+            OnDrag(this);
+            MouseStartPos = MouseEndPos;
+        }
+
+
 
         private void OnMouseUp()
         {
@@ -100,7 +93,7 @@ namespace FkAssistPlugin.HSStudioNEOAddno
 //                return;
 //            this.OnClick(this);
 //            Logger.Log("MouseUp", Input.mousePosition);
-            _mouseStartPos = null;
+            _isDraged = false;
         }
     }
 }

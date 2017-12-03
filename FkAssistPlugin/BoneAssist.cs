@@ -24,7 +24,7 @@ namespace FkAssistPlugin
                    || name == "cm_J_Foot01_L"
                    || name == "cm_J_Foot01_R";
         }
-        
+
         public static bool IsArm(this GuideObject go)
         {
             var name = go.transformTarget.name;
@@ -33,7 +33,7 @@ namespace FkAssistPlugin
                    || name == "cm_J_ArmUp00_L"
                    || name == "cm_J_ArmUp00_R";
         }
-        
+
         public static bool IsLeg(this GuideObject go)
         {
             var name = go.transformTarget.name;
@@ -61,7 +61,7 @@ namespace FkAssistPlugin
                 guideObject.changeAmount.rot = guideObject.transformTarget.localEulerAngles;
             }
         }
-        
+
         public static void Reset(this GuideObject guideObject)
         {
             if (guideObject.enableRot)
@@ -91,7 +91,7 @@ namespace FkAssistPlugin
                 var root = new TransformBone(tpp, tp);
                 var end = new TransformBone(tp, t);
                 var rotater = new LimbBoneRotater(root, end);
-                return rotater; 
+                return rotater;
             }
         }
 
@@ -114,20 +114,33 @@ namespace FkAssistPlugin
         {
             LimbBoneRotater(go).Normals(angle);
         }
-        
+
         public static void MoveEndX(this GuideObject go, float dist)
         {
             LimbBoneRotater(go).MoveEndTo(go.transformTarget.position + new Vector3(dist, 0, 0));
         }
-        
+
         public static void MoveEndY(this GuideObject go, float dist)
         {
             LimbBoneRotater(go).MoveEndTo(go.transformTarget.position + new Vector3(0, dist, 0));
         }
-        
+
         public static void MoveEndZ(this GuideObject go, float dist)
         {
             LimbBoneRotater(go).MoveEndTo(go.transformTarget.position + new Vector3(0, 0, dist));
+        }
+
+        public static Vector3 MapScreenVec(Vector3 screenVec, Vector3 pos)
+        {
+            var screenZ = Context.MainCamera().WorldToScreenPoint(pos).z;
+            var screenStart = Vector3.zero;
+            screenStart.z = screenZ;
+            var screenEnd = screenVec;
+            screenEnd.z = screenZ;
+            var worldStart = Context.MainCamera().ScreenToWorldPoint(screenStart);
+            var worldEnd = Context.MainCamera().ScreenToWorldPoint(screenEnd);
+            var end = pos + (worldEnd - worldStart);
+            return end;
         }
     }
 }

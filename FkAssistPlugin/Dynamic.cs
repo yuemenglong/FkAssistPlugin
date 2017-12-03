@@ -55,7 +55,16 @@ namespace FkAssistPlugin
                     sphere.transform.localScale = new Vector3(0.01f, 0.01f, 0.01f);
                     var marker = BoneMarker.Create(sphere.transform);
                     BoneMarkerMgr.Instance.markerEnabled = true;
-                    marker.OnDrag = (m, start, end) => { sphere.transform.position = end; };
+                    marker.OnDrag = (m) =>
+                    {
+                        var screenVec = m.MouseEndPos-m.MouseStartPos;
+                        Logger.Log("Screen Vec", screenVec);
+                        var pos = BoneAssist.MapScreenVec(screenVec, sphere.transform.position);
+                        Logger.Log("Trans From", sphere.transform.position);
+                        Logger.Log("Trans To", pos);
+                        sphere.transform.position = pos;
+                    };
+
                 }
             }
             catch (Exception e)

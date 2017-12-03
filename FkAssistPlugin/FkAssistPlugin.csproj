@@ -39,6 +39,9 @@
     <Compile Include="FKAssist.cs" />
     <Compile Include="FkAssistPlugin.cs" />
     <Compile Include="Bone.cs" />
+    <Compile Include="HSStudioNEOAddno\BoneMarker.cs" />
+    <Compile Include="HSStudioNEOAddno\BoneMarkerMgr.cs" />
+    <Compile Include="HSStudioNEOAddno\ShaderUtil.cs" />
     <Compile Include="ObjMoveRotAssistMgr.cs" />
     <Compile Include="Context.cs" />
     <Compile Include="Kit.cs" />
@@ -80,6 +83,9 @@
     </Reference>
     <Reference Include="UnityEngine.UI, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null">
       <HintPath>..\Libs\UnityEngine.UI.dll</HintPath>
+    </Reference>
+    <Reference Include="UnityEngine.UI.Translation, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null">
+      <HintPath>..\Libs\UnityEngine.UI.Translation.dll</HintPath>
     </Reference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />

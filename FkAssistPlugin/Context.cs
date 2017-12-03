@@ -23,6 +23,18 @@ namespace FkAssistPlugin
             return GuideObjectManager().GetPrivateField<Dictionary<Transform, GuideObject>>("dicGuideObject");
         }
 
+////        protected Dictionary<Transform, Light> dicTransLight = new Dictionary<Transform, Light>();
+////        protected Dictionary<GuideObject, Light> dicGuideLight = new Dictionary<GuideObject, Light>();
+//        public static Dictionary<Transform, Light> DicTransLight()
+//        {
+//            return GuideObjectManager().GetPrivateField<Dictionary<Transform, Light>>("dicTransLight");
+//        }
+//        
+//        public static Dictionary<GuideObject, Light> DicGuideLight()
+//        {
+//            return GuideObjectManager().GetPrivateField<Dictionary<GuideObject, Light>>("dicGuideLight");
+//        }
+
         public static UndoRedoManager UndoRedoManager()
         {
             return Singleton<UndoRedoManager>.Instance;

@@ -12,13 +12,10 @@ namespace FkAssistPlugin.HSStudioNEOAddno
 
         public static BoneMarkerMgr Instance
         {
-            get
-            {
-                return BoneMarkerMgr._instance;
-            }
+            get { return BoneMarkerMgr._instance; }
         }
 
-        public List<BoneMarker> CreateFor(List<Transform> transforms)
+        public List<BoneMarker> CreateFor(Transform[] transforms)
         {
             this.Clear();
             foreach (Transform transform in transforms)

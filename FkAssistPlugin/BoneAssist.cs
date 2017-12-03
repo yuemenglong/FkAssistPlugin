@@ -130,15 +130,20 @@ namespace FkAssistPlugin
             LimbBoneRotater(go).MoveEndTo(go.transformTarget.position + new Vector3(0, 0, dist));
         }
 
+        public static void MoveEnd(this GuideObject go, Vector3 pos)
+        {
+            LimbBoneRotater(go).MoveEndTo(pos);
+        }
+
         public static Vector3 MapScreenVec(Vector3 screenVec, Vector3 pos)
         {
-            var screenZ = Context.MainCamera().WorldToScreenPoint(pos).z;
+            var screenZ = CameraMgr.MainCamera().WorldToScreenPoint(pos).z;
             var screenStart = Vector3.zero;
             screenStart.z = screenZ;
             var screenEnd = screenVec;
             screenEnd.z = screenZ;
-            var worldStart = Context.MainCamera().ScreenToWorldPoint(screenStart);
-            var worldEnd = Context.MainCamera().ScreenToWorldPoint(screenEnd);
+            var worldStart = CameraMgr.MainCamera().ScreenToWorldPoint(screenStart);
+            var worldEnd = CameraMgr.MainCamera().ScreenToWorldPoint(screenEnd);
             var end = pos + (worldEnd - worldStart);
             return end;
         }

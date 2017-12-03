@@ -72,6 +72,7 @@ namespace FkAssistPlugin.HSStudioNEOAddno
 //            Logger.Log("MouseDown", Input.mousePosition);
             MouseStartPos = Input.mousePosition;
             _isDraged = true;
+            CameraMgr.Lock();
         }
 
         private void OnMouseDrag()
@@ -94,6 +95,7 @@ namespace FkAssistPlugin.HSStudioNEOAddno
 //            this.OnClick(this);
 //            Logger.Log("MouseUp", Input.mousePosition);
             _isDraged = false;
+            CameraMgr.Unlock();
         }
     }
 }

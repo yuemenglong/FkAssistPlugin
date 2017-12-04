@@ -15,16 +15,6 @@ namespace FkAssistPlugin
             IsLock = false;
         }
 
-        private void LateUpdate()
-        {
-            if (IsLock && MainCamera().transform.position != LastPos)
-            {
-                Tracer.Log(MainCamera().transform.position);
-                MainCamera().transform.position = LastPos;
-//                MainCamera().transform.rotation = LastRot;
-            }
-        }
-
         public static void Lock()
         {
 //            CameraControl().NoCtrlCondition = () => true;

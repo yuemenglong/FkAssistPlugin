@@ -1,12 +1,22 @@
 ﻿using System;
 using System.Collections.Generic;
 using FkAssistPlugin.HSStudioNEOAddno;
+using Harmony;
 using IllusionPlugin;
 using UnityEngine;
 using Object = UnityEngine.Object;
 
 namespace FkAssistPlugin
 {
+    public class Test
+    {
+        public static bool pre()
+        {
+//            Logger.Log("Pre");
+            return false;
+        }
+    }
+
     public class FkPlugin : IEnhancedPlugin
     {
         HashSet<String> _set = new HashSet<string>();
@@ -15,6 +25,7 @@ namespace FkAssistPlugin
         public void OnApplicationStart()
         {
             Tracer.Log("OnApplicationStart");
+            PatchMgr.Init();
         }
 
         public void OnApplicationQuit()

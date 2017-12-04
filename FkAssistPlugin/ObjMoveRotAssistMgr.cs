@@ -56,7 +56,7 @@ namespace FkAssistPlugin
 
         private void Start()
         {
-            Logger.Log("Assist Start");
+            Tracer.Log("Assist Start");
 //      this.InitKey();
         }
 
@@ -102,7 +102,7 @@ namespace FkAssistPlugin
         {
             if (Input.GetKeyDown(KeyCode.A))
             {
-                Logger.Log("Assist A");
+                Tracer.Log("Assist A");
             }
         }
         

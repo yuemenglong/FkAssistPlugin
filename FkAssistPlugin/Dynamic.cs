@@ -43,7 +43,7 @@ namespace FkAssistPlugin
 //                    Logger.Log("Not Hit");
 //                }
                 var go = Context.GuideObjectManager().selectObject;
-                if (go != null && go.IsLimb())
+                if (go != null)
                 {
 //                    var screenPoint = Camera.main.WorldToScreenPoint(go.transformTarget.position);
 //                    Logger.Log("ScreenPoint", screenPoint);
@@ -63,7 +63,8 @@ namespace FkAssistPlugin
 //                        Logger.Log("Trans From", sphere.transform.position);
 //                        Logger.Log("Trans To", pos);
 //                        sphere.transform.position = pos;
-                        BoneAssist.MoveEnd(go, pos);
+//                        BoneAssist.MoveEnd(go, pos);
+                        go.MoveTo(pos);
                     };
                 }
                 else
@@ -73,7 +74,7 @@ namespace FkAssistPlugin
             }
             catch (Exception e)
             {
-                Logger.Log(e);
+                Tracer.Log(e);
             }
         }
 
@@ -104,7 +105,7 @@ namespace FkAssistPlugin
         public void Proc()
         {
             var length = Context.Characters().Length;
-            Logger.Log("Proc..", length);
+            Tracer.Log("Proc..", length);
         }
     }
 }

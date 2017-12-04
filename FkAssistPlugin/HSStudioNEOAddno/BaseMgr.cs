@@ -6,7 +6,7 @@
 
 using UnityEngine;
 
-namespace FkAssistPlugin
+namespace FkAssistPlugin.HSStudioNEOAddno
 {
     public class BaseMgr<T> : MonoBehaviour where T : MonoBehaviour
     {

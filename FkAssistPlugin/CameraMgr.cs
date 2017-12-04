@@ -1,18 +1,49 @@
 ﻿using System.Threading;
+using FkAssistPlugin.HSStudioNEOAddno;
 using UnityEngine;
 
 namespace FkAssistPlugin
 {
-    public static class CameraMgr
+    public class CameraMgr
     {
+        public static Vector3 LastPos { get; private set; }
+        public static Quaternion LastRot { get; private set; }
+        public static bool IsLock { get; private set; }
+
+        public CameraMgr()
+        {
+            IsLock = false;
+        }
+
+        private void LateUpdate()
+        {
+            if (IsLock && MainCamera().transform.position != LastPos)
+            {
+                Tracer.Log(MainCamera().transform.position);
+                MainCamera().transform.position = LastPos;
+//                MainCamera().transform.rotation = LastRot;
+            }
+        }
+
         public static void Lock()
         {
-            CameraControl().NoCtrlCondition = () => true;
+//            CameraControl().NoCtrlCondition = () => true;
+            LastPos = MainCamera().transform.position;
+            LastRot = MainCamera().transform.rotation;
+            IsLock = true;
+            Tracer.Log(LastPos);
+            Tracer.Log(LastRot);
         }
 
         public static void Unlock()
         {
-            CameraControl().NoCtrlCondition = () => false;
+//            CameraControl().NoCtrlCondition = () => false;
+            IsLock = false;
+        }
+
+        public static void Toggle()
+        {
+            IsLock = !IsLock;
         }
 
         public static CameraControl CameraControl()

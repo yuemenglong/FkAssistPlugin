@@ -68,7 +68,7 @@ namespace FkAssistPlugin
             var max = _root.Vector.magnitude + _end.Vector.magnitude;
             if (max <= target.magnitude)
             {
-                Logger.Log("Reach Max");
+                Tracer.Log("Reach Max");
                 return;
             }
             var angle = Vector3.Angle(Vector, target);

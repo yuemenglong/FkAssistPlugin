@@ -22,16 +22,16 @@ namespace FkAssistPlugin
         static void Prefix(PauseCtrl.FileInfo __instance, OCIChar _char)
         {
 //            _char.LoadAnime(this.group, this.category, this.no, this.normalizedTime);
-            Logger.Log("LoadAnime", __instance.group, __instance.category, __instance.no, __instance.normalizedTime);
-            Logger.Log("activeIK", __instance.activeIK.Length, __instance.enableIK);
-            Logger.Log("activeFK", __instance.activeFK.Length, __instance.enableFK);
-            Logger.Log("bones Length", _char.oiCharInfo.bones.Count);
+            Tracer.Log("LoadAnime", __instance.group, __instance.category, __instance.no, __instance.normalizedTime);
+            Tracer.Log("activeIK", __instance.activeIK.Length, __instance.enableIK);
+            Tracer.Log("activeFK", __instance.activeFK.Length, __instance.enableFK);
+            Tracer.Log("bones Length", _char.oiCharInfo.bones.Count);
             using (Dictionary<int, ChangeAmount>.Enumerator enumerator = __instance.dicFK.GetEnumerator())
             {
                 while (enumerator.MoveNext())
                 {
                     KeyValuePair<int, ChangeAmount> current = enumerator.Current;
-                    Logger.Log("Key", current.Key);
+                    Tracer.Log("Key", current.Key);
 //                    _char.oiCharInfo.bones[current.Key].changeAmount.Copy(current.Value, true, true, true);
                     
                 }

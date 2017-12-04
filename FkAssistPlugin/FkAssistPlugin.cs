@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using FkAssistPlugin.HSStudioNEOAddno;
 using IllusionPlugin;
 using UnityEngine;
 using Object = UnityEngine.Object;
@@ -13,17 +14,17 @@ namespace FkAssistPlugin
 
         public void OnApplicationStart()
         {
-            Logger.Log("OnApplicationStart");
+            Tracer.Log("OnApplicationStart");
         }
 
         public void OnApplicationQuit()
         {
-            Logger.Log("");
+            Tracer.Log("");
         }
 
         public void OnLevelWasLoaded(int level)
         {
-            Logger.Log("OnLevelWasLoaded, " + level);
+            Tracer.Log("OnLevelWasLoaded, " + level);
         }
 
         public void OnLevelWasInitialized(int level)
@@ -31,7 +32,7 @@ namespace FkAssistPlugin
             if (!((Object) Singleton<Studio.Studio>.Instance != (Object) null))
                 return;
             BaseMgr<FkAssist>.Install(new GameObject("FkPlugin"));
-            Logger.Log("OnLevelWasInitialized, " + level);
+            Tracer.Log("OnLevelWasInitialized, " + level);
         }
 
         public void OnUpdate()

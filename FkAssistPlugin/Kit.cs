@@ -39,7 +39,7 @@ namespace FkAssistPlugin
                 return new GameObject[] { };
             }
             var list = new List<GameObject>();
-            Logger.Log(GetGameObjectPathAndPos(obj), obj.transform.childCount + "");
+            Tracer.Log(GetGameObjectPathAndPos(obj), obj.transform.childCount + "");
             for (int i = 0; i < obj.transform.childCount; i++)
             {
                 var child = obj.transform.GetChild(i);
@@ -56,6 +56,12 @@ namespace FkAssistPlugin
             var za = Vector3.Angle(new Vector3(0, 0, 1), v);
             return String.Format("({0,6:F3}, {1,6:F3}, {2,6:F3}) <{3,5:F2}, {4,5:F2}, {5,5:F2}> [{6,6:F3}]",
                 v.x, v.y, v.z, xa, ya, za, v.magnitude);
+        }
+
+        public static String QuatStr(Quaternion q)
+        {
+            return String.Format("({0,6:F3}, {1,6:F3}, {2,6:F3}), {3,6:F3})",
+                q.w, q.x, q.y, q.z);
         }
 
         public static String StackTrace()

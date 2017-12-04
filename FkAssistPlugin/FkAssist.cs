@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using FkAssistPlugin.HSStudioNEOAddno;
 using IllusionUtility.GetUtility;
 using RootMotion.FinalIK;
 using Studio;
@@ -15,7 +16,7 @@ namespace FkAssistPlugin
 
         public override void Init()
         {
-            Logger.Log("FkAssistPlugin Init");
+            Tracer.Log("FkAssistPlugin Init");
         }
 
         private void Rotate(float z, float y, float x)
@@ -80,7 +81,7 @@ namespace FkAssistPlugin
             }
             catch (Exception e)
             {
-                Logger.Log(e);
+                Tracer.Log(e);
             }
         }
 
@@ -199,7 +200,7 @@ namespace FkAssistPlugin
             {
                 if (_counter > 1)
                 {
-                    Logger.Log("FinishRotate");
+                    Tracer.Log("FinishRotate");
                     FinishRotate();
                 }
                 _counter = 0;

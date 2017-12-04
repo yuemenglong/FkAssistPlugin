@@ -33,20 +33,21 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <ItemGroup>
-    <Compile Include="BaseMgr.cs" />
     <Compile Include="BoneAssist.cs" />
     <Compile Include="CameraMgr.cs" />
     <Compile Include="Dynamic.cs" />
     <Compile Include="FKAssist.cs" />
     <Compile Include="FkAssistPlugin.cs" />
     <Compile Include="Bone.cs" />
+    <Compile Include="GuideObjectHelper.cs" />
+    <Compile Include="HSStudioNEOAddno\BaseMgr.cs" />
     <Compile Include="HSStudioNEOAddno\BoneMarker.cs" />
     <Compile Include="HSStudioNEOAddno\BoneMarkerMgr.cs" />
     <Compile Include="HSStudioNEOAddno\ShaderUtil.cs" />
     <Compile Include="ObjMoveRotAssistMgr.cs" />
     <Compile Include="Context.cs" />
     <Compile Include="Kit.cs" />
-    <Compile Include="Logger.cs" />
+    <Compile Include="Tracer.cs" />
     <Compile Include="Patch.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>

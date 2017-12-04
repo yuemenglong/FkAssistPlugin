@@ -5,7 +5,7 @@ using UnityEngine;
 
 namespace FkAssistPlugin
 {
-    public static class Logger
+    public static class Tracer
     {
         static FileStream fs = new FileStream("D:/hs-log.txt", FileMode.Append);
 
@@ -17,6 +17,10 @@ namespace FkAssistPlugin
                 if (o is Vector3)
                 {
                     list.Add(Kit.VecStr((Vector3) o));
+                }
+                else if (o is Quaternion)
+                {
+                    list.Add(Kit.QuatStr((Quaternion) o));
                 }
                 else if (o is GameObject)
                 {

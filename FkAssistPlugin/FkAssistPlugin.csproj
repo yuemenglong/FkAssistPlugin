@@ -47,8 +47,8 @@
     <Compile Include="ObjMoveRotAssistMgr.cs" />
     <Compile Include="Context.cs" />
     <Compile Include="Kit.cs" />
+    <Compile Include="Patch\PatchMgr.cs" />
     <Compile Include="Tracer.cs" />
-    <Compile Include="PatchMgr.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>

@@ -31,6 +31,9 @@ namespace FkAssistPlugin
         {
             try
             {
+                CameraMgr.Toggle();
+                Tracer.Log("IsLock", CameraMgr.IsLock);
+                return;
 //                var ray = Camera.main.ScreenPointToRay(Input.mousePosition);
 //                RaycastHit hit;
 //                if (Physics.Raycast(ray, out hit))

@@ -1,31 +1,26 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Reflection;
-using System.Runtime.CompilerServices;
 using Harmony;
-using Studio;
-using UnityEngine;
 
-namespace FkAssistPlugin
+namespace FkAssistPlugin.Patch
 {
-    public class Patch
+    public class CameraPatch
     {
         public static bool Prefix()
         {
-            Tracer.Log("Prefix");
-            return true;
+//            Tracer.Log("Prefix");
+            return !CameraMgr.IsLock;
         }
     }
 
-    public class PatchMgr
+    public class PatchMgr : Singleton<PatchMgr>
     {
         public static void Init()
         {
             try
             {
                 var harmony = HarmonyInstance.Create("io.github.yuemenglong.test");
-                var original = typeof(Studio.Studio).GetMethod("AddMale", new[] {typeof(String)});
-                var prefix = new HarmonyMethod(typeof(Patch).GetMethod("Prefix"));
+                var original = typeof(Studio.CameraControl).GetMethod("LateUpdate");
+                var prefix = new HarmonyMethod(typeof(CameraPatch).GetMethod("Prefix"));
                 harmony.Patch(original, prefix, null);
             }
             catch (Exception ex)

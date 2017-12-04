@@ -31,43 +31,16 @@ namespace FkAssistPlugin
         {
             try
             {
-                CameraMgr.Toggle();
-                Tracer.Log("IsLock", CameraMgr.IsLock);
-                return;
-//                var ray = Camera.main.ScreenPointToRay(Input.mousePosition);
-//                RaycastHit hit;
-//                if (Physics.Raycast(ray, out hit))
-//                {
-//                    Logger.Log(hit.transform);
-//                    Logger.Log(hit.transform.position);
-//                }
-//                else
-//                {
-//                    Logger.Log("Not Hit");
-//                }
                 var go = Context.GuideObjectManager().selectObject;
-                if (go != null)
+                if (go != null && go.IsLimb())
                 {
-//                    var screenPoint = Camera.main.WorldToScreenPoint(go.transformTarget.position);
-//                    Logger.Log("ScreenPoint", screenPoint);
-//                    screenPoint += new Vector3(100f, 0, 0);
-//                    var worldPoint = Camera.main.ScreenToWorldPoint(screenPoint);
-//                    Logger.Log("WorldPoint", worldPoint);
-//                    var sphere = GameObject.CreatePrimitive(PrimitiveType.Sphere);
-//                    sphere.transform.position = Vector3.zero;
-//                    sphere.transform.localScale = new Vector3(0.01f, 0.01f, 0.01f);
                     var marker = BoneMarkerMgr.Instance.CreateFor(new[] {go.transformTarget.transform});
                     BoneMarkerMgr.Instance.markerEnabled = true;
                     marker[0].OnDrag = (m) =>
                     {
                         var screenVec = m.MouseEndPos - m.MouseStartPos;
-//                        Logger.Log("Screen Vec", screenVec);
                         var pos = BoneAssist.MapScreenVec(screenVec, go.transformTarget.position);
-//                        Logger.Log("Trans From", sphere.transform.position);
-//                        Logger.Log("Trans To", pos);
-//                        sphere.transform.position = pos;
-//                        BoneAssist.MoveEnd(go, pos);
-                        go.MoveTo(pos);
+                        BoneAssist.MoveEnd(go, pos);
                     };
                 }
                 else

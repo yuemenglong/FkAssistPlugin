@@ -6,8 +6,6 @@ namespace FkAssistPlugin
 {
     public class CameraMgr
     {
-        public static Vector3 LastPos { get; private set; }
-        public static Quaternion LastRot { get; private set; }
         public static bool IsLock { get; private set; }
 
         public CameraMgr()
@@ -17,23 +15,20 @@ namespace FkAssistPlugin
 
         public static void Lock()
         {
-//            CameraControl().NoCtrlCondition = () => true;
-            LastPos = MainCamera().transform.position;
-            LastRot = MainCamera().transform.rotation;
             IsLock = true;
-            Tracer.Log(LastPos);
-            Tracer.Log(LastRot);
+            Tracer.Log("CameraLock", IsLock);
         }
 
         public static void Unlock()
         {
-//            CameraControl().NoCtrlCondition = () => false;
             IsLock = false;
+            Tracer.Log("CameraLock", IsLock);
         }
 
         public static void Toggle()
         {
             IsLock = !IsLock;
+            Tracer.Log("CameraLock", IsLock);
         }
 
         public static CameraControl CameraControl()

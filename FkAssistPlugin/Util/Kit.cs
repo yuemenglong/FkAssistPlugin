@@ -65,7 +65,7 @@ namespace FkAssistPlugin.Util
         public static String StackTrace()
         {
             StackTrace st = new StackTrace();
-            var list = new List<String>();
+            var list = new List<string>();
             foreach (var frame in st.GetFrames())
             {
                 list.Add(String.Format("\n{0}, {1}", frame.GetMethod().DeclaringType.FullName, frame.GetMethod().Name));
@@ -332,5 +332,18 @@ namespace FkAssistPlugin.Util
 //        }
 
         #endregion
+
+        public static Vector3 MapScreenVecToWorld(Vector3 screenVec, Vector3 pos)
+        {
+            var screenZ = CameraMgr.MainCamera().WorldToScreenPoint(pos).z;
+            var screenStart = Vector3.zero;
+            screenStart.z = screenZ;
+            var screenEnd = screenVec;
+            screenEnd.z = screenZ;
+            var worldStart = CameraMgr.MainCamera().ScreenToWorldPoint(screenStart);
+            var worldEnd = CameraMgr.MainCamera().ScreenToWorldPoint(screenEnd);
+            var end = pos + (worldEnd - worldStart);
+            return end;
+        }
     }
 }

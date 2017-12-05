@@ -1,6 +1,7 @@
 ﻿using System;
 using System.IO;
 using System.Reflection;
+using FkAssistPlugin.Bone;
 using FkAssistPlugin.HSStudioNEOAddno;
 using FkAssistPlugin.Util;
 using UnityEngine;
@@ -32,22 +33,30 @@ namespace FkAssistPlugin
         {
             try
             {
-                var go = Context.GuideObjectManager().selectObject;
-                if (go != null && go.IsLimb())
+                var chars = CharaBoneMgr.FindSelectChara();
+                foreach (var fkChara in chars)
                 {
-                    var marker = BoneMarkerMgr.Instance.CreateFor(new[] {go.transformTarget.transform});
-                    BoneMarkerMgr.Instance.markerEnabled = true;
-                    marker[0].OnDrag = (m) =>
+                    foreach (var guideObject in fkChara.GuideObjects())
                     {
-                        var screenVec = m.MouseEndPos - m.MouseStartPos;
-                        var pos = BoneAssist.MapScreenVec(screenVec, go.transformTarget.position);
-                        BoneAssist.MoveEnd(go, pos);
-                    };
+                        Tracer.Log(guideObject.transformTarget);
+                    }
                 }
-                else
-                {
-                    BoneMarkerMgr.Instance.Clear();
-                }
+//                var go = Context.GuideObjectManager().selectObject;
+//                if (go != null && go.IsLimb())
+//                {
+//                    var marker = BoneMarkerMgr.Instance.CreateFor(new[] {go.transformTarget.transform});
+//                    BoneMarkerMgr.Instance.markerEnabled = true;
+//                    marker[0].OnDrag = (m) =>
+//                    {
+//                        var screenVec = m.MouseEndPos - m.MouseStartPos;
+//                        var pos = Kit.MapScreenVecToWorld(screenVec, go.transformTarget.position);
+//                        BoneAssist.MoveEnd(go, pos);
+//                    };
+//                }
+//                else
+//                {
+//                    BoneMarkerMgr.Instance.Clear();
+//                }
             }
             catch (Exception e)
             {

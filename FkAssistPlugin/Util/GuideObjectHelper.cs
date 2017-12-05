@@ -1,7 +1,7 @@
 ﻿using Studio;
 using UnityEngine;
 
-namespace FkAssistPlugin
+namespace FkAssistPlugin.Util
 {
     public static class GuideObjectHelper
     {

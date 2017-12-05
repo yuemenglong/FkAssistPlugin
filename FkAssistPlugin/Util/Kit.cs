@@ -2,12 +2,10 @@
 using System.Collections.Generic;
 using System.Diagnostics;
 using System.IO;
-using System.Linq;
 using System.Reflection;
-using System.Security;
 using UnityEngine;
 
-namespace FkAssistPlugin
+namespace FkAssistPlugin.Util
 {
     public static class Kit
     {

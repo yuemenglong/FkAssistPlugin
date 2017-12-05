@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using FkAssistPlugin.HSStudioNEOAddno;
+using FkAssistPlugin.Util;
 using IllusionUtility.GetUtility;
 using RootMotion.FinalIK;
 using Studio;

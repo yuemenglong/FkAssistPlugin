@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using System.IO;
 using UnityEngine;
 
-namespace FkAssistPlugin
+namespace FkAssistPlugin.Util
 {
     public static class Tracer
     {
@@ -14,7 +14,11 @@ namespace FkAssistPlugin
             var list = new List<String>();
             foreach (var o in ss)
             {
-                if (o is Vector3)
+                if (o == null)
+                {
+                    list.Add("NULL");
+                }
+                else if (o is Vector3)
                 {
                     list.Add(Kit.VecStr((Vector3) o));
                 }

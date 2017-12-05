@@ -1,7 +1,9 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Security;
 using FkAssistPlugin.HSStudioNEOAddno;
 using FkAssistPlugin.Patch;
+using FkAssistPlugin.Util;
 using Harmony;
 using IllusionPlugin;
 using UnityEngine;
@@ -26,7 +28,9 @@ namespace FkAssistPlugin
         public void OnApplicationStart()
         {
             Tracer.Log("OnApplicationStart");
-            PatchMgr.Init();
+            var p = new CameraPatch();
+            Tracer.Log("Before");
+            PatchMgr.Patch(p);
         }
 
         public void OnApplicationQuit()

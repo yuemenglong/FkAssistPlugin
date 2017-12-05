@@ -39,17 +39,17 @@
     <Compile Include="FKAssist.cs" />
     <Compile Include="FkAssistPlugin.cs" />
     <Compile Include="Bone.cs" />
-    <Compile Include="GuideObjectHelper.cs" />
     <Compile Include="HSStudioNEOAddno\BaseMgr.cs" />
     <Compile Include="HSStudioNEOAddno\BoneMarker.cs" />
     <Compile Include="HSStudioNEOAddno\BoneMarkerMgr.cs" />
     <Compile Include="HSStudioNEOAddno\ShaderUtil.cs" />
     <Compile Include="ObjMoveRotAssistMgr.cs" />
     <Compile Include="Context.cs" />
-    <Compile Include="Kit.cs" />
     <Compile Include="Patch\PatchMgr.cs" />
-    <Compile Include="Tracer.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="Util\GuideObjectHelper.cs" />
+    <Compile Include="Util\Kit.cs" />
+    <Compile Include="Util\Tracer.cs" />
   </ItemGroup>
   <ItemGroup>
     <Reference Include="0Harmony, Version=1.0.9.1, Culture=neutral, PublicKeyToken=null">

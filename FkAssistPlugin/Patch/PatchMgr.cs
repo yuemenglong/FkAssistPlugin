@@ -1,27 +1,69 @@
 ﻿using System;
+using FkAssistPlugin.Util;
 using Harmony;
+using UnityEngine;
 
 namespace FkAssistPlugin.Patch
 {
-    public class CameraPatch
+    public interface IPatch
+    {
+        Type PatchType();
+        String PatchMethod();
+        Type[] PatchParams();
+    }
+
+    public class CameraPatch : IPatch
     {
         public static bool Prefix()
         {
 //            Tracer.Log("Prefix");
             return !CameraMgr.IsLock;
         }
+
+        public Type PatchType()
+        {
+            return typeof(Studio.CameraControl);
+        }
+
+        public string PatchMethod()
+        {
+            return "LateUpdate";
+        }
+
+        public Type[] PatchParams()
+        {
+            return new Type[] { };
+        }
     }
 
-    public class PatchMgr : Singleton<PatchMgr>
+    public class PatchMgr
     {
+        private static HarmonyInstance _harmony = HarmonyInstance.Create("io.github.yuemenglong.test");
+
+        public static void Patch(IPatch patch)
+        {
+            try
+            {
+                var original = patch.PatchType().GetMethod(patch.PatchMethod(), patch.PatchParams());
+                var prefix = new HarmonyMethod(patch.GetType().GetMethod("Prefix"));
+                var postfix = new HarmonyMethod(patch.GetType().GetMethod("Postfix"));
+                _harmony.Patch(original, prefix, postfix);
+                Tracer.Log("Patch ", patch.PatchType(), patch.PatchMethod());
+            }
+            catch (Exception e)
+            {
+                Tracer.Log(e);
+            }
+        }
+
         public static void Init()
         {
             try
             {
-                var harmony = HarmonyInstance.Create("io.github.yuemenglong.test");
-                var original = typeof(Studio.CameraControl).GetMethod("LateUpdate");
-                var prefix = new HarmonyMethod(typeof(CameraPatch).GetMethod("Prefix"));
-                harmony.Patch(original, prefix, null);
+//                var harmony = HarmonyInstance.Create("io.github.yuemenglong.test");
+//                var original = typeof(Studio.CameraControl).GetMethod("LateUpdate");
+//                var prefix = new HarmonyMethod(typeof(CameraPatch).GetMethod("Prefix"));
+//                harmony.Patch(original, prefix, null);
             }
             catch (Exception ex)
             {

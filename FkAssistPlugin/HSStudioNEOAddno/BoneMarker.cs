@@ -66,10 +66,6 @@ namespace FkAssistPlugin.HSStudioNEOAddno
 
         private void OnMouseDown()
         {
-//            if (this.OnClick == null)
-//                return;
-//            this.OnClick(this);
-//            Logger.Log("MouseDown", Input.mousePosition);
             MouseStartPos = Input.mousePosition;
             _isDraged = true;
             CameraMgr.Lock();
@@ -86,16 +82,15 @@ namespace FkAssistPlugin.HSStudioNEOAddno
             MouseStartPos = MouseEndPos;
         }
 
-
-
         private void OnMouseUp()
         {
-//            if (this.OnClick == null)
-//                return;
-//            this.OnClick(this);
-//            Logger.Log("MouseUp", Input.mousePosition);
             _isDraged = false;
             CameraMgr.Unlock();
+        }
+
+        public void SetActive(bool active)
+        {
+            gameObject.SetActive(active);
         }
     }
 }

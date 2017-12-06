@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using FkAssistPlugin.HSStudioNEOAddno;
 using FkAssistPlugin.Util;
 using Studio;
 using UnityEngine;
@@ -54,12 +55,28 @@ namespace FkAssistPlugin.Bone
             }
             LoopChildren(root);
             AttachChild();
+            AttachMarker();
         }
 
         private FkBone CreateBone(Transform transform)
         {
             GuideObject go = Context.DicGuideObject()[transform];
             return new FkBone(go);
+        }
+
+        private void AttachMarker()
+        {
+            Limbs().Foreach(b =>
+            {
+                Tracer.Log(b.Transform);
+                b.Marker = BoneMarkerMgr.Instance.Create(b.Transform);
+                b.Marker.OnDrag = m =>
+                {
+                    var screenVec = m.MouseEndPos - m.MouseStartPos;
+                    var pos = Kit.MapScreenVecToWorld(screenVec, b.Transform.position);
+                    FkRotaterAssist.MoveEnd(b.GuideObject, pos);
+                };
+            });
         }
 
         private void AttachChild()

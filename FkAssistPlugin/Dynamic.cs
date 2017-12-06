@@ -33,14 +33,26 @@ namespace FkAssistPlugin
         {
             try
             {
-                var chars = CharaBoneMgr.FindSelectChara();
-                foreach (var fkChara in chars)
+                if (FkCharaMgr.IsMarkerEnabled())
                 {
-                    foreach (var guideObject in fkChara.GuideObjects())
-                    {
-                        Tracer.Log(guideObject.transformTarget);
-                    }
+                    Tracer.Log("Do Clear Marker");
+                    FkCharaMgr.ClearMarker();
                 }
+                else
+                {
+                    Tracer.Log("Do AttachMarker");
+                    FkCharaMgr.RefreshSelectChara();
+                    FkCharaMgr.ReAttachMarker();
+                }
+//                    
+//                var chars = FkCharaMgr.FindSelectChara();
+//                foreach (var fkChara in chars)
+//                {
+//                    foreach (var guideObject in fkChara.GuideObjects())
+//                    {
+//                        Tracer.Log(guideObject.transformTarget);
+//                    }
+//                }
 //                var go = Context.GuideObjectManager().selectObject;
 //                if (go != null && go.IsLimb())
 //                {

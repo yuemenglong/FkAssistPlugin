@@ -29,7 +29,6 @@ namespace FkAssistPlugin
         {
             Tracer.Log("OnApplicationStart");
             var p = new CameraPatch();
-            Tracer.Log("Before");
             PatchMgr.Patch(p);
         }
 

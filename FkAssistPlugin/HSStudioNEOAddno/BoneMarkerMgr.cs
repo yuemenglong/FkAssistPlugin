@@ -8,7 +8,7 @@ namespace FkAssistPlugin.HSStudioNEOAddno
     {
         private static BoneMarkerMgr _instance = new BoneMarkerMgr();
         public List<BoneMarker> markers = new List<BoneMarker>();
-        public bool markerEnabled = true;
+        public bool markerEnabled = false;
 
         public static BoneMarkerMgr Instance
         {
@@ -27,6 +27,14 @@ namespace FkAssistPlugin.HSStudioNEOAddno
             return this.markers;
         }
 
+        public BoneMarker Create(Transform transform)
+        {
+            BoneMarker boneMarker = BoneMarker.Create(transform);
+            boneMarker.gameObject.SetActive(this.markerEnabled);
+            this.markers.Add(boneMarker);
+            return boneMarker;
+        }
+
         public void Clear()
         {
             foreach (Component marker in this.markers)
@@ -39,6 +47,11 @@ namespace FkAssistPlugin.HSStudioNEOAddno
             this.markerEnabled = enabled;
             foreach (Component marker in this.markers)
                 marker.gameObject.SetActive(this.markerEnabled);
+        }
+
+        public Boolean IsEnabled()
+        {
+            return this.markerEnabled;
         }
     }
 }

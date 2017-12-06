@@ -11,7 +11,7 @@ using UnityEngine.Assertions;
 
 namespace FkAssistPlugin.Bone
 {
-    public class CharaBoneMgr
+    public class FkCharaMgr
     {
         public static FkChara[] Charas = new FkChara[0];
 
@@ -53,26 +53,43 @@ namespace FkAssistPlugin.Bone
             Charas = FindSelectChara();
         }
 
+        public static bool IsMarkerEnabled()
+        {
+            return BoneMarkerMgr.Instance.IsEnabled();
+        }
+
+        public static void DisableMarker()
+        {
+            BoneMarkerMgr.Instance.ToggleEnabled(false);
+        }
+
         public static void EnableMarker()
         {
-            var list = new List<Transform>();
-            foreach (var fkChara in Charas)
+            BoneMarkerMgr.Instance.ToggleEnabled(true);
+        }
+
+        public static void ClearMarker()
+        {
+            BoneMarkerMgr.Instance.ToggleEnabled(false);
+            BoneMarkerMgr.Instance.Clear();
+        }
+
+        public static void ReAttachMarker()
+        {
+            BoneMarkerMgr.Instance.Clear();
+            var bones = Charas.FlatMap(c => { return c.Limbs(); });
+            bones.Foreach(b =>
             {
-                foreach (var bone in fkChara.Limbs())
+                Tracer.Log("Bones", b.Transform);
+                b.Marker = BoneMarkerMgr.Instance.Create(b.Transform);
+                b.Marker.OnDrag = m =>
                 {
-                    list.Add(bone.Transform);
-                }
-            }
-            var markers = BoneMarkerMgr.Instance.CreateFor(list.ToArray());
-            markers.ForEach(m =>
-            {
-                m.OnDrag = marker =>
-                {
-//                                        var screenVec = m.MouseEndPos - m.MouseStartPos;
-//                        var pos = Kit.MapScreenVecToWorld(screenVec, go.transformTarget.position);
-//                        FkRotaterAssist.MoveEnd(go, pos);
+                    var screenVec = m.MouseEndPos - m.MouseStartPos;
+                    var pos = Kit.MapScreenVecToWorld(screenVec, b.Transform.position);
+                    FkRotaterAssist.MoveEnd(b.GuideObject, pos);
                 };
             });
+            EnableMarker();
         }
     }
 }

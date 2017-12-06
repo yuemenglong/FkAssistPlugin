@@ -8,10 +8,10 @@ namespace FkAssistPlugin.HSStudioNEOAddno
     public class BoneMarker : MonoBehaviour
     {
         public static Color DefaultColor = new Color(0.8f, 0.8f, 0.0f, 0.4f);
-        public static Color HoverColor = new Color(1f, 0.0f, 0.0f, 0.4f);
+        public static Color HoverColor = new Color(0f, 0.8f, 0.0f, 0.4f);
         public Action<BoneMarker> OnClick;
         public Action<BoneMarker> OnDrag;
-        private MeshRenderer renderer;
+        private MeshRenderer _renderer;
         public Vector3 MouseStartPos;
         public Vector3 MouseEndPos;
         private bool _isDraged;
@@ -37,7 +37,7 @@ namespace FkAssistPlugin.HSStudioNEOAddno
             renderer.shadowCastingMode = ShadowCastingMode.Off;
             
             BoneMarker boneMarker = primitive.AddComponent<BoneMarker>();
-            boneMarker.renderer = renderer;
+            boneMarker._renderer = renderer;
             return boneMarker;
         }
 
@@ -59,12 +59,12 @@ namespace FkAssistPlugin.HSStudioNEOAddno
 
         private void OnMouseEnter()
         {
-            this.renderer.material.color = HoverColor;
+            this._renderer.material.color = HoverColor;
         }
 
         private void OnMouseExit()
         {
-            this.renderer.material.color = DefaultColor;
+            this._renderer.material.color = DefaultColor;
         }
 
         private void OnMouseDown()

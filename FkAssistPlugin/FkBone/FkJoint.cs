@@ -1,7 +1,7 @@
 ﻿using FkAssistPlugin.Util;
 using UnityEngine;
 
-namespace FkAssistPlugin.Bone
+namespace FkAssistPlugin.FkBone
 {
     public interface IFkJoint
     {

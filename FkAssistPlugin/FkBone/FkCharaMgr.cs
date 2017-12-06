@@ -1,15 +1,9 @@
-﻿using System.Collections;
-using System.Collections.Generic;
-using System.Linq;
-using System.Runtime.CompilerServices;
+﻿using System.Collections.Generic;
 using FkAssistPlugin.HSStudioNEOAddno;
 using FkAssistPlugin.Util;
-using IllusionUtility.GetUtility;
 using Studio;
-using UnityEngine;
-using UnityEngine.Assertions;
 
-namespace FkAssistPlugin.Bone
+namespace FkAssistPlugin.FkBone
 {
     public class FkCharaMgr
     {
@@ -73,7 +67,7 @@ namespace FkAssistPlugin.Bone
             BoneMarkerMgr.Instance.ToggleEnabled(false);
             BoneMarkerMgr.Instance.Clear();
         }
-
+        
         public static void ReAttachMarker()
         {
             BoneMarkerMgr.Instance.Clear();

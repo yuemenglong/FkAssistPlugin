@@ -3,22 +3,24 @@ using FkAssistPlugin.HSStudioNEOAddno;
 using Studio;
 using UnityEngine;
 
-namespace FkAssistPlugin.Bone
+namespace FkAssistPlugin.FkBone
 {
     public class FkBone : IFkJoint
     {
-        public String Name
-        {
-            get { return GuideObject.transformTarget.name; }
-        }
-
         public GuideObject GuideObject { get; private set; }
         public FkBone Child;
         public BoneMarker Marker;
+        public bool IsLocked;
 
         public FkBone(GuideObject go)
         {
             GuideObject = go;
+            IsLocked = false;
+        }
+
+        public String Name
+        {
+            get { return GuideObject.transformTarget.name; }
         }
 
         public Transform Transform

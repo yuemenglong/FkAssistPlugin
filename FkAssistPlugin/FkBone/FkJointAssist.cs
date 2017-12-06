@@ -2,7 +2,7 @@
 using Studio;
 using UnityEngine;
 
-namespace FkAssistPlugin.Bone
+namespace FkAssistPlugin.FkBone
 {
     public static class FkRotaterAssist
     {

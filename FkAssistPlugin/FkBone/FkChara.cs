@@ -5,7 +5,7 @@ using FkAssistPlugin.Util;
 using Studio;
 using UnityEngine;
 
-namespace FkAssistPlugin.Bone
+namespace FkAssistPlugin.FkBone
 {
     public class FkChara
     {

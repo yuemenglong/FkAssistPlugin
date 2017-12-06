@@ -1,6 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
-using FkAssistPlugin.Bone;
+using FkAssistPlugin.FkBone;
 using FkAssistPlugin.HSStudioNEOAddno;
 using FkAssistPlugin.Util;
 using IllusionUtility.GetUtility;

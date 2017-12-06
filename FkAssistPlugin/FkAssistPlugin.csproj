@@ -33,7 +33,6 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <ItemGroup>
-    <Compile Include="FkBone\FkMonitor.cs" />
     <Compile Include="FkBone\FkBone.cs" />
     <Compile Include="FkBone\FkCharaMgr.cs" />
     <Compile Include="FkBone\FkChara.cs" />
@@ -44,6 +43,7 @@
     <Compile Include="Dynamic.cs" />
     <Compile Include="FKAssist.cs" />
     <Compile Include="FkAssistPlugin.cs" />
+    <Compile Include="FkMonitor.cs" />
     <Compile Include="Fp.cs" />
     <Compile Include="HSStudioNEOAddno\BaseMgr.cs" />
     <Compile Include="HSStudioNEOAddno\BoneMarker.cs" />

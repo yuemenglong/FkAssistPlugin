@@ -9,6 +9,8 @@ namespace FkAssistPlugin.FkBone
 {
     public class FkChara
     {
+        #region Field
+
         private FkBone _root; //cm_J_Hips
 
         private FkBone _head; //cm_J_Head
@@ -35,6 +37,8 @@ namespace FkAssistPlugin.FkBone
         private FkBone _foot01R; //cm_J_Foot01_R
         private FkBone _toes01L; //cm_J_Toes01_L
         private FkBone _toes01R; //cm_J_Toes01_R
+
+        #endregion
 
         public bool IsMale()
         {
@@ -73,8 +77,24 @@ namespace FkAssistPlugin.FkBone
                 {
                     var screenVec = m.MouseEndPos - m.MouseStartPos;
                     var pos = Kit.MapScreenVecToWorld(screenVec, b.Transform.position);
-                    FkRotaterAssist.MoveEnd(b.GuideObject, pos);
+                    FkJointAssist.MoveEnd(b.GuideObject, pos);
                 };
+                Tracer.Log("Attach On Drag");
+                b.Marker.OnRightClick = marker =>
+                {
+                    b.IsLocked = !b.IsLocked;
+                    Tracer.Log(b.IsLocked);
+                    if (b.IsLocked)
+                    {
+                        Tracer.Log("Lock");
+                        b.LockedPos = b.Transform.position;
+                        b.LockedRot = b.Transform.rotation;
+                        Tracer.Log(b.LockedPos);
+                        Tracer.Log(b.LockedRot);
+                    }
+                };
+                Tracer.Log("Attach On RightClick");
+                Tracer.Log(b.Marker.OnDrag, b.Marker.OnRightClick);
             });
         }
 
@@ -301,6 +321,14 @@ namespace FkAssistPlugin.FkBone
             {
                 LoopChildren(transform.GetChild(i));
             }
+        }
+
+        public void MoveLocked()
+        {
+            Limbs().Filter(l => { return l.IsLocked; }).Foreach(l =>
+            {
+                FkJointAssist.LimbRotater(l.GuideObject).MoveEndTo(l.LockedPos);
+            });
         }
     }
 }

@@ -1,9 +1,10 @@
 ﻿using System;
+using FkAssistPlugin.FkBone;
 using FkAssistPlugin.HSStudioNEOAddno;
 using FkAssistPlugin.Util;
 using UnityEngine;
 
-namespace FkAssistPlugin.FkBone
+namespace FkAssistPlugin
 {
     public class FkMonitor : BaseMgr<FkMonitor>
     {
@@ -42,6 +43,7 @@ namespace FkAssistPlugin.FkBone
                     FkCharaMgr.ReAttachMarker();
                 }
             }
+            FkCharaMgr.MoveLocked();
         }
     }
 }

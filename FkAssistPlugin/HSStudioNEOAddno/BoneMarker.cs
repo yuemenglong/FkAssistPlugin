@@ -1,4 +1,6 @@
 ﻿using System;
+using System.Diagnostics;
+using FkAssistPlugin.Util;
 using RootMotion.Demos;
 using UnityEngine;
 using UnityEngine.Rendering;
@@ -11,6 +13,7 @@ namespace FkAssistPlugin.HSStudioNEOAddno
         public static Color HoverColor = new Color(0f, 0.8f, 0.0f, 0.4f);
         public Action<BoneMarker> OnClick;
         public Action<BoneMarker> OnDrag;
+        public Action<BoneMarker> OnRightClick;
         private MeshRenderer _renderer;
         public Vector3 MouseStartPos;
         public Vector3 MouseEndPos;
@@ -35,7 +38,7 @@ namespace FkAssistPlugin.HSStudioNEOAddno
             renderer.material = material;
             renderer.receiveShadows = false;
             renderer.shadowCastingMode = ShadowCastingMode.Off;
-            
+
             BoneMarker boneMarker = primitive.AddComponent<BoneMarker>();
             boneMarker._renderer = renderer;
             return boneMarker;
@@ -72,6 +75,24 @@ namespace FkAssistPlugin.HSStudioNEOAddno
             MouseStartPos = Input.mousePosition;
             _isDraged = true;
             CameraMgr.Lock();
+        }
+
+        private void OnMouseOver()
+        {
+            if (Input.GetMouseButtonDown(1))
+            {
+                Tracer.Log("Get Mouse Button Down", OnRightClick);
+                if (OnRightClick != null)
+                {
+                    Tracer.Log("Call Right Click");
+                    OnRightClick(this);
+                    Tracer.Log("Call Right Click End");
+                }
+                else
+                {
+                    Tracer.Log("OnRight Is NULL");
+                }
+            }
         }
 
         private void OnMouseDrag()

@@ -67,7 +67,7 @@ namespace FkAssistPlugin.FkBone
             BoneMarkerMgr.Instance.ToggleEnabled(false);
             BoneMarkerMgr.Instance.Clear();
         }
-        
+
         public static void ReAttachMarker()
         {
             BoneMarkerMgr.Instance.Clear();
@@ -79,10 +79,15 @@ namespace FkAssistPlugin.FkBone
                 {
                     var screenVec = m.MouseEndPos - m.MouseStartPos;
                     var pos = Kit.MapScreenVecToWorld(screenVec, b.Transform.position);
-                    FkRotaterAssist.MoveEnd(b.GuideObject, pos);
+                    FkJointAssist.MoveEnd(b.GuideObject, pos);
                 };
             });
             EnableMarker();
+        }
+
+        public static void MoveLocked()
+        {
+            Charas.Foreach(c => c.MoveLocked());
         }
     }
 }

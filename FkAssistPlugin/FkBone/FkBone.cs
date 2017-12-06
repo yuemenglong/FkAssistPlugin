@@ -11,6 +11,8 @@ namespace FkAssistPlugin.FkBone
         public FkBone Child;
         public BoneMarker Marker;
         public bool IsLocked;
+        public Vector3 LockedPos;
+        public Quaternion LockedRot;
 
         public FkBone(GuideObject go)
         {

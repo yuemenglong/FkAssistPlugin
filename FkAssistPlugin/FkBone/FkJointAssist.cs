@@ -4,7 +4,7 @@ using UnityEngine;
 
 namespace FkAssistPlugin.FkBone
 {
-    public static class FkRotaterAssist
+    public static class FkJointAssist
     {
         public static FkLimbRotater LimbRotater(GuideObject go)
         {

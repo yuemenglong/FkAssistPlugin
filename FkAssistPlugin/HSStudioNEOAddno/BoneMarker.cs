@@ -7,8 +7,8 @@ namespace FkAssistPlugin.HSStudioNEOAddno
 {
     public class BoneMarker : MonoBehaviour
     {
-        public Color defaultColor = new Color(0.8f, 0.8f, 0.0f, 0.4f);
-        public Color hoverColor = new Color(1f, 0.0f, 0.0f, 0.4f);
+        public static Color DefaultColor = new Color(0.8f, 0.8f, 0.0f, 0.4f);
+        public static Color HoverColor = new Color(1f, 0.0f, 0.0f, 0.4f);
         public Action<BoneMarker> OnClick;
         public Action<BoneMarker> OnDrag;
         private MeshRenderer renderer;
@@ -27,14 +27,17 @@ namespace FkAssistPlugin.HSStudioNEOAddno
             primitive.transform.position = parent.position;
             primitive.transform.rotation = parent.rotation;
             primitive.transform.parent = parent;
-            MeshRenderer component = primitive.GetComponent<MeshRenderer>();
+
             Material material = new Material(ShaderUtil.TransparentZAlways);
+            material.color = DefaultColor;
+
+            MeshRenderer renderer = primitive.GetComponent<MeshRenderer>();
+            renderer.material = material;
+            renderer.receiveShadows = false;
+            renderer.shadowCastingMode = ShadowCastingMode.Off;
+            
             BoneMarker boneMarker = primitive.AddComponent<BoneMarker>();
-            boneMarker.renderer = component;
-            material.color = boneMarker.defaultColor;
-            component.material = material;
-            component.receiveShadows = false;
-            component.shadowCastingMode = ShadowCastingMode.Off;
+            boneMarker.renderer = renderer;
             return boneMarker;
         }
 
@@ -56,12 +59,12 @@ namespace FkAssistPlugin.HSStudioNEOAddno
 
         private void OnMouseEnter()
         {
-            this.renderer.material.color = this.hoverColor;
+            this.renderer.material.color = HoverColor;
         }
 
         private void OnMouseExit()
         {
-            this.renderer.material.color = this.defaultColor;
+            this.renderer.material.color = DefaultColor;
         }
 
         private void OnMouseDown()

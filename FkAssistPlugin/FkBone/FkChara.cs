@@ -68,7 +68,6 @@ namespace FkAssistPlugin.FkBone
         {
             Limbs().Foreach(b =>
             {
-                Tracer.Log(b.Transform);
                 b.Marker = BoneMarkerMgr.Instance.Create(b.Transform);
                 b.Marker.OnDrag = m =>
                 {

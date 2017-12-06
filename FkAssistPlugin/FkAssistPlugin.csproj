@@ -33,7 +33,7 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <ItemGroup>
-    <Compile Include="FkBone\FkLocker.cs" />
+    <Compile Include="FkBone\FkMonitor.cs" />
     <Compile Include="FkBone\FkBone.cs" />
     <Compile Include="FkBone\FkCharaMgr.cs" />
     <Compile Include="FkBone\FkChara.cs" />

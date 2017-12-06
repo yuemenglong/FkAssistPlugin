@@ -72,11 +72,6 @@ namespace FkAssistPlugin
 
         private void Update()
         {
-            if (Input.GetKeyDown(KeyCode.T))
-            {
-                Dynamic.DynamicProc();
-                return;
-            }
             try
             {
                 InnerUpdate();

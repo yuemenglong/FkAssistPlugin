@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Security;
+using FkAssistPlugin.FkBone;
 using FkAssistPlugin.HSStudioNEOAddno;
 using FkAssistPlugin.Patch;
 using FkAssistPlugin.Util;
@@ -47,6 +48,7 @@ namespace FkAssistPlugin
             if (!((Object) Singleton<Studio.Studio>.Instance != (Object) null))
                 return;
             BaseMgr<FkAssist>.Install(new GameObject("FkPlugin"));
+            BaseMgr<FkMonitor>.Install(new GameObject("FkMonitor"));
             Tracer.Log("OnLevelWasInitialized, " + level);
         }
 

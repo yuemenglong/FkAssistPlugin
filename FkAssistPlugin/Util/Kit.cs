@@ -37,7 +37,6 @@ namespace FkAssistPlugin.Util
                 return new GameObject[] { };
             }
             var list = new List<GameObject>();
-            Tracer.Log(GetGameObjectPathAndPos(obj), obj.transform.childCount + "");
             for (int i = 0; i < obj.transform.childCount; i++)
             {
                 var child = obj.transform.GetChild(i);

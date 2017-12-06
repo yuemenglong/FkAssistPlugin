@@ -33,17 +33,7 @@ namespace FkAssistPlugin
         {
             try
             {
-                if (FkCharaMgr.IsMarkerEnabled())
-                {
-                    Tracer.Log("Do Clear Marker");
-                    FkCharaMgr.ClearMarker();
-                }
-                else
-                {
-                    Tracer.Log("Do AttachMarker");
-                    FkCharaMgr.RefreshSelectChara();
-                    FkCharaMgr.ReAttachMarker();
-                }
+                
 //                    
 //                var chars = FkCharaMgr.FindSelectChara();
 //                foreach (var fkChara in chars)

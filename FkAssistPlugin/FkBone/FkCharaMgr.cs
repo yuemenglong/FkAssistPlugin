@@ -74,7 +74,6 @@ namespace FkAssistPlugin.FkBone
             var bones = Charas.FlatMap(c => { return c.Limbs(); });
             bones.Foreach(b =>
             {
-                Tracer.Log("Bones", b.Transform);
                 b.Marker = BoneMarkerMgr.Instance.Create(b.Transform);
                 b.Marker.OnDrag = m =>
                 {

@@ -65,7 +65,7 @@ namespace FkAssistPlugin.FkBone
         {
             var target = pos - _root.Transform.position;
             var max = _root.Vector.magnitude + _end.Vector.magnitude;
-            if (max <= target.magnitude)
+            if (max < target.magnitude)
             {
                 Tracer.Log("Reach Max");
                 return;
@@ -80,7 +80,7 @@ namespace FkAssistPlugin.FkBone
         {
             var vec = _root.Vector + _end.Vector;
             var target = vec.magnitude + value;
-            if (target >= _root.Vector.magnitude + _end.Vector.magnitude)
+            if (target > _root.Vector.magnitude + _end.Vector.magnitude)
             {
                 return;
             }

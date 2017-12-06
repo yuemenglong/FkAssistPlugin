@@ -197,7 +197,6 @@ namespace FkAssistPlugin
             {
                 if (_counter > 1)
                 {
-                    Tracer.Log("FinishRotate");
                     FinishRotate();
                 }
                 _counter = 0;

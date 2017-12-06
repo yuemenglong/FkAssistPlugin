@@ -68,7 +68,7 @@ namespace FkAssistPlugin.FkBone
             return new FkBone(go);
         }
 
-        private void AttachMarker()
+        public void AttachMarker()
         {
             Limbs().Foreach(b =>
             {
@@ -79,7 +79,6 @@ namespace FkAssistPlugin.FkBone
                     var pos = Kit.MapScreenVecToWorld(screenVec, b.Transform.position);
                     FkJointAssist.MoveEnd(b.GuideObject, pos);
                 };
-                Tracer.Log("Attach On Drag");
                 b.Marker.OnRightClick = marker =>
                 {
                     b.IsLocked = !b.IsLocked;
@@ -93,8 +92,6 @@ namespace FkAssistPlugin.FkBone
                         Tracer.Log(b.LockedRot);
                     }
                 };
-                Tracer.Log("Attach On RightClick");
-                Tracer.Log(b.Marker.OnDrag, b.Marker.OnRightClick);
             });
         }
 
@@ -327,7 +324,11 @@ namespace FkAssistPlugin.FkBone
         {
             Limbs().Filter(l => { return l.IsLocked; }).Foreach(l =>
             {
-                FkJointAssist.LimbRotater(l.GuideObject).MoveEndTo(l.LockedPos);
+                if (l.Transform.position != l.LockedPos)
+                {
+                    Tracer.Log("Need Move");
+                    FkJointAssist.LimbRotater(l.GuideObject).MoveEndTo(l.LockedPos);
+                }
             });
         }
     }

@@ -17,13 +17,11 @@ namespace FkAssistPlugin
         public static void Lock()
         {
             IsLock = true;
-            Tracer.Log("CameraLock", IsLock);
         }
 
         public static void Unlock()
         {
             IsLock = false;
-            Tracer.Log("CameraLock", IsLock);
         }
 
         public static void Toggle()

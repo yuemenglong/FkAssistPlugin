@@ -64,24 +64,15 @@ namespace FkAssistPlugin.FkBone
 
         public static void ClearMarker()
         {
-            BoneMarkerMgr.Instance.ToggleEnabled(false);
+//            BoneMarkerMgr.Instance.ToggleEnabled(false);
+            DisableMarker();
             BoneMarkerMgr.Instance.Clear();
         }
 
         public static void ReAttachMarker()
         {
             BoneMarkerMgr.Instance.Clear();
-            var bones = Charas.FlatMap(c => { return c.Limbs(); });
-            bones.Foreach(b =>
-            {
-                b.Marker = BoneMarkerMgr.Instance.Create(b.Transform);
-                b.Marker.OnDrag = m =>
-                {
-                    var screenVec = m.MouseEndPos - m.MouseStartPos;
-                    var pos = Kit.MapScreenVecToWorld(screenVec, b.Transform.position);
-                    FkJointAssist.MoveEnd(b.GuideObject, pos);
-                };
-            });
+            Charas.Foreach(c => c.AttachMarker());
             EnableMarker();
         }
 

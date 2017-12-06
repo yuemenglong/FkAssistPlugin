@@ -79,19 +79,9 @@ namespace FkAssistPlugin.HSStudioNEOAddno
 
         private void OnMouseOver()
         {
-            if (Input.GetMouseButtonDown(1))
+            if (Input.GetMouseButtonDown(1) && OnRightClick != null)
             {
-                Tracer.Log("Get Mouse Button Down", OnRightClick);
-                if (OnRightClick != null)
-                {
-                    Tracer.Log("Call Right Click");
-                    OnRightClick(this);
-                    Tracer.Log("Call Right Click End");
-                }
-                else
-                {
-                    Tracer.Log("OnRight Is NULL");
-                }
+                OnRightClick(this);
             }
         }
 

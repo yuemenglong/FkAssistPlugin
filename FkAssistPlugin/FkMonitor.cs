@@ -33,14 +33,14 @@ namespace FkAssistPlugin
         {
             if (Input.GetKeyDown(KeyCode.T))
             {
-                FkCharaMgr.RefreshSelectChara();
                 if (FkCharaMgr.IsMarkerEnabled())
                 {
                     FkCharaMgr.ClearMarker();
                 }
-                else if (FkCharaMgr.Charas.Length > 0)
+                else
                 {
-                    FkCharaMgr.ReAttachMarker();
+                    FkCharaMgr.RefreshSelectChara();
+                    FkCharaMgr.EnableMarker();
                 }
             }
             FkCharaMgr.MoveLocked();

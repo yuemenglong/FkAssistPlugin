@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using FkAssistPlugin.Bone;
 using FkAssistPlugin.HSStudioNEOAddno;
 using FkAssistPlugin.Util;
 using IllusionUtility.GetUtility;
@@ -136,65 +137,65 @@ namespace FkAssistPlugin
             //
             else if (Input.GetKey(KeyCode.X) && Input.GetMouseButton(0) && isLimb)
             {
-                BoneAssist.Forward(go, dist);
+                FkRotaterAssist.Forward(go, dist);
             }
             else if (Input.GetKey(KeyCode.X) && Input.GetMouseButton(1) && isLimb)
             {
-                BoneAssist.Forward(go, -dist);
+                FkRotaterAssist.Forward(go, -dist);
             }
             //
             else if (Input.GetKey(KeyCode.C) && Input.GetMouseButton(0) && isLimb)
             {
-                BoneAssist.Tangent(go, angle);
+                FkRotaterAssist.Tangent(go, angle);
             }
             else if (Input.GetKey(KeyCode.C) && Input.GetMouseButton(1) && isLimb)
             {
-                BoneAssist.Tangent(go, -angle);
+                FkRotaterAssist.Tangent(go, -angle);
             }
             //
             else if (Input.GetKey(KeyCode.V) && Input.GetMouseButton(0) && isLimb)
             {
-                BoneAssist.Normals(go, angle);
+                FkRotaterAssist.Normals(go, angle);
             }
             else if (Input.GetKey(KeyCode.V) && Input.GetMouseButton(1) && isLimb)
             {
-                BoneAssist.Normals(go, -angle);
+                FkRotaterAssist.Normals(go, -angle);
             }
             //
             else if (Input.GetKey(KeyCode.B) && Input.GetMouseButton(0) && isLimb)
             {
-                BoneAssist.Revolution(go, angle);
+                FkRotaterAssist.Revolution(go, angle);
             }
             else if (Input.GetKey(KeyCode.B) && Input.GetMouseButton(1) && isLimb)
             {
-                BoneAssist.Revolution(go, -angle);
+                FkRotaterAssist.Revolution(go, -angle);
             }
             //
             else if (Input.GetKey(KeyCode.G) && Input.GetMouseButton(0) && isLimb)
             {
-                BoneAssist.MoveEndX(go, dist);
+                FkRotaterAssist.MoveEndX(go, dist);
             }
             else if (Input.GetKey(KeyCode.G) && Input.GetMouseButton(1) && isLimb)
             {
-                BoneAssist.MoveEndX(go, -dist);
+                FkRotaterAssist.MoveEndX(go, -dist);
             }
             //
             else if (Input.GetKey(KeyCode.Y) && Input.GetMouseButton(0) && isLimb)
             {
-                BoneAssist.MoveEndY(go, dist);
+                FkRotaterAssist.MoveEndY(go, dist);
             }
             else if (Input.GetKey(KeyCode.Y) && Input.GetMouseButton(1) && isLimb)
             {
-                BoneAssist.MoveEndY(go, -dist);
+                FkRotaterAssist.MoveEndY(go, -dist);
             }
             //
             else if (Input.GetKey(KeyCode.H) && Input.GetMouseButton(0) && isLimb)
             {
-                BoneAssist.MoveEndZ(go, dist);
+                FkRotaterAssist.MoveEndZ(go, dist);
             }
             else if (Input.GetKey(KeyCode.H) && Input.GetMouseButton(1) && isLimb)
             {
-                BoneAssist.MoveEndZ(go, -dist);
+                FkRotaterAssist.MoveEndZ(go, -dist);
             }
             //
             else

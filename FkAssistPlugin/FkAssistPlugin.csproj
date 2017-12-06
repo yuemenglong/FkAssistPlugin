@@ -33,14 +33,16 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <ItemGroup>
-    <Compile Include="BoneAssist.cs" />
-    <Compile Include="Bone\CharaBoneMgr.cs" />
+    <Compile Include="Bone\FkBone.cs" />
+    <Compile Include="Bone\FkCharaMgr.cs" />
+    <Compile Include="Bone\FkChara.cs" />
+    <Compile Include="Bone\FkJoint.cs" />
+    <Compile Include="Bone\FkJointAssist.cs" />
     <Compile Include="Camera\CameraMgr.cs" />
     <Compile Include="Camera\CameraPatch.cs" />
     <Compile Include="Dynamic.cs" />
     <Compile Include="FKAssist.cs" />
     <Compile Include="FkAssistPlugin.cs" />
-    <Compile Include="Bone.cs" />
     <Compile Include="HSStudioNEOAddno\BaseMgr.cs" />
     <Compile Include="HSStudioNEOAddno\BoneMarker.cs" />
     <Compile Include="HSStudioNEOAddno\BoneMarkerMgr.cs" />

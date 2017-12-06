@@ -1,11 +1,9 @@
 ﻿using FkAssistPlugin.Util;
-using Studio;
-using UniRx.Examples;
 using UnityEngine;
 
-namespace FkAssistPlugin
+namespace FkAssistPlugin.Bone
 {
-    public interface IBone
+    public interface IFkJoint
     {
         Transform Transform { get; }
         Vector3 Vector { get; }
@@ -14,12 +12,12 @@ namespace FkAssistPlugin
         void RotateAround(Vector3 point, Vector3 axis, float angle);
     }
 
-    public class LimbBoneRotater
+    public class FkLimbRotater
     {
-        private IBone _root;
-        private IBone _end;
+        private IFkJoint _root;
+        private IFkJoint _end;
 
-        public LimbBoneRotater(IBone root, IBone end)
+        public FkLimbRotater(IFkJoint root, IFkJoint end)
         {
             _root = root;
             _end = end;
@@ -127,12 +125,12 @@ namespace FkAssistPlugin
         }
     }
 
-    public class TransformBone : IBone
+    public class TransformFkJoint : IFkJoint
     {
         private Transform _start;
         private Transform _end;
 
-        public TransformBone(Transform start, Transform end)
+        public TransformFkJoint(Transform start, Transform end)
         {
             _start = start;
             _end = end;

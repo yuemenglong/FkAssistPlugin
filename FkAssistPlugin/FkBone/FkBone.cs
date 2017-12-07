@@ -9,6 +9,7 @@ namespace FkAssistPlugin.FkBone
     {
         public GuideObject GuideObject { get; private set; }
         public FkBone Child;
+        
         public BoneMarker Marker;
         public bool IsLocked;
         public Vector3 LockedPos;

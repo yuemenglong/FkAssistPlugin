@@ -11,6 +11,7 @@ namespace FkAssistPlugin.HSStudioNEOAddno
     {
         public static Color DefaultColor = new Color(0.8f, 0.8f, 0.0f, 0.4f);
         public static Color HoverColor = new Color(0f, 0.8f, 0.0f, 0.4f);
+        private Color _defaultColor = DefaultColor;
         public Action<BoneMarker> OnClick;
         public Action<BoneMarker> OnDrag;
         public Action<BoneMarker> OnRightClick;
@@ -44,6 +45,18 @@ namespace FkAssistPlugin.HSStudioNEOAddno
             return boneMarker;
         }
 
+        public void SetColor(Color c)
+        {
+            _defaultColor = c;
+            this._renderer.material.color = _defaultColor;
+        }
+
+        public void SetDefaultColor()
+        {
+            _defaultColor = DefaultColor;
+            this._renderer.material.color = _defaultColor;
+        }
+
         private void FixedUpdate()
         {
         }
@@ -52,13 +65,14 @@ namespace FkAssistPlugin.HSStudioNEOAddno
         {
             if (!((UnityEngine.Object) this.transform.parent == (UnityEngine.Object) null))
                 return;
-            UnityEngine.Object.Destroy((UnityEngine.Object) this);
+            BoneMarkerMgr.Instance.Destroy(this);
+//            UnityEngine.Object.Destroy((UnityEngine.Object) this);
         }
 
-        private void OnDestroy()
-        {
-            BoneMarkerMgr.Instance.markers.Remove(this);
-        }
+//        private void OnDestroy()
+//        {
+//            BoneMarkerMgr.Instance.markers.Remove(this);
+//        }
 
         private void OnMouseEnter()
         {
@@ -67,7 +81,7 @@ namespace FkAssistPlugin.HSStudioNEOAddno
 
         private void OnMouseExit()
         {
-            this._renderer.material.color = DefaultColor;
+            this._renderer.material.color = _defaultColor;
         }
 
         private void OnMouseDown()

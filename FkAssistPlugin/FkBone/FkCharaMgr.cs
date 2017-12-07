@@ -8,6 +8,7 @@ namespace FkAssistPlugin.FkBone
     public class FkCharaMgr
     {
         public static FkChara[] Charas = new FkChara[0];
+        public static bool IsEnabled = false;
 
         public static FkChara[] FindSelectChara()
         {
@@ -47,11 +48,6 @@ namespace FkAssistPlugin.FkBone
             Charas = FindSelectChara();
         }
 
-        public static bool IsMarkerEnabled()
-        {
-            return BoneMarkerMgr.Instance.IsEnabled();
-        }
-
         public static void DisableMarker()
         {
             BoneMarkerMgr.Instance.ToggleEnabled(false);
@@ -62,18 +58,13 @@ namespace FkAssistPlugin.FkBone
             BoneMarkerMgr.Instance.ToggleEnabled(true);
         }
 
-        public static void ClearMarker()
+        public static void ClearChars()
         {
 //            BoneMarkerMgr.Instance.ToggleEnabled(false);
-            DisableMarker();
-            BoneMarkerMgr.Instance.Clear();
-        }
-
-        public static void ReAttachMarker()
-        {
-            BoneMarkerMgr.Instance.Clear();
-            Charas.Foreach(c => c.AttachMarker());
-            EnableMarker();
+//            DisableMarker();
+//            BoneMarkerMgr.Instance.Clear();
+            Charas.Foreach(c => c.Destroy());
+            Charas = new FkChara[0];
         }
 
         public static void MoveLocked()

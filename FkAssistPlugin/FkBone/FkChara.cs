@@ -9,6 +9,8 @@ namespace FkAssistPlugin.FkBone
 {
     public class FkChara
     {
+        private static Color _lockedColor = new Color(0.8f, 0f, 0f, 0.4f);
+
         #region Field
 
         private FkBone _root; //cm_J_Hips
@@ -82,14 +84,15 @@ namespace FkAssistPlugin.FkBone
                 b.Marker.OnRightClick = marker =>
                 {
                     b.IsLocked = !b.IsLocked;
-                    Tracer.Log(b.IsLocked);
                     if (b.IsLocked)
                     {
-                        Tracer.Log("Lock");
                         b.LockedPos = b.Transform.position;
                         b.LockedRot = b.Transform.rotation;
-                        Tracer.Log(b.LockedPos);
-                        Tracer.Log(b.LockedRot);
+                        b.Marker.SetColor(_lockedColor);
+                    }
+                    else
+                    {
+                        b.Marker.SetDefaultColor();
                     }
                 };
             });
@@ -328,6 +331,18 @@ namespace FkAssistPlugin.FkBone
                 {
                     Tracer.Log("Need Move");
                     FkJointAssist.LimbRotater(l.GuideObject).MoveEndTo(l.LockedPos);
+                }
+            });
+        }
+
+        public void Destroy()
+        {
+            Bones().Foreach(b =>
+            {
+                if (b.Marker != null)
+                {
+                    BoneMarkerMgr.Instance.Destroy(b.Marker);
+                    b.IsLocked = false;
                 }
             });
         }

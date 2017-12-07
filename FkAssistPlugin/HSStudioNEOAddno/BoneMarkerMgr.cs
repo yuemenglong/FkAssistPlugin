@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using FkAssistPlugin.Util;
 using UnityEngine;
 
 namespace FkAssistPlugin.HSStudioNEOAddno
@@ -8,7 +9,7 @@ namespace FkAssistPlugin.HSStudioNEOAddno
     {
         private static BoneMarkerMgr _instance = new BoneMarkerMgr();
         public List<BoneMarker> markers = new List<BoneMarker>();
-        public bool markerEnabled = false;
+        public bool MarkerEnabled = true;
 
         public static BoneMarkerMgr Instance
         {
@@ -21,7 +22,7 @@ namespace FkAssistPlugin.HSStudioNEOAddno
             foreach (Transform transform in transforms)
             {
                 BoneMarker boneMarker = BoneMarker.Create(transform);
-                boneMarker.gameObject.SetActive(this.markerEnabled);
+                boneMarker.gameObject.SetActive(this.MarkerEnabled);
                 this.markers.Add(boneMarker);
             }
             return this.markers;
@@ -30,28 +31,37 @@ namespace FkAssistPlugin.HSStudioNEOAddno
         public BoneMarker Create(Transform transform)
         {
             BoneMarker boneMarker = BoneMarker.Create(transform);
-            boneMarker.gameObject.SetActive(this.markerEnabled);
+            boneMarker.gameObject.SetActive(this.MarkerEnabled);
             this.markers.Add(boneMarker);
             return boneMarker;
         }
 
         public void Clear()
         {
-            foreach (Component marker in this.markers)
-                UnityEngine.Object.Destroy((UnityEngine.Object) marker.gameObject);
+            this.markers.ForEach(m => Destroy(m));
+//            foreach (Component marker in this.markers)
+//                UnityEngine.Object.Destroy((UnityEngine.Object) marker.gameObject);
             this.markers = new List<BoneMarker>();
         }
 
         public void ToggleEnabled(bool enabled)
         {
-            this.markerEnabled = enabled;
+            this.MarkerEnabled = enabled;
             foreach (Component marker in this.markers)
-                marker.gameObject.SetActive(this.markerEnabled);
+                marker.gameObject.SetActive(this.MarkerEnabled);
         }
 
         public Boolean IsEnabled()
         {
-            return this.markerEnabled;
+            return this.MarkerEnabled;
+        }
+
+        public void Destroy(BoneMarker m)
+        {
+            Tracer.Log("Distroy Marker");
+            m.SetActive(false);
+            UnityEngine.Object.Destroy(m);
+            markers.Remove(m);
         }
     }
 }

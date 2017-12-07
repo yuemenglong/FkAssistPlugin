@@ -96,6 +96,25 @@ namespace FkAssistPlugin.FkBone
                     }
                 };
             });
+            Legs().Foreach(b =>
+            {
+                b.Marker = BoneMarkerMgr.Instance.Create(b.Transform);
+                b.Marker.OnRightClick = marker =>
+                {
+                    b.IsLocked = !b.IsLocked;
+                    if (b.IsLocked)
+                    {
+                        b.LockedPos = b.Transform.position;
+                        b.LockedRot = b.Transform.rotation;
+                        b.Marker.SetColor(_lockedColor);
+                    }
+                    else
+                    {
+                        b.Marker.SetDefaultColor();
+                    }
+                }; 
+            });
+           
         }
 
         private void AttachChild()
@@ -228,6 +247,11 @@ namespace FkAssistPlugin.FkBone
             return new[] {_handL, _handR, _foot01L, _foot01R};
         }
 
+        public FkBone[] Legs()
+        {
+            return new[] {_legUp00L, _legUp00R};
+        }
+
         private void LoopChildren(Transform transform)
         {
             switch (transform.name)
@@ -325,19 +349,26 @@ namespace FkAssistPlugin.FkBone
 
         public void MoveLocked()
         {
-            Limbs().Filter(l => { return l.IsLocked; }).Foreach(l =>
+            Limbs().Filter(b => { return b.IsLocked; }).Foreach(b =>
             {
-                if (l.Transform.position != l.LockedPos)
+                if (b.Transform.position != b.LockedPos)
                 {
-                    if (l.GuideObject.IsLimb())
+                    if (b.GuideObject.IsLimb())
                     {
-                        FkJointAssist.LimbRotater(l.GuideObject).MoveLimbTo(l.LockedPos);
+                        FkJointAssist.LimbRotater(b.GuideObject).MoveLimbTo(b.LockedPos);
                     }
                 }
-                if (l.Transform.rotation != l.LockedRot)
+                if (b.Transform.rotation != b.LockedRot)
                 {
-                    l.GuideObject.TurnTo(l.LockedRot);
+                    b.GuideObject.TurnTo(b.LockedRot);
                 }
+            });
+            Legs().Filter(b=>b.IsLocked).Foreach(b =>
+            {
+                if (b.Transform.rotation != b.LockedRot)
+                {
+                    b.GuideObject.TurnTo(b.LockedRot);
+                } 
             });
         }
 

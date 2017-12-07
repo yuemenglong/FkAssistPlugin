@@ -87,7 +87,7 @@ namespace FkAssistPlugin.FkBone
                     if (b.IsLocked)
                     {
                         b.LockedPos = b.Transform.position;
-                        b.LockedRot = b.Transform.forward;
+                        b.LockedRot = b.Transform.rotation;
                         b.Marker.SetColor(_lockedColor);
                     }
                     else
@@ -334,11 +334,8 @@ namespace FkAssistPlugin.FkBone
                         FkJointAssist.LimbRotater(l.GuideObject).MoveLimbTo(l.LockedPos);
                     }
                 }
-                if (l.Transform.forward != l.LockedRot)
+                if (l.Transform.rotation != l.LockedRot)
                 {
-                    Tracer.Log("TurnRot");
-                    Tracer.Log(l.Transform.forward);
-                    Tracer.Log(l.LockedRot);
                     l.GuideObject.TurnTo(l.LockedRot);
                 }
             });

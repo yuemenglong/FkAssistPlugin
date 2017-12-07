@@ -32,7 +32,7 @@ namespace FkAssistPlugin.Util
                    || name == "cm_J_ArmUp00_L"
                    || name == "cm_J_ArmUp00_R";
         }
-        
+
         public static bool IsShoulder(this GuideObject go)
         {
             var name = go.transformTarget.name;
@@ -79,12 +79,17 @@ namespace FkAssistPlugin.Util
             }
         }
 
-        public static void TurnTo(this GuideObject guideObject, Vector3 forword)
+        public static void TurnTo(this GuideObject guideObject, Quaternion rot)
         {
-            var cur = guideObject.transformTarget.forward;
-            var angle = Vector3.Angle(cur, forword);
-            var axis = Vector3.Cross(cur, forword).normalized;
-            guideObject.RotateAround(guideObject.transformTarget.position, axis, angle);
+            if (guideObject.enableRot)
+            {
+                guideObject.transformTarget.rotation = rot;
+                guideObject.changeAmount.rot = guideObject.transformTarget.localEulerAngles;
+            }
+//            var cur = guideObject.transformTarget.forward;
+//            var angle = Vector3.Angle(cur, forword);
+//            var axis = Vector3.Cross(cur, forword).normalized;
+//            guideObject.RotateAround(guideObject.transformTarget.position, axis, angle);
         }
 
         public static void Move(this GuideObject guideObject, float x, float y, float z)

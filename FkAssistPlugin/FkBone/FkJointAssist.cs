@@ -52,22 +52,22 @@ namespace FkAssistPlugin.FkBone
 
         public static void MoveEndX(this GuideObject go, float dist)
         {
-            LimbRotater(go).MoveEndTo(go.transformTarget.position + new Vector3(dist, 0, 0));
+            LimbRotater(go).MoveLimbTo(go.transformTarget.position + new Vector3(dist, 0, 0));
         }
 
         public static void MoveEndY(this GuideObject go, float dist)
         {
-            LimbRotater(go).MoveEndTo(go.transformTarget.position + new Vector3(0, dist, 0));
+            LimbRotater(go).MoveLimbTo(go.transformTarget.position + new Vector3(0, dist, 0));
         }
 
         public static void MoveEndZ(this GuideObject go, float dist)
         {
-            LimbRotater(go).MoveEndTo(go.transformTarget.position + new Vector3(0, 0, dist));
+            LimbRotater(go).MoveLimbTo(go.transformTarget.position + new Vector3(0, 0, dist));
         }
 
         public static void MoveEnd(this GuideObject go, Vector3 pos)
         {
-            LimbRotater(go).MoveEndTo(pos);
+            LimbRotater(go).MoveLimbTo(pos);
         }
     }
 }

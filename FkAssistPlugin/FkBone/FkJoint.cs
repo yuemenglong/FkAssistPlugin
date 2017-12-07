@@ -61,7 +61,7 @@ namespace FkAssistPlugin.FkBone
             get { return 180.0f - Vector3.Angle(_root.Vector, _end.Vector); }
         }
 
-        public void MoveEndTo(Vector3 pos)
+        public void MoveLimbTo(Vector3 pos)
         {
             var target = pos - _root.Transform.position;
             var max = _root.Vector.magnitude + _end.Vector.magnitude;
@@ -76,7 +76,7 @@ namespace FkAssistPlugin.FkBone
             Forward(target.magnitude - Vector.magnitude);
         }
 
-        public void Forward(float value)
+       public void Forward(float value)
         {
             var vec = _root.Vector + _end.Vector;
             var target = vec.magnitude + value;

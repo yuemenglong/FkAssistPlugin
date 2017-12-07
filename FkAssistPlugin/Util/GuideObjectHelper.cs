@@ -1,4 +1,5 @@
-﻿using Studio;
+﻿using System.Security;
+using Studio;
 using UnityEngine;
 
 namespace FkAssistPlugin.Util
@@ -31,6 +32,15 @@ namespace FkAssistPlugin.Util
                    || name == "cm_J_ArmUp00_L"
                    || name == "cm_J_ArmUp00_R";
         }
+        
+        public static bool IsShoulder(this GuideObject go)
+        {
+            var name = go.transformTarget.name;
+            return name == "cf_J_Shoulder_L"
+                   || name == "cm_J_Shoulder_L"
+                   || name == "cf_J_Shoulder_R"
+                   || name == "cm_J_Shoulder_R";
+        }
 
         public static bool IsLeg(this GuideObject go)
         {
@@ -60,21 +70,38 @@ namespace FkAssistPlugin.Util
             }
         }
 
+        public static void RotateAround(this GuideObject guideObject, Vector3 point, Vector3 axis, float angle)
+        {
+            if (guideObject.enableRot)
+            {
+                guideObject.transformTarget.RotateAround(point, axis, angle);
+                guideObject.changeAmount.rot = guideObject.transformTarget.localEulerAngles;
+            }
+        }
+
+        public static void TurnTo(this GuideObject guideObject, Vector3 forword)
+        {
+            var cur = guideObject.transformTarget.forward;
+            var angle = Vector3.Angle(cur, forword);
+            var axis = Vector3.Cross(cur, forword).normalized;
+            guideObject.RotateAround(guideObject.transformTarget.position, axis, angle);
+        }
+
         public static void Move(this GuideObject guideObject, float x, float y, float z)
         {
-            Move(guideObject, new Vector3(x,y,z));
+            Move(guideObject, new Vector3(x, y, z));
         }
-        
+
         public static void Move(this GuideObject guideObject, Vector3 vec)
         {
-            MoveTo(guideObject, guideObject.transformTarget.position +vec);
+            MoveTo(guideObject, guideObject.transformTarget.position + vec);
         }
-        
+
         public static void MoveTo(this GuideObject guideObject, float x, float y, float z)
         {
-            MoveTo(guideObject, new Vector3(x,y,z));
-        } 
-        
+            MoveTo(guideObject, new Vector3(x, y, z));
+        }
+
         public static void MoveTo(this GuideObject guideObject, Vector3 pos)
         {
             if (guideObject.enablePos)

@@ -65,7 +65,7 @@ namespace FkAssistPlugin.HSStudioNEOAddno
         {
             if (!((UnityEngine.Object) this.transform.parent == (UnityEngine.Object) null))
                 return;
-            BoneMarkerMgr.Instance.Destroy(this);
+            Destroy();
 //            UnityEngine.Object.Destroy((UnityEngine.Object) this);
         }
 
@@ -119,6 +119,12 @@ namespace FkAssistPlugin.HSStudioNEOAddno
         public void SetActive(bool active)
         {
             gameObject.SetActive(active);
+        }
+
+        public void Destroy()
+        {
+            SetActive(false);
+            UnityEngine.Object.Destroy(this);
         }
     }
 }

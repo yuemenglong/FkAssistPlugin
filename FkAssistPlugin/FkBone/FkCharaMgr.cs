@@ -74,12 +74,16 @@ namespace FkAssistPlugin.FkBone
 
         public static void DisableMarker()
         {
-            BoneMarkerMgr.Instance.ToggleEnabled(false);
+            IsMarkerEnabled = false;
+            Charas.Foreach(c=>c.DetachMarker());
+//            BoneMarkerMgr.Instance.ToggleEnabled(false);
         }
 
         public static void EnableMarker()
         {
-            BoneMarkerMgr.Instance.ToggleEnabled(true);
+            IsMarkerEnabled = true;
+            Charas.Foreach(c=>c.AttachMarker());
+//            BoneMarkerMgr.Instance.ToggleEnabled(true);
         }
 
         public static void ClearChars()

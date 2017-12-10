@@ -78,7 +78,7 @@ namespace FkAssistPlugin.FkBone
             {
                 if (b.Marker != null)
                 {
-                    BoneMarkerMgr.Instance.Destroy(b.Marker);
+                    b.Marker.Destroy();
                     b.Marker = null;
                     b.IsLocked = false;
                 }
@@ -89,7 +89,7 @@ namespace FkAssistPlugin.FkBone
         {
             Limbs().Foreach(b =>
             {
-                b.Marker = BoneMarkerMgr.Instance.Create(b.Transform);
+                b.Marker = BoneMarker.Create(b.Transform);
                 b.Marker.OnDrag = m =>
                 {
                     var screenVec = m.MouseEndPos - m.MouseStartPos;
@@ -113,7 +113,7 @@ namespace FkAssistPlugin.FkBone
             });
             Legs().Foreach(b =>
             {
-                b.Marker = BoneMarkerMgr.Instance.Create(b.Transform);
+                b.Marker = BoneMarker.Create(b.Transform);
                 b.Marker.OnRightClick = marker =>
                 {
                     b.IsLocked = !b.IsLocked;
@@ -341,7 +341,8 @@ namespace FkAssistPlugin.FkBone
             {
                 if (b.Marker != null)
                 {
-                    BoneMarkerMgr.Instance.Destroy(b.Marker);
+                    b.Marker.Destroy();
+                    b.Marker = null;
                     b.IsLocked = false;
                 }
             });

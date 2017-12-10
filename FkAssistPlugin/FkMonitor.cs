@@ -36,12 +36,14 @@ namespace FkAssistPlugin
                 if (FkCharaMgr.IsMarkerEnabled)
                 {
                     FkCharaMgr.ClearChars();
-                    FkCharaMgr.IsMarkerEnabled = false;
+//                    FkCharaMgr.IsMarkerEnabled = false;
+                    FkCharaMgr.DisableMarker();
                 }
                 else
                 {
                     FkCharaMgr.RefreshSelectChara();
-                    FkCharaMgr.IsMarkerEnabled = true;
+                    FkCharaMgr.EnableMarker();
+//                    FkCharaMgr.IsMarkerEnabled = true;
                 }
             }
             if (FkCharaMgr.IsMarkerEnabled)

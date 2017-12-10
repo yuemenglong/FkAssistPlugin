@@ -47,7 +47,6 @@
     <Compile Include="Fp.cs" />
     <Compile Include="HSStudioNEOAddno\BaseMgr.cs" />
     <Compile Include="HSStudioNEOAddno\BoneMarker.cs" />
-    <Compile Include="HSStudioNEOAddno\BoneMarkerMgr.cs" />
     <Compile Include="HSStudioNEOAddno\ShaderUtil.cs" />
     <Compile Include="ObjMoveRotAssistMgr.cs" />
     <Compile Include="Context.cs" />

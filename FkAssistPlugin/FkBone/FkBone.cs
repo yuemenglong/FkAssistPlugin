@@ -22,7 +22,7 @@ namespace FkAssistPlugin.FkBone
             }
         }
 
-        public FkBone[] Childre
+        public FkBone[] Children
         {
             get { return _children.ToArray(); }
         }
@@ -37,10 +37,11 @@ namespace FkAssistPlugin.FkBone
             }
         }
 
-        public BoneMarker Marker;
+        public BoneMarker Marker = null;
         public bool IsLocked;
         public Vector3 LockedPos;
         public Quaternion LockedRot;
+        
         public FkChara Chara { get; private set; }
 
         public FkBone(GuideObject go, FkChara chara)

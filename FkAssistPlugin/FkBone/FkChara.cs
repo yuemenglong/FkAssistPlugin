@@ -43,6 +43,7 @@ namespace FkAssistPlugin.FkBone
         #endregion
 
         public Dictionary<GuideObject, FkBone> DicGuideBones = new Dictionary<GuideObject, FkBone>();
+        public Dictionary<Transform, FkBone> DicTransBones = new Dictionary<Transform, FkBone>();
 
         public bool IsMale()
         {
@@ -141,7 +142,7 @@ namespace FkAssistPlugin.FkBone
             _handL.Parent = _armLow01L;
             _armLow01L.Parent = _armUp00L;
             _armUp00L.Parent = _spine02;
-            
+
             _handR.Parent = _armLow01R;
             _armLow01R.Parent = _armUp00R;
             _armUp00R.Parent = _spine02;
@@ -154,7 +155,7 @@ namespace FkAssistPlugin.FkBone
 //            _armLow01R.Child = _handR;
             _foot01L.Parent = _legLow01L;
             _legLow01L.Parent = _legUp00L;
-            
+
             _foot01R.Parent = _legLow01R;
             _legLow01R.Parent = _legUp00R;
 
@@ -162,6 +163,12 @@ namespace FkAssistPlugin.FkBone
 //            _legUp00R.Child = _legLow01R;
 //            _legLow01L.Child = _foot01L;
 //            _legLow01R.Child = _foot01R;
+
+            Bones().Foreach(b =>
+            {
+                DicGuideBones.Add(b.GuideObject, b);
+                DicTransBones.Add(b.Transform, b);
+            });
         }
 
         public FkBone[] Bones()
@@ -318,7 +325,7 @@ namespace FkAssistPlugin.FkBone
                 {
                     if (b.GuideObject.IsLimb())
                     {
-                        FkJointAssist.LimbRotater(b.GuideObject).MoveLimbTo(b.LockedPos);
+                        FkJointAssist.FkJointRotater(b.GuideObject).MoveEndTo(b.LockedPos);
                     }
                 }
                 if (b.Transform.rotation != b.LockedRot)

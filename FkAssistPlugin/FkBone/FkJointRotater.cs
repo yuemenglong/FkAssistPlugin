@@ -52,7 +52,7 @@ namespace FkAssistPlugin.FkBone
             get { return 180.0f - Vector3.Angle(_root.Vector, _end.Vector); }
         }
 
-        public void MoveLimbTo(Vector3 pos)
+        public void MoveEndTo(Vector3 pos)
         {
             var target = pos - _root.Transform.position;
             var max = _root.Vector.magnitude + _end.Vector.magnitude;

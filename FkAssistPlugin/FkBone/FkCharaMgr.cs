@@ -2,6 +2,7 @@
 using FkAssistPlugin.HSStudioNEOAddno;
 using FkAssistPlugin.Util;
 using Studio;
+using UnityEngine;
 
 namespace FkAssistPlugin.FkBone
 {
@@ -9,6 +10,25 @@ namespace FkAssistPlugin.FkBone
     {
         public static FkChara[] Charas = new FkChara[0];
         public static bool IsMarkerEnabled = false;
+
+        public static FkChara CreateChara(Transform transform)
+        {
+            var regex = @"^c[fm]_J_Hips$";
+            var root = transform.FindParentLoopByRegex(regex);
+            if (root == null)
+            {
+                root = transform.FindChildLoopByRegex(regex);
+                if (root == null)
+                {
+                    return null;
+                }
+            }
+            if (!Context.DicGuideObject().ContainsKey(root))
+            {
+                return null;
+            }
+            return new FkChara(root);
+        }
 
         public static FkChara FindSelectChara()
         {
@@ -75,14 +95,14 @@ namespace FkAssistPlugin.FkBone
         public static void DisableMarker()
         {
             IsMarkerEnabled = false;
-            Charas.Foreach(c=>c.DetachMarker());
+            Charas.Foreach(c => c.DetachMarker());
 //            BoneMarkerMgr.Instance.ToggleEnabled(false);
         }
 
         public static void EnableMarker()
         {
             IsMarkerEnabled = true;
-            Charas.Foreach(c=>c.AttachMarker());
+            Charas.Foreach(c => c.AttachMarker());
 //            BoneMarkerMgr.Instance.ToggleEnabled(true);
         }
 

@@ -42,6 +42,8 @@ namespace FkAssistPlugin.FkBone
 
         #endregion
 
+        public Dictionary<GuideObject, FkBone> DicGuideBones = new Dictionary<GuideObject, FkBone>();
+
         public bool IsMale()
         {
             return _root.Name == "cm_J_Hips";
@@ -60,14 +62,27 @@ namespace FkAssistPlugin.FkBone
                 throw new Exception("Invalid Root");
             }
             LoopChildren(root);
-            AttachChild();
-            AttachMarker();
+            AttachRelation();
+//            AttachMarker();
         }
 
         private FkBone CreateBone(Transform transform)
         {
             GuideObject go = Context.DicGuideObject()[transform];
-            return new FkBone(go);
+            return new FkBone(go, this);
+        }
+
+        public void DetachMarker()
+        {
+            Bones().Foreach(b =>
+            {
+                if (b.Marker != null)
+                {
+                    BoneMarkerMgr.Instance.Destroy(b.Marker);
+                    b.Marker = null;
+                    b.IsLocked = false;
+                }
+            });
         }
 
         public void AttachMarker()
@@ -112,93 +127,41 @@ namespace FkAssistPlugin.FkBone
                     {
                         b.Marker.SetDefaultColor();
                     }
-                }; 
+                };
             });
-           
         }
 
-        private void AttachChild()
+        private void AttachRelation()
         {
-            foreach (var fkBone in Bones())
-            {
-                switch (fkBone.Name)
-                {
-                    case "cm_J_Head":
-                    case "cf_J_Head":
-                        break;
-                    case "cm_J_Neck":
-                    case "cf_J_Neck":
-                        _neck.Child = _head;
-                        break;
-                    case "cm_J_Spine01":
-                    case "cf_J_Spine01":
-                        break;
-                    case "cm_J_Spine02":
-                    case "cf_J_Spine02":
-                        break;
-                    case "cm_J_Shoulder_L":
-                    case "cf_J_Shoulder_L":
-                        _shoulderL.Child = _armUp00L;
-                        break;
-                    case "cm_J_Shoulder_R":
-                    case "cf_J_Shoulder_R":
-                        _shoulderR.Child = _armUp00R;
-                        break;
-                    case "cm_J_ArmUp00_L":
-                    case "cf_J_ArmUp00_L":
-                        _armUp00L.Child = _armLow01L;
-                        break;
-                    case "cm_J_ArmUp00_R":
-                    case "cf_J_ArmUp00_R":
-                        _armUp00R.Child = _armLow01R;
-                        break;
-                    case "cm_J_ArmLow01_L":
-                    case "cf_J_ArmLow01_L":
-                        _armLow01L.Child = _handL;
-                        break;
-                    case "cm_J_ArmLow01_R":
-                    case "cf_J_ArmLow01_R":
-                        _armLow01R.Child = _handR;
-                        break;
-                    case "cm_J_Hand_L":
-                    case "cf_J_Hand_L":
-                        break;
-                    case "cm_J_Hand_R":
-                    case "cf_J_Hand_R":
-                        break;
-                    case "cm_J_Kosi01":
-                    case "cf_J_Kosi01":
-                        break;
-                    case "cm_J_LegUp00_L":
-                    case "cf_J_LegUp00_L":
-                        _legUp00L.Child = _legLow01L;
-                        break;
-                    case "cm_J_LegUp00_R":
-                    case "cf_J_LegUp00_R":
-                        _legUp00R.Child = _legLow01R;
-                        break;
-                    case "cm_J_LegLow01_L":
-                    case "cf_J_LegLow01_L":
-                        _legLow01L.Child = _foot01L;
-                        break;
-                    case "cm_J_LegLow01_R":
-                    case "cf_J_LegLow01_R":
-                        _legLow01R.Child = _foot01R;
-                        break;
-                    case "cm_J_Foot01_L":
-                    case "cf_J_Foot01_L":
-                        break;
-                    case "cm_J_Foot01_R":
-                    case "cf_J_Foot01_R":
-                        break;
-                    case "cm_J_Toes01_L":
-                    case "cf_J_Toes01_L":
-                        break;
-                    case "cm_J_Toes01_R":
-                    case "cf_J_Toes01_R":
-                        break;
-                }
-            }
+//            _neck.Child = _head;
+            _head.Parent = _neck;
+            _neck.Parent = _spine02;
+            _spine02.Parent = _spine01;
+
+            _handL.Parent = _armLow01L;
+            _armLow01L.Parent = _armUp00L;
+            _armUp00L.Parent = _spine02;
+            
+            _handR.Parent = _armLow01R;
+            _armLow01R.Parent = _armUp00R;
+            _armUp00R.Parent = _spine02;
+
+//            _shoulderL.Child = _armUp00L;
+//            _shoulderR.Child = _armUp00R;
+//            _armUp00L.Child = _armLow01L;
+//            _armUp00R.Child = _armLow01R;
+//            _armLow01L.Child = _handL;
+//            _armLow01R.Child = _handR;
+            _foot01L.Parent = _legLow01L;
+            _legLow01L.Parent = _legUp00L;
+            
+            _foot01R.Parent = _legLow01R;
+            _legLow01R.Parent = _legUp00R;
+
+//            _legUp00L.Child = _legLow01L;
+//            _legUp00R.Child = _legLow01R;
+//            _legLow01L.Child = _foot01L;
+//            _legLow01R.Child = _foot01R;
         }
 
         public FkBone[] Bones()
@@ -363,12 +326,12 @@ namespace FkAssistPlugin.FkBone
                     b.GuideObject.TurnTo(b.LockedRot);
                 }
             });
-            Legs().Filter(b=>b.IsLocked).Foreach(b =>
+            Legs().Filter(b => b.IsLocked).Foreach(b =>
             {
                 if (b.Transform.rotation != b.LockedRot)
                 {
                     b.GuideObject.TurnTo(b.LockedRot);
-                } 
+                }
             });
         }
 

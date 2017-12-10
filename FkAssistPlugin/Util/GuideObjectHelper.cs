@@ -6,6 +6,18 @@ namespace FkAssistPlugin.Util
 {
     public static class GuideObjectHelper
     {
+        public static bool IsMale(this GuideObject go)
+        {
+            var name = go.transformTarget.name;
+            return name.StartsWith("cm");
+        }
+        
+        public static bool IsFemale(this GuideObject go)
+        {
+            var name = go.transformTarget.name;
+            return name.StartsWith("cf");
+        }
+        
         public static bool IsHand(this GuideObject go)
         {
             var name = go.transformTarget.name;

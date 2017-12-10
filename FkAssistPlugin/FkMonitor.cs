@@ -33,18 +33,18 @@ namespace FkAssistPlugin
         {
             if (Input.GetKeyDown(KeyCode.T))
             {
-                if (FkCharaMgr.IsEnabled)
+                if (FkCharaMgr.IsMarkerEnabled)
                 {
                     FkCharaMgr.ClearChars();
-                    FkCharaMgr.IsEnabled = false;
+                    FkCharaMgr.IsMarkerEnabled = false;
                 }
                 else
                 {
                     FkCharaMgr.RefreshSelectChara();
-                    FkCharaMgr.IsEnabled = true;
+                    FkCharaMgr.IsMarkerEnabled = true;
                 }
             }
-            if (FkCharaMgr.IsEnabled)
+            if (FkCharaMgr.IsMarkerEnabled)
             {
                 FkCharaMgr.MoveLocked();
             }

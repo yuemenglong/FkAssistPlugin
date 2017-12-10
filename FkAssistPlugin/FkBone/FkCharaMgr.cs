@@ -8,9 +8,33 @@ namespace FkAssistPlugin.FkBone
     public class FkCharaMgr
     {
         public static FkChara[] Charas = new FkChara[0];
-        public static bool IsEnabled = false;
+        public static bool IsMarkerEnabled = false;
 
-        public static FkChara[] FindSelectChara()
+        public static FkChara FindSelectChara()
+        {
+            var regex = @"^c[fm]_J_Hips$";
+            if (Context.GuideObjectManager().selectObject == null)
+            {
+                return null;
+            }
+            var guideObject = Context.GuideObjectManager().selectObject;
+            var transform = guideObject.transformTarget.FindParentLoopByRegex(regex);
+            if (transform == null)
+            {
+                transform = guideObject.transformTarget.FindChildLoopByRegex(regex);
+                if (transform == null)
+                {
+                    return null;
+                }
+            }
+            if (!Context.DicGuideObject().ContainsKey(transform))
+            {
+                return null;
+            }
+            return new FkChara(transform);
+        }
+
+        public static FkChara[] FindSelectCharas()
         {
             var regex = @"^c[fm]_J_Hips$";
             var set = new HashSet<GuideObject>();
@@ -45,7 +69,7 @@ namespace FkAssistPlugin.FkBone
 
         public static void RefreshSelectChara()
         {
-            Charas = FindSelectChara();
+            Charas = FindSelectCharas();
         }
 
         public static void DisableMarker()

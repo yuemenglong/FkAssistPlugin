@@ -1,32 +1,40 @@
 ﻿using FkAssistPlugin.Util;
 using Studio;
 using UnityEngine;
+using Utility;
 
 namespace FkAssistPlugin.FkBone
 {
     public static class FkJointAssist
     {
-        public static FkLimbRotater LimbRotater(GuideObject go)
+        public static FkJointRotater LimbRotater(GuideObject go)
         {
-            if (go.IsHand() || go.transformTarget.name.StartsWith("cm_"))
+            if (go.IsLimb())
             {
-                var t = go.transformTarget;
-                var tp = t.parent;
-                var tpp = tp.parent;
-                var root = new TransformFkJoint(tpp, tp);
-                var end = new TransformFkJoint(tp, t);
-                var rotater = new FkLimbRotater(root, end);
-                return rotater;
+                if (go.IsHand() || go.IsMale())
+                {
+                    var t = go.transformTarget;
+                    var tp = t.parent;
+                    var tpp = tp.parent;
+                    var root = new TransformFkJoint(tpp, tp);
+                    var end = new TransformFkJoint(tp, t);
+                    var rotater = new FkJointRotater(root, end);
+                    return rotater;
+                }
+                else
+                {
+                    var t = go.transformTarget;
+                    var tp = t.parent.parent;
+                    var tpp = tp.parent;
+                    var root = new TransformFkJoint(tpp, tp);
+                    var end = new TransformFkJoint(tp, t);
+                    var rotater = new FkJointRotater(root, end);
+                    return rotater;
+                }
             }
             else
             {
-                var t = go.transformTarget;
-                var tp = t.parent.parent;
-                var tpp = tp.parent;
-                var root = new TransformFkJoint(tpp, tp);
-                var end = new TransformFkJoint(tp, t);
-                var rotater = new FkLimbRotater(root, end);
-                return rotater;
+                return null;
             }
         }
 

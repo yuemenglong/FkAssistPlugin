@@ -42,8 +42,7 @@
     <Compile Include="Camera\CameraPatch.cs" />
     <Compile Include="FKAssist.cs" />
     <Compile Include="FkAssistPlugin.cs" />
-    <Compile Include="FkBone\FkLegRotater.cs" />
-    <Compile Include="FkBone\FkLimbRotater.cs" />
+    <Compile Include="FkBone\FkJointRotater.cs" />
     <Compile Include="FkMonitor.cs" />
     <Compile Include="Fp.cs" />
     <Compile Include="HSStudioNEOAddno\BaseMgr.cs" />

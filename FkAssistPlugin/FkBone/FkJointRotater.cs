@@ -3,12 +3,12 @@ using UnityEngine;
 
 namespace FkAssistPlugin.FkBone
 {
-    public class FkLimbRotater
+    public class FkJointRotater
     {
         private IFkJoint _root;
         private IFkJoint _end;
 
-        public FkLimbRotater(IFkJoint root, IFkJoint end)
+        public FkJointRotater(IFkJoint root, IFkJoint end)
         {
             _root = root;
             _end = end;

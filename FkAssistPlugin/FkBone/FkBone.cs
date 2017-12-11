@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using FkAssistPlugin.HSStudioNEOAddno;
+using RootMotion.Demos;
 using Studio;
 using UnityEngine;
 
@@ -41,7 +42,7 @@ namespace FkAssistPlugin.FkBone
         public bool IsLocked;
         public Vector3 LockedPos;
         public Quaternion LockedRot;
-        
+
         public FkChara Chara { get; private set; }
 
         public FkBone(GuideObject go, FkChara chara)
@@ -76,6 +77,23 @@ namespace FkAssistPlugin.FkBone
         {
             GuideObject.transformTarget.RotateAround(point, axis, angle);
             GuideObject.changeAmount.rot = GuideObject.transformTarget.localEulerAngles;
+        }
+
+        public void RotateSelf(Vector3 axis, float angle)
+        {
+            RotateAround(Transform.position, axis, angle);
+        }
+
+        public void ActiveMarker()
+        {
+            Marker = BoneMarker.Create(Transform);
+        }
+
+        public void DestroyMarker()
+        {
+            Marker.Destroy();
+            Marker = null;
+            IsLocked = false;
         }
     }
 }

@@ -12,20 +12,8 @@ using Object = UnityEngine.Object;
 
 namespace FkAssistPlugin
 {
-    public class Test
-    {
-        public static bool pre()
-        {
-//            Logger.Log("Pre");
-            return false;
-        }
-    }
-
     public class FkPlugin : IEnhancedPlugin
     {
-        HashSet<String> _set = new HashSet<string>();
-        GameObject _go = new GameObject();
-
         public void OnApplicationStart()
         {
             Tracer.Log("OnApplicationStart");
@@ -45,7 +33,7 @@ namespace FkAssistPlugin
 
         public void OnLevelWasInitialized(int level)
         {
-            if (!((Object) Singleton<Studio.Studio>.Instance != (Object) null))
+            if (Context.Studio() == null)
                 return;
             BaseMgr<FkAssist>.Install(new GameObject("FkPlugin"));
             BaseMgr<FkMonitor>.Install(new GameObject("FkMonitor"));

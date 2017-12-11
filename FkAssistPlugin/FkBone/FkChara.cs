@@ -136,8 +136,6 @@ namespace FkAssistPlugin.FkBone
         {
 //            _neck.Child = _head;
             _head.Parent = _neck;
-            _neck.Parent = _spine02;
-            _spine02.Parent = _spine01;
 
             _handL.Parent = _armLow01L;
             _armLow01L.Parent = _armUp00L;
@@ -146,6 +144,8 @@ namespace FkAssistPlugin.FkBone
             _handR.Parent = _armLow01R;
             _armLow01R.Parent = _armUp00R;
             _armUp00R.Parent = _spine02;
+            
+            _spine02.Parent = _spine01;
 
 //            _shoulderL.Child = _armUp00L;
 //            _shoulderR.Child = _armUp00R;
@@ -325,7 +325,7 @@ namespace FkAssistPlugin.FkBone
                 {
                     if (b.GuideObject.IsLimb())
                     {
-                        FkJointAssist.FkJointRotater(b.GuideObject).MoveEndTo(b.LockedPos);
+                        FkJointAssist.FkJointRotater(b.GuideObject).MoveTo(b.LockedPos);
                     }
                 }
                 if (b.Transform.rotation != b.LockedRot)

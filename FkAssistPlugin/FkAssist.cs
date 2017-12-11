@@ -3,8 +3,6 @@ using System.Collections.Generic;
 using FkAssistPlugin.FkBone;
 using FkAssistPlugin.HSStudioNEOAddno;
 using FkAssistPlugin.Util;
-using IllusionUtility.GetUtility;
-using RootMotion.FinalIK;
 using Studio;
 using UnityEngine;
 
@@ -19,24 +17,6 @@ namespace FkAssistPlugin
         public override void Init()
         {
             Tracer.Log("FkAssistPlugin Init");
-        }
-
-        private void Rotate(float z, float y, float x)
-        {
-            GuideObjectManager instance = Singleton<GuideObjectManager>.Instance;
-            foreach (GuideObject guideObject in instance.selectObjects)
-            {
-                guideObject.Rotate(z, y, x);
-            }
-        }
-
-        private void Reset()
-        {
-            GuideObjectManager instance = Singleton<GuideObjectManager>.Instance;
-            foreach (GuideObject guideObject in instance.selectObjects)
-            {
-                guideObject.Reset();
-            }
         }
 
         private void FinishRotate()
@@ -72,6 +52,16 @@ namespace FkAssistPlugin
 
         private void Update()
         {
+            if (Input.GetKeyDown(KeyCode.P))
+            {
+//                var go = Context.GuideObjectManager().selectObject;
+//                var chara = FkCharaMgr.CreateChara(go.transformTarget);
+//                var bone = chara.DicGuideBones[go];
+//                bone.ActiveMarker();
+//                bone.Parent.ActiveMarker();
+//                bone.Parent.Parent.ActiveMarker();
+                return;
+            }
             try
             {
                 InnerUpdate();
@@ -99,34 +89,34 @@ namespace FkAssistPlugin
             _counter++;
             if (Input.GetKey(KeyCode.LeftShift) && Input.GetKeyDown(KeyCode.R))
             {
-                Reset();
+                go.Reset();
             }
             //
             else if (Input.GetKey(KeyCode.E) && Input.GetMouseButton(0))
             {
-                Rotate(angle, 0, 0);
+                go.Rotate(angle, 0, 0);
             }
             else if (Input.GetKey(KeyCode.E) && Input.GetMouseButton(1))
             {
-                Rotate(-angle, 0, 0);
+                go.Rotate(-angle, 0, 0);
             }
             //
             else if (Input.GetKey(KeyCode.S) && Input.GetMouseButton(0))
             {
-                Rotate(0, angle, 0);
+                go.Rotate(0, angle, 0);
             }
             else if (Input.GetKey(KeyCode.S) && Input.GetMouseButton(1))
             {
-                Rotate(0, -angle, 0);
+                go.Rotate(0, -angle, 0);
             }
             //
             else if (Input.GetKey(KeyCode.D) && Input.GetMouseButton(0))
             {
-                Rotate(0, 0, angle);
+                go.Rotate(0, 0, angle);
             }
             else if (Input.GetKey(KeyCode.D) && Input.GetMouseButton(1))
             {
-                Rotate(0, 0, -angle);
+                go.Rotate(0, 0, -angle);
             }
             //
             else if (Input.GetKey(KeyCode.X) && Input.GetMouseButton(0))

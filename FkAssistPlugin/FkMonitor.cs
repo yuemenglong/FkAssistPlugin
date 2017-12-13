@@ -133,6 +133,7 @@ namespace FkAssistPlugin
 
         private void ClearSelectorMarker()
         {
+            Tracer.Log("ClearSelectorMarker");
             _selectorMarkers.ForEach(m => m.Destroy());
             _selectorMarkers.Clear();
             _dicLockRecords.Clear();

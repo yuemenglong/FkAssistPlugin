@@ -18,6 +18,7 @@ namespace FkAssistPlugin
     {
         public Transform Leader;
         public FkBone.FkBone Follower;
+        public BoneMarker Marker;
         public Vector3 Pos;
     }
 
@@ -85,6 +86,7 @@ namespace FkAssistPlugin
             chara.Limbs().Foreach(b =>
             {
                 var marker = BoneMarker.Create(b.Transform);
+                _limbMarkers.Add(marker);
                 marker.OnDrag = (m) =>
                 {
                     var screenVec = m.MouseEndPos - m.MouseStartPos;
@@ -104,6 +106,7 @@ namespace FkAssistPlugin
             chara.Legs().Foreach(b =>
             {
                 var marker = BoneMarker.Create(b.Transform);
+                _limbMarkers.Add(marker);
                 marker.OnRightClick = (m) => { ToggleLockBone(b, m); };
             });
         }
@@ -116,6 +119,7 @@ namespace FkAssistPlugin
                 c.Bones().Foreach(b =>
                 {
                     var marker = BoneMarker.Create(b.Transform);
+                    _selectorMarkers.Add(marker);
                     marker.OnLeftClick = (m) =>
                     {
                         var attach = new AttachRecord();
@@ -123,9 +127,8 @@ namespace FkAssistPlugin
                         attach.Follower = _follower;
                         attach.Pos = attach.Follower.Transform.position - attach.Leader.position;
                         ClearSelectorMarker();
-                        Tracer.Log("Leader", attach.Leader);
-                        Tracer.Log("Follower", attach.Follower);
                         AttachLimbMarker();
+                        _attachRecords.Add(attach);
                     };
                 });
             });
@@ -148,12 +151,14 @@ namespace FkAssistPlugin
                     _isMarkerEnable = false;
                     ClearLimbMarker();
                     ClearSelectorMarker();
+                    _attachRecords.Clear();
                 }
                 else
                 {
                     _isMarkerEnable = true;
                     AttachLimbMarker();
                 }
+                Tracer.Log(_isMarkerEnable);
             }
             // 移动到Lock的位置
             foreach (var pair in _dicLockRecords)
@@ -169,6 +174,12 @@ namespace FkAssistPlugin
                     b.GuideObject.TurnTo(r.LockedRot);
                 }
             }
+            // attach
+            _attachRecords.ForEach(r =>
+            {
+                var pos = r.Leader.position + r.Pos;
+                FkJointAssist.MoveEnd(r.Follower.GuideObject, pos);
+            });
         }
     }
 }

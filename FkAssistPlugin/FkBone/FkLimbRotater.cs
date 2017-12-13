@@ -43,8 +43,6 @@ namespace FkAssistPlugin.FkBone
                 var now = Kit.Angle(root.Vector.magnitude, target, end.Vector.magnitude);
                 var angle = old - now;
                 var axis = Vector3.Cross(root.Vector, end.Vector).normalized;
-                Tracer.Log("Root", root.Transform.name, root.Transform);
-                Tracer.Log("Root", angle, axis);
                 root.RotateAround(root.Transform.position, axis, angle);
             }
             {
@@ -52,8 +50,6 @@ namespace FkAssistPlugin.FkBone
                 var now = Kit.Angle(root.Vector.magnitude, end.Vector.magnitude, target);
                 var angle = old - now;
                 var axis = Vector3.Cross(root.Vector, end.Vector).normalized;
-                Tracer.Log("End", end.Transform.name, end.Transform);
-                Tracer.Log("End", angle, axis);
                 end.RotateAround(end.Transform.position, axis, angle);
             }
         }
@@ -213,8 +209,6 @@ namespace FkAssistPlugin.FkBone
                 var now = Kit.Angle(_root.Vector.magnitude, target, _end.Vector.magnitude);
                 var angle = old - now;
                 var axis = Vector3.Cross(_root.Vector, _end.Vector).normalized;
-                Tracer.Log("Root", _root.Transform.name, _root.Transform);
-                Tracer.Log("Root", angle, axis);
                 _root.RotateAround(_root.Transform.position, axis, angle);
             }
             {
@@ -222,8 +216,6 @@ namespace FkAssistPlugin.FkBone
                 var now = Kit.Angle(_root.Vector.magnitude, _end.Vector.magnitude, target);
                 var angle = old - now;
                 var axis = Vector3.Cross(_root.Vector, _end.Vector).normalized;
-                Tracer.Log("End", _end.Transform.name, _end.Transform);
-                Tracer.Log("End", angle, axis);
                 _end.RotateAround(_end.Transform.position, axis, angle);
             }
         }

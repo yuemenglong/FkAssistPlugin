@@ -86,6 +86,13 @@ namespace FkAssistPlugin
                             FkJointAssist.MoveEnd(b.GuideObject, pos);
                         };
                         marker.OnRightClick = (m) => { ToggleLockBone(b, m); };
+                        marker.OnLeftDown = (m) => { UndoRedoHelper.Record(); };
+                        marker.OnLeftUp = (m) => { UndoRedoHelper.Finish(); };
+                    });
+                    chara.Legs().Foreach(b =>
+                    {
+                        var marker = BoneMarker.Create(b.Transform);
+                        marker.OnRightClick = (m) => { ToggleLockBone(b, m); };
                     });
                 }
             }
@@ -106,36 +113,3 @@ namespace FkAssistPlugin
         }
     }
 }
-
-//                    b.IsLocked = !b.IsLocked;
-//                    if (b.IsLocked)
-//                    {
-//                        b.LockedPos = b.Transform.position;
-//                        b.LockedRot = b.Transform.rotation;
-//                        b.Marker.SetColor(_lockedColor);
-//                    }
-//                    else
-//                    {
-//                        b.Marker.SetDefaultColor();
-//                    }
-
-//                });
-//            }
-//                if (FkCharaMgr.IsMarkerEnabled)
-//                {
-//                    FkCharaMgr.ClearChars();
-////                    FkCharaMgr.IsMarkerEnabled = false;
-//                    FkCharaMgr.DisableMarker();
-//                }
-//                else
-//                {
-//                    FkCharaMgr.RefreshSelectChara();
-//                    FkCharaMgr.EnableMarker();
-////                    FkCharaMgr.IsMarkerEnabled = true;
-//                }
-//        }
-
-//            if (FkCharaMgr.IsMarkerEnabled)
-//            {
-//                FkCharaMgr.MoveLocked();
-//            }

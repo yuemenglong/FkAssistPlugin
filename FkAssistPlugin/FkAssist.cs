@@ -48,6 +48,10 @@ namespace FkAssistPlugin
             }
             float angle = 0.5f;
             float dist = 0.002f;
+            if (Input.anyKeyDown)
+            {
+                UndoRedoHelper.Record();
+            }
             if (Input.GetKey(KeyCode.LeftShift))
             {
                 angle /= 4;
@@ -158,8 +162,8 @@ namespace FkAssistPlugin
                 }
                 _counter = 0;
 //                _oldRot = CollectOldRot();
-                UndoRedoHelper.Record();
             }
+
         }
     }
 }

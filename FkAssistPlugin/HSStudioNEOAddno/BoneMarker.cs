@@ -12,9 +12,11 @@ namespace FkAssistPlugin.HSStudioNEOAddno
         public static Color DefaultColor = new Color(0.8f, 0.8f, 0.0f, 0.4f);
         public static Color HoverColor = new Color(0f, 0.8f, 0.0f, 0.4f);
         private Color _defaultColor = DefaultColor;
-        public Action<BoneMarker> OnClick;
+        public Action<BoneMarker> OnLeftClick;
         public Action<BoneMarker> OnDrag;
         public Action<BoneMarker> OnRightClick;
+        public Action<BoneMarker> OnLeftDown;
+        public Action<BoneMarker> OnLeftUp;
         private MeshRenderer _renderer;
         public Vector3 MouseStartPos;
         public Vector3 MouseEndPos;
@@ -83,6 +85,10 @@ namespace FkAssistPlugin.HSStudioNEOAddno
             MouseStartPos = Input.mousePosition;
             _isDraged = true;
             CameraMgr.Lock();
+            if (OnLeftDown!=null)
+            {
+                OnLeftDown(this);
+            }
         }
 
         private void OnMouseOver()
@@ -108,6 +114,10 @@ namespace FkAssistPlugin.HSStudioNEOAddno
         {
             _isDraged = false;
             CameraMgr.Unlock();
+            if (OnLeftUp!=null)
+            {
+                OnLeftUp(this);
+            }
         }
 
         public void SetActive(bool active)

@@ -9,7 +9,7 @@ namespace FkAssistPlugin.FkBone
 {
     public class FkChara
     {
-        private static Color _lockedColor = new Color(0.8f, 0f, 0f, 0.4f);
+//        private static Color _lockedColor = new Color(0.8f, 0f, 0f, 0.4f);
 
         #region Field
 
@@ -73,64 +73,64 @@ namespace FkAssistPlugin.FkBone
             return new FkBone(go, this);
         }
 
-        public void DetachMarker()
-        {
-            Bones().Foreach(b =>
-            {
-                if (b.Marker != null)
-                {
-                    b.Marker.Destroy();
-                    b.Marker = null;
-                    b.IsLocked = false;
-                }
-            });
-        }
+//        public void DetachMarker()
+//        {
+//            Bones().Foreach(b =>
+//            {
+//                if (b.Marker != null)
+//                {
+//                    b.Marker.Destroy();
+//                    b.Marker = null;
+//                    b.IsLocked = false;
+//                }
+//            });
+//        }
 
-        public void AttachMarker()
-        {
-            Limbs().Foreach(b =>
-            {
-                b.Marker = BoneMarker.Create(b.Transform);
-                b.Marker.OnDrag = m =>
-                {
-                    var screenVec = m.MouseEndPos - m.MouseStartPos;
-                    var pos = Kit.MapScreenVecToWorld(screenVec, b.Transform.position);
-                    FkJointAssist.MoveEnd(b.GuideObject, pos);
-                };
-                b.Marker.OnRightClick = marker =>
-                {
-                    b.IsLocked = !b.IsLocked;
-                    if (b.IsLocked)
-                    {
-                        b.LockedPos = b.Transform.position;
-                        b.LockedRot = b.Transform.rotation;
-                        b.Marker.SetColor(_lockedColor);
-                    }
-                    else
-                    {
-                        b.Marker.SetDefaultColor();
-                    }
-                };
-            });
-            Legs().Foreach(b =>
-            {
-                b.Marker = BoneMarker.Create(b.Transform);
-                b.Marker.OnRightClick = marker =>
-                {
-                    b.IsLocked = !b.IsLocked;
-                    if (b.IsLocked)
-                    {
-                        b.LockedPos = b.Transform.position;
-                        b.LockedRot = b.Transform.rotation;
-                        b.Marker.SetColor(_lockedColor);
-                    }
-                    else
-                    {
-                        b.Marker.SetDefaultColor();
-                    }
-                };
-            });
-        }
+//        public void AttachMarker()
+//        {
+//            Limbs().Foreach(b =>
+//            {
+//                b.Marker = BoneMarker.Create(b.Transform);
+//                b.Marker.OnDrag = m =>
+//                {
+//                    var screenVec = m.MouseEndPos - m.MouseStartPos;
+//                    var pos = Kit.MapScreenVecToWorld(screenVec, b.Transform.position);
+//                    FkJointAssist.MoveEnd(b.GuideObject, pos);
+//                };
+//                b.Marker.OnRightClick = marker =>
+//                {
+//                    b.IsLocked = !b.IsLocked;
+//                    if (b.IsLocked)
+//                    {
+//                        b.LockedPos = b.Transform.position;
+//                        b.LockedRot = b.Transform.rotation;
+//                        b.Marker.SetColor(_lockedColor);
+//                    }
+//                    else
+//                    {
+//                        b.Marker.SetDefaultColor();
+//                    }
+//                };
+//            });
+//            Legs().Foreach(b =>
+//            {
+//                b.Marker = BoneMarker.Create(b.Transform);
+//                b.Marker.OnRightClick = marker =>
+//                {
+//                    b.IsLocked = !b.IsLocked;
+//                    if (b.IsLocked)
+//                    {
+//                        b.LockedPos = b.Transform.position;
+//                        b.LockedRot = b.Transform.rotation;
+//                        b.Marker.SetColor(_lockedColor);
+//                    }
+//                    else
+//                    {
+//                        b.Marker.SetDefaultColor();
+//                    }
+//                };
+//            });
+//        }
 
         private void AttachRelation()
         {
@@ -317,42 +317,42 @@ namespace FkAssistPlugin.FkBone
             }
         }
 
-        public void MoveLocked()
-        {
-            Limbs().Filter(b => { return b.IsLocked; }).Foreach(b =>
-            {
-                if (b.Transform.position != b.LockedPos)
-                {
-                    if (b.GuideObject.IsLimb())
-                    {
-                        FkJointAssist.FkJointRotater(b.GuideObject).MoveTo(b.LockedPos);
-                    }
-                }
-                if (b.Transform.rotation != b.LockedRot)
-                {
-                    b.GuideObject.TurnTo(b.LockedRot);
-                }
-            });
-            Legs().Filter(b => b.IsLocked).Foreach(b =>
-            {
-                if (b.Transform.rotation != b.LockedRot)
-                {
-                    b.GuideObject.TurnTo(b.LockedRot);
-                }
-            });
-        }
+//        public void MoveLocked()
+//        {
+//            Limbs().Filter(b => { return b.IsLocked; }).Foreach(b =>
+//            {
+//                if (b.Transform.position != b.LockedPos)
+//                {
+//                    if (b.GuideObject.IsLimb())
+//                    {
+//                        FkJointAssist.FkJointRotater(b.GuideObject).MoveTo(b.LockedPos);
+//                    }
+//                }
+//                if (b.Transform.rotation != b.LockedRot)
+//                {
+//                    b.GuideObject.TurnTo(b.LockedRot);
+//                }
+//            });
+//            Legs().Filter(b => b.IsLocked).Foreach(b =>
+//            {
+//                if (b.Transform.rotation != b.LockedRot)
+//                {
+//                    b.GuideObject.TurnTo(b.LockedRot);
+//                }
+//            });
+//        }
 
-        public void Destroy()
-        {
-            Bones().Foreach(b =>
-            {
-                if (b.Marker != null)
-                {
-                    b.Marker.Destroy();
-                    b.Marker = null;
-                    b.IsLocked = false;
-                }
-            });
-        }
+//        public void Destroy()
+//        {
+//            Bones().Foreach(b =>
+//            {
+//                if (b.Marker != null)
+//                {
+//                    b.Marker.Destroy();
+//                    b.Marker = null;
+//                    b.IsLocked = false;
+//                }
+//            });
+//        }
     }
 }

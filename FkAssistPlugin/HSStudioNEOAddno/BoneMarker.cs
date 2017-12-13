@@ -45,6 +45,10 @@ namespace FkAssistPlugin.HSStudioNEOAddno
             return boneMarker;
         }
 
+        private BoneMarker()
+        {
+        }
+
         public void SetColor(Color c)
         {
             _defaultColor = c;
@@ -57,22 +61,12 @@ namespace FkAssistPlugin.HSStudioNEOAddno
             this._renderer.material.color = _defaultColor;
         }
 
-        private void FixedUpdate()
-        {
-        }
-
         private void Update()
         {
-            if (!((UnityEngine.Object) this.transform.parent == (UnityEngine.Object) null))
+            if (this.transform.parent != null)
                 return;
             Destroy();
-//            UnityEngine.Object.Destroy((UnityEngine.Object) this);
         }
-
-//        private void OnDestroy()
-//        {
-//            BoneMarkerMgr.Instance.markers.Remove(this);
-//        }
 
         private void OnMouseEnter()
         {

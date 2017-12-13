@@ -38,10 +38,10 @@ namespace FkAssistPlugin.FkBone
             }
         }
 
-        public BoneMarker Marker = null;
-        public bool IsLocked;
-        public Vector3 LockedPos;
-        public Quaternion LockedRot;
+//        public BoneMarker Marker = null;
+//        public bool IsLocked;
+//        public Vector3 LockedPos;
+//        public Quaternion LockedRot;
 
         public FkChara Chara { get; private set; }
 
@@ -49,7 +49,7 @@ namespace FkAssistPlugin.FkBone
         {
             GuideObject = go;
             Chara = chara;
-            IsLocked = false;
+//            IsLocked = false;
         }
 
         public String Name
@@ -84,16 +84,16 @@ namespace FkAssistPlugin.FkBone
             RotateAround(Transform.position, axis, angle);
         }
 
-        public void ActiveMarker()
-        {
-            Marker = BoneMarker.Create(Transform);
-        }
+//        public void ActiveMarker()
+//        {
+//            Marker = BoneMarker.Create(Transform);
+//        }
 
-        public void DestroyMarker()
-        {
-            Marker.Destroy();
-            Marker = null;
-            IsLocked = false;
-        }
+//        public void DestroyMarker()
+//        {
+//            Marker.Destroy();
+//            Marker = null;
+//            IsLocked = false;
+//        }
     }
 }

@@ -9,7 +9,7 @@ namespace FkAssistPlugin.FkBone
     {
         public static IFkJointRotater FkJointRotater(GuideObject go)
         {
-            var chara = FkCharaMgr.CreateChara(go.transformTarget);
+            var chara = FkCharaMgr.BuildChara(go.transformTarget);
             var point = chara.DicTransBones[go.transformTarget];
             if (go.IsLimb())
             {

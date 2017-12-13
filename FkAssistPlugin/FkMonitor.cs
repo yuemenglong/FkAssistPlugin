@@ -14,13 +14,24 @@ namespace FkAssistPlugin
         public Quaternion LockedRot;
     }
 
+    struct AttachRecord
+    {
+        public Transform Leader;
+        public FkBone.FkBone Follower;
+        public Vector3 Pos;
+    }
+
     public class FkMonitor : BaseMgr<FkMonitor>
     {
         private static Color _lockedColor = new Color(0.8f, 0f, 0f, 0.4f);
 
         private bool _isMarkerEnable = false;
-        private List<BoneMarker> _markers = new List<BoneMarker>();
+        private List<BoneMarker> _limbMarkers = new List<BoneMarker>();
         private Dictionary<FkBone.FkBone, LockRecord> _dicLockRecords = new Dictionary<FkBone.FkBone, LockRecord>();
+
+        private List<BoneMarker> _selectorMarkers = new List<BoneMarker>();
+        private List<AttachRecord> _attachRecords = new List<AttachRecord>();
+        private FkBone.FkBone _follower = null;
 
         public override void Init()
         {
@@ -61,6 +72,72 @@ namespace FkAssistPlugin
             }
         }
 
+        private void ClearLimbMarker()
+        {
+            _limbMarkers.ForEach(m => { m.Destroy(); });
+            _limbMarkers.Clear();
+            _dicLockRecords.Clear();
+        }
+
+        private void AttachLimbMarker()
+        {
+            var chara = FkCharaMgr.FindSelectChara();
+            chara.Limbs().Foreach(b =>
+            {
+                var marker = BoneMarker.Create(b.Transform);
+                marker.OnDrag = (m) =>
+                {
+                    var screenVec = m.MouseEndPos - m.MouseStartPos;
+                    var pos = Kit.MapScreenVecToWorld(screenVec, b.Transform.position);
+                    FkJointAssist.MoveEnd(b.GuideObject, pos);
+                };
+                marker.OnMidClick = (m) =>
+                {
+                    ClearLimbMarker();
+                    _follower = b;
+                    AttachSelectorMarker();
+                };
+                marker.OnRightClick = (m) => { ToggleLockBone(b, m); };
+                marker.OnLeftDown = (m) => { UndoRedoHelper.Record(); };
+                marker.OnLeftUp = (m) => { UndoRedoHelper.Finish(); };
+            });
+            chara.Legs().Foreach(b =>
+            {
+                var marker = BoneMarker.Create(b.Transform);
+                marker.OnRightClick = (m) => { ToggleLockBone(b, m); };
+            });
+        }
+
+        private void AttachSelectorMarker()
+        {
+            var chars = FkCharaMgr.FindSelectCharas();
+            chars.Foreach(c =>
+            {
+                c.Bones().Foreach(b =>
+                {
+                    var marker = BoneMarker.Create(b.Transform);
+                    marker.OnLeftClick = (m) =>
+                    {
+                        var attach = new AttachRecord();
+                        attach.Leader = b.Transform;
+                        attach.Follower = _follower;
+                        attach.Pos = attach.Follower.Transform.position - attach.Leader.position;
+                        ClearSelectorMarker();
+                        Tracer.Log("Leader", attach.Leader);
+                        Tracer.Log("Follower", attach.Follower);
+                        AttachLimbMarker();
+                    };
+                });
+            });
+        }
+
+        private void ClearSelectorMarker()
+        {
+            _selectorMarkers.ForEach(m => m.Destroy());
+            _selectorMarkers.Clear();
+            _dicLockRecords.Clear();
+        }
+
         private void InnerUpdate()
         {
             if (Input.GetKeyDown(KeyCode.T))
@@ -68,32 +145,13 @@ namespace FkAssistPlugin
                 if (_isMarkerEnable)
                 {
                     _isMarkerEnable = false;
-                    _markers.ForEach(m => { m.Destroy(); });
-                    _markers.Clear();
-                    _dicLockRecords.Clear();
+                    ClearLimbMarker();
+                    ClearSelectorMarker();
                 }
                 else
                 {
                     _isMarkerEnable = true;
-                    var chara = FkCharaMgr.FindSelectChara();
-                    chara.Limbs().Foreach(b =>
-                    {
-                        var marker = BoneMarker.Create(b.Transform);
-                        marker.OnDrag = (m) =>
-                        {
-                            var screenVec = m.MouseEndPos - m.MouseStartPos;
-                            var pos = Kit.MapScreenVecToWorld(screenVec, b.Transform.position);
-                            FkJointAssist.MoveEnd(b.GuideObject, pos);
-                        };
-                        marker.OnRightClick = (m) => { ToggleLockBone(b, m); };
-                        marker.OnLeftDown = (m) => { UndoRedoHelper.Record(); };
-                        marker.OnLeftUp = (m) => { UndoRedoHelper.Finish(); };
-                    });
-                    chara.Legs().Foreach(b =>
-                    {
-                        var marker = BoneMarker.Create(b.Transform);
-                        marker.OnRightClick = (m) => { ToggleLockBone(b, m); };
-                    });
+                    AttachLimbMarker();
                 }
             }
             // 移动到Lock的位置

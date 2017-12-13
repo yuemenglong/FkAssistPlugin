@@ -11,43 +11,10 @@ namespace FkAssistPlugin
     public class FkAssist : BaseMgr<FkAssist>
     {
         private int _counter;
-        private Dictionary<int, Vector3> _oldRot;
-        private Dictionary<int, GuideObject> _targets = new Dictionary<int, GuideObject>();
 
         public override void Init()
         {
             Tracer.Log("FkAssistPlugin Init");
-        }
-
-        private void FinishRotate()
-        {
-            GuideObjectManager instance = Singleton<GuideObjectManager>.Instance;
-            var list = new List<GuideCommand.EqualsInfo>();
-            foreach (var kv in _targets)
-            {
-                var info = new GuideCommand.EqualsInfo();
-                info.dicKey = kv.Key;
-                info.oldValue = _oldRot[kv.Key];
-                info.newValue = kv.Value.changeAmount.rot;
-                list.Add(info);
-            }
-            var arr = list.ToArray();
-            Context.UndoRedoManager().Push(new GuideCommand.RotationEqualsCommand(arr));
-        }
-
-        private Dictionary<int, Vector3> CollectOldRot()
-        {
-            Dictionary<int, Vector3> dictionary = new Dictionary<int, Vector3>();
-            _targets = new Dictionary<int, GuideObject>();
-            foreach (GuideObject selectObject in Singleton<GuideObjectManager>.Instance.selectObjects)
-            {
-                if (selectObject.enableRot)
-                {
-                    dictionary.Add(selectObject.dicKey, selectObject.changeAmount.rot);
-                    _targets.Add(selectObject.dicKey, selectObject);
-                }
-            }
-            return dictionary;
         }
 
         private void Update()
@@ -186,10 +153,12 @@ namespace FkAssistPlugin
             {
                 if (_counter > 1)
                 {
-                    FinishRotate();
+                    UndoRedoHelper.Finish();
+//                    FinishRotate();
                 }
                 _counter = 0;
-                _oldRot = CollectOldRot();
+//                _oldRot = CollectOldRot();
+                UndoRedoHelper.Record();
             }
         }
     }

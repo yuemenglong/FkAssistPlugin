@@ -53,5 +53,13 @@ namespace FkAssistPlugin
                 fn(arr[i]);
             }
         }
+
+        public static T[] Concat<T>(this T[] arr, T[] arr2)
+        {
+            var list = new List<T>();
+            arr.Foreach(o => list.Add(o));
+            arr2.Foreach(o => list.Add(o));
+            return list.ToArray();
+        }
     }
 }

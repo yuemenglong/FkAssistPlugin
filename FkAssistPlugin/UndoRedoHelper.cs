@@ -13,7 +13,6 @@ namespace FkAssistPlugin
 
         public static void Record()
         {
-            Tracer.Log("Record");
             _lastRots.Clear();
             _lastTargets.Clear();
             foreach (var selectObject in FkCharaMgr.FindSelectChara().DicGuideBones.Keys)
@@ -31,7 +30,6 @@ namespace FkAssistPlugin
 
         public static void Finish()
         {
-            Tracer.Log("Finish");
             var list = new List<GuideCommand.EqualsInfo>();
             foreach (var kv in _lastTargets)
             {

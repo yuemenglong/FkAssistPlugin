@@ -118,8 +118,6 @@ namespace FkAssistPlugin
                         attach.Follower = _follower;
                         attach.Pos = attach.Follower.Transform.position - attach.Leader.position;
                         ClearSelectorMarker();
-                        Tracer.Log("Leader", attach.Leader);
-                        Tracer.Log("Follower", attach.Follower);
                         AttachLimbMarker();
                     };
                 });
@@ -128,7 +126,6 @@ namespace FkAssistPlugin
 
         private void ClearSelectorMarker()
         {
-            Tracer.Log("ClearSelectorMarker");
             _selectorMarkers.ForEach(m => m.Destroy());
             _selectorMarkers.Clear();
             _dicLockRecords.Clear();

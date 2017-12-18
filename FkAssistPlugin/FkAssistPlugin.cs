@@ -55,7 +55,7 @@ namespace FkAssistPlugin
 
         public string Version
         {
-            get { return "0.0.1"; }
+            get { return "1.0.0"; }
         }
 
         public void OnLateUpdate()

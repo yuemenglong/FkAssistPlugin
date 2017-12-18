@@ -11,21 +11,25 @@ namespace FkAssistPlugin
         private static readonly Dictionary<int, Vector3> _lastRots = new Dictionary<int, Vector3>();
         private static readonly Dictionary<int, GuideObject> _lastTargets = new Dictionary<int, GuideObject>();
 
+        private static void Record(GuideObject selectObject)
+        {
+            if (selectObject.enableRot)
+            {
+                _lastRots.Add(selectObject.dicKey, selectObject.changeAmount.rot);
+                _lastTargets.Add(selectObject.dicKey, selectObject);
+            }
+        }
+
         public static void Record()
         {
             _lastRots.Clear();
             _lastTargets.Clear();
             foreach (var selectObject in FkCharaMgr.FindSelectChara().DicGuideBones.Keys)
             {
-//            }
-//            foreach (GuideObject selectObject in Singleton<GuideObjectManager>.Instance.selectObjects)
-//            {
-                if (selectObject.enableRot)
-                {
-                    _lastRots.Add(selectObject.dicKey, selectObject.changeAmount.rot);
-                    _lastTargets.Add(selectObject.dicKey, selectObject);
-                }
+                Record(selectObject);
             }
+            Context.GuideObjectManager().selectObjects.Filter(go => go.IsChara())
+                .Foreach(go => Record(go));
         }
 
         public static void Finish()

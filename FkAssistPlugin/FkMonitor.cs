@@ -101,11 +101,6 @@ namespace FkAssistPlugin
                 marker.OnLeftDown = (m) => { UndoRedoHelper.Record(); };
                 marker.OnLeftUp = (m) => { UndoRedoHelper.Finish(); };
             });
-            chara.Legs().Foreach(b =>
-            {
-                var marker = BoneMarker.Create(b.Transform);
-                marker.OnRightClick = (m) => { ToggleLockBone(b, m); };
-            });
         }
 
         private void AttachSelectorMarker()

@@ -57,6 +57,11 @@ namespace FkAssistPlugin.FkBone
             return _root.Name.StartsWith("chaF");
         }
 
+        public FkBone Root
+        {
+            get { return _root; }
+        }
+
         public FkChara(Transform root)
         {
             _root = CreateBone(root);

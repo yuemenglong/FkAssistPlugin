@@ -16,7 +16,7 @@ namespace FkAssistPlugin
 
     struct AttachRecord
     {
-        public Transform Leader;
+        public FkBone.FkBone Leader;
         public FkBone.FkBone Follower;
         public Vector3 Pos;
     }
@@ -41,14 +41,6 @@ namespace FkAssistPlugin
 
         private void Update()
         {
-            if (Input.GetKeyDown(KeyCode.P))
-            {
-                var go = Context.GuideObjectManager().selectObject;
-                if (go != null)
-                {
-                    Tracer.Log(go.transformTarget);
-                }
-            }
             try
             {
                 InnerUpdate();
@@ -137,9 +129,17 @@ namespace FkAssistPlugin
                     marker.OnLeftClick = (m) =>
                     {
                         var attach = new AttachRecord();
-                        attach.Leader = b.Transform;
+                        attach.Leader = b;
                         attach.Follower = _follower;
-                        attach.Pos = attach.Follower.Transform.position - attach.Leader.position;
+                        if (attach.Leader.Transform == attach.Follower.Transform)
+                        {
+                            attach.Pos = attach.Leader.Transform.position;
+                            Tracer.Log("Self Attach", attach.Pos);
+                        }
+                        else
+                        {
+                            attach.Pos = attach.Follower.Transform.position - attach.Leader.Transform.position;
+                        }
                         _attachRecords.Add(attach);
                         ClearSelectorMarker();
                         EnableLimbMarker();
@@ -188,8 +188,16 @@ namespace FkAssistPlugin
             }
             _attachRecords.ForEach(r =>
             {
-                var target = r.Leader.position + r.Pos;
-                r.Follower.GuideObject.MoveEnd(target);
+                if (r.Leader.Transform == r.Follower.Transform)
+                {
+                    var vec = r.Pos - r.Leader.Transform.position;
+                    r.Leader.Chara.Root.GuideObject.Move(vec);
+                }
+                else
+                {
+                    var target = r.Leader.Transform.position + r.Pos;
+                    r.Follower.GuideObject.MoveEnd(target);
+                }
             });
         }
     }

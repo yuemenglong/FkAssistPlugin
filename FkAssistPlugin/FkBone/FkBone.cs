@@ -38,18 +38,12 @@ namespace FkAssistPlugin.FkBone
             }
         }
 
-//        public BoneMarker Marker = null;
-//        public bool IsLocked;
-//        public Vector3 LockedPos;
-//        public Quaternion LockedRot;
-
         public FkChara Chara { get; private set; }
 
         public FkBone(GuideObject go, FkChara chara)
         {
             GuideObject = go;
             Chara = chara;
-//            IsLocked = false;
         }
 
         public String Name

@@ -100,9 +100,10 @@ namespace FkAssistPlugin.FkBone
 
         public void Forward(float value)
         {
-            var root = new TransformFkJoint(_spine1.Transform, _spine2.Transform);
-            var end = new TransformFkJoint(_spine2.Transform, _arm.Transform);
-            FkJointRotater.Forward(root, end, value);
+            // 肩膀拉伸效果不好
+//            var root = new TransformFkJoint(_spine1.Transform, _spine2.Transform);
+//            var end = new TransformFkJoint(_spine2.Transform, _arm.Transform);
+//            FkJointRotater.Forward(root, end, value);
         }
 
         public void Revolution(float angle)

@@ -24,6 +24,7 @@ namespace FkAssistPlugin
     public class FkMonitor : BaseMgr<FkMonitor>
     {
         private static Color _lockedColor = new Color(0.8f, 0f, 0f, 0.4f);
+        private static Color _selectorColor = new Color(0.0f, 0.0f, 0.8f, 0.4f);
 
         private bool _isMarkerEnable = false;
         private List<BoneMarker> _limbMarkers = new List<BoneMarker>();
@@ -93,7 +94,7 @@ namespace FkAssistPlugin
                 };
                 marker.OnMidClick = (m) =>
                 {
-                    ClearLimbMarker();
+//                    ClearLimbMarker();
                     _follower = b;
                     AttachSelectorMarker();
                 };
@@ -111,6 +112,7 @@ namespace FkAssistPlugin
                 c.Bones().Foreach(b =>
                 {
                     var marker = BoneMarker.Create(b.Transform);
+                    marker.SetColor(_selectorColor);
                     marker.OnLeftClick = (m) =>
                     {
                         var attach = new AttachRecord();
@@ -118,7 +120,7 @@ namespace FkAssistPlugin
                         attach.Follower = _follower;
                         attach.Pos = attach.Follower.Transform.position - attach.Leader.position;
                         ClearSelectorMarker();
-                        AttachLimbMarker();
+//                        AttachLimbMarker();
                     };
                 });
             });

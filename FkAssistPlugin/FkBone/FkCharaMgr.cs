@@ -3,6 +3,7 @@ using FkAssistPlugin.HSStudioNEOAddno;
 using FkAssistPlugin.Util;
 using Studio;
 using UnityEngine;
+using Utility;
 
 namespace FkAssistPlugin.FkBone
 {
@@ -10,10 +11,11 @@ namespace FkAssistPlugin.FkBone
     {
 //        public static FkChara[] Charas = new FkChara[0];
 //        public static bool IsMarkerEnabled = false;
+        private static string regex = @"^cha[FM]\d{2}$";
 
         public static FkChara BuildChara(Transform transform)
         {
-            var regex = @"^c[fm]_J_Hips$";
+//            var regex = @"^c[fm]_J_Hips$";
             var root = transform.FindParentLoopByRegex(regex);
             if (root == null)
             {
@@ -32,7 +34,6 @@ namespace FkAssistPlugin.FkBone
 
         public static FkChara FindSelectChara()
         {
-            var regex = @"^c[fm]_J_Hips$";
             if (Context.GuideObjectManager().selectObject == null)
             {
                 return null;
@@ -56,7 +57,6 @@ namespace FkAssistPlugin.FkBone
 
         public static FkChara[] FindSelectCharas()
         {
-            var regex = @"^c[fm]_J_Hips$";
             var set = new HashSet<GuideObject>();
             if (Context.GuideObjectManager().selectObjects == null)
             {
@@ -86,38 +86,5 @@ namespace FkAssistPlugin.FkBone
             }
             return list.ToArray();
         }
-
-//        public static void RefreshSelectChara()
-//        {
-//            Charas = FindSelectCharas();
-//        }
-
-//        public static void DisableMarker()
-//        {
-//            IsMarkerEnabled = false;
-//            Charas.Foreach(c => c.DetachMarker());
-////            BoneMarkerMgr.Instance.ToggleEnabled(false);
-//        }
-//
-//        public static void EnableMarker()
-//        {
-//            IsMarkerEnabled = true;
-//            Charas.Foreach(c => c.AttachMarker());
-////            BoneMarkerMgr.Instance.ToggleEnabled(true);
-//        }
-
-//        public static void ClearChars()
-//        {
-////            BoneMarkerMgr.Instance.ToggleEnabled(false);
-////            DisableMarker();
-////            BoneMarkerMgr.Instance.Clear();
-//            Charas.Foreach(c => c.Destroy());
-//            Charas = new FkChara[0];
-//        }
-
-//        public static void MoveLocked()
-//        {
-//            Charas.Foreach(c => c.MoveLocked());
-//        }
     }
 }

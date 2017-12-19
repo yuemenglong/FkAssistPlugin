@@ -41,6 +41,14 @@ namespace FkAssistPlugin
 
         private void Update()
         {
+            if (Input.GetKeyDown(KeyCode.P))
+            {
+                var go = Context.GuideObjectManager().selectObject;
+                if (go != null)
+                {
+                    Tracer.Log(go.transformTarget);
+                }
+            }
             try
             {
                 InnerUpdate();

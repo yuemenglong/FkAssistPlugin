@@ -75,13 +75,49 @@ namespace FkAssistPlugin.FkBone
         }
     }
 
+    public class FkHeadRotater : IFkJointRotater
+    {
+        private FkBone _spine1;
+        private FkBone _spine2;
+        private FkBone _neck;
+
+        public FkHeadRotater(FkBone spine1, FkBone spine2, FkBone neck)
+        {
+            _spine1 = spine1;
+            _spine2 = spine2;
+            _neck = neck;
+        }
+
+        public void MoveTo(Vector3 pos)
+        {
+        }
+
+        public void Forward(float value)
+        {
+        }
+
+        public void Revolution(float angle)
+        {
+            //旋转
+        }
+
+        public void Tangent(float angle)
+        {
+            //切向
+        }
+
+        public void Normals(float angle)
+        {
+            //法向
+        }
+    }
+
     public class FkArmRotater : IFkJointRotater
     {
         private FkBone _spine1;
         private FkBone _spine2;
         private FkBone _arm;
         private FkBone _armAno;
-
 
         public FkArmRotater(FkBone spine1, FkBone spine2, FkBone arm, FkBone armAno)
         {
@@ -93,9 +129,10 @@ namespace FkAssistPlugin.FkBone
 
         public void MoveTo(Vector3 pos)
         {
-            var root = new TransformFkJoint(_spine1.Transform, _spine2.Transform);
-            var end = new TransformFkJoint(_spine2.Transform, _arm.Transform);
-            FkJointRotater.MoveTo(root, end, pos);
+            // 肩膀也不适合移动
+//            var root = new TransformFkJoint(_spine1.Transform, _spine2.Transform);
+//            var end = new TransformFkJoint(_spine2.Transform, _arm.Transform);
+//            FkJointRotater.MoveTo(root, end, pos);
         }
 
         public void Forward(float value)

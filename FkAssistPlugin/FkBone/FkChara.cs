@@ -13,7 +13,9 @@ namespace FkAssistPlugin.FkBone
 
         #region Field
 
-        private FkBone _root; //cm_J_Hips
+        private FkBone _root;
+
+        private FkBone _hips; //cm_J_Hips
 
         private FkBone _head; //cm_J_Head
         private FkBone _neck; //cm_J_Neck
@@ -47,12 +49,12 @@ namespace FkAssistPlugin.FkBone
 
         public bool IsMale()
         {
-            return _root.Name == "cm_J_Hips";
+            return _root.Name.StartsWith("chaM");
         }
 
         public bool IsFemale()
         {
-            return _root.Name == "cf_J_Hips";
+            return _root.Name.StartsWith("chaF");
         }
 
         public FkChara(Transform root)
@@ -64,7 +66,6 @@ namespace FkAssistPlugin.FkBone
             }
             LoopChildren(root);
             AttachRelation();
-//            AttachMarker();
         }
 
         private FkBone CreateBone(Transform transform)
@@ -73,68 +74,8 @@ namespace FkAssistPlugin.FkBone
             return new FkBone(go, this);
         }
 
-//        public void DetachMarker()
-//        {
-//            Bones().Foreach(b =>
-//            {
-//                if (b.Marker != null)
-//                {
-//                    b.Marker.Destroy();
-//                    b.Marker = null;
-//                    b.IsLocked = false;
-//                }
-//            });
-//        }
-
-//        public void AttachMarker()
-//        {
-//            Limbs().Foreach(b =>
-//            {
-//                b.Marker = BoneMarker.Create(b.Transform);
-//                b.Marker.OnDrag = m =>
-//                {
-//                    var screenVec = m.MouseEndPos - m.MouseStartPos;
-//                    var pos = Kit.MapScreenVecToWorld(screenVec, b.Transform.position);
-//                    FkJointAssist.MoveEnd(b.GuideObject, pos);
-//                };
-//                b.Marker.OnRightClick = marker =>
-//                {
-//                    b.IsLocked = !b.IsLocked;
-//                    if (b.IsLocked)
-//                    {
-//                        b.LockedPos = b.Transform.position;
-//                        b.LockedRot = b.Transform.rotation;
-//                        b.Marker.SetColor(_lockedColor);
-//                    }
-//                    else
-//                    {
-//                        b.Marker.SetDefaultColor();
-//                    }
-//                };
-//            });
-//            Legs().Foreach(b =>
-//            {
-//                b.Marker = BoneMarker.Create(b.Transform);
-//                b.Marker.OnRightClick = marker =>
-//                {
-//                    b.IsLocked = !b.IsLocked;
-//                    if (b.IsLocked)
-//                    {
-//                        b.LockedPos = b.Transform.position;
-//                        b.LockedRot = b.Transform.rotation;
-//                        b.Marker.SetColor(_lockedColor);
-//                    }
-//                    else
-//                    {
-//                        b.Marker.SetDefaultColor();
-//                    }
-//                };
-//            });
-//        }
-
         private void AttachRelation()
         {
-//            _neck.Child = _head;
             _head.Parent = _neck;
 
             _handL.Parent = _armLow01L;
@@ -144,25 +85,15 @@ namespace FkAssistPlugin.FkBone
             _handR.Parent = _armLow01R;
             _armLow01R.Parent = _armUp00R;
             _armUp00R.Parent = _spine02;
-            
-            _spine02.Parent = _spine01;
 
-//            _shoulderL.Child = _armUp00L;
-//            _shoulderR.Child = _armUp00R;
-//            _armUp00L.Child = _armLow01L;
-//            _armUp00R.Child = _armLow01R;
-//            _armLow01L.Child = _handL;
-//            _armLow01R.Child = _handR;
+            _spine02.Parent = _spine01;
+            _spine01.Parent = _hips;
+
             _foot01L.Parent = _legLow01L;
             _legLow01L.Parent = _legUp00L;
 
             _foot01R.Parent = _legLow01R;
             _legLow01R.Parent = _legUp00R;
-
-//            _legUp00L.Child = _legLow01L;
-//            _legUp00R.Child = _legLow01R;
-//            _legLow01L.Child = _foot01L;
-//            _legLow01R.Child = _foot01R;
 
             Bones().Foreach(b =>
             {
@@ -273,6 +204,10 @@ namespace FkAssistPlugin.FkBone
                 case "cm_J_Hand_R":
                 case "cf_J_Hand_R":
                     _handR = CreateBone(transform);
+                    break;
+                case "cm_J_Hips":
+                case "cf_J_Hips":
+                    _hips = CreateBone(transform);
                     break;
                 case "cm_J_Kosi01":
                 case "cf_J_Kosi01":

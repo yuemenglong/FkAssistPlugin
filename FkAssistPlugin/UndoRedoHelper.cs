@@ -24,11 +24,13 @@ namespace FkAssistPlugin
         {
             _lastRots.Clear();
             _lastTargets.Clear();
+            var set = new HashSet<GuideObject>();
             foreach (var selectObject in FkCharaMgr.FindSelectChara().DicGuideBones.Keys)
             {
                 Record(selectObject);
+                set.Add(selectObject);
             }
-            Context.GuideObjectManager().selectObjects.Filter(go => go.IsChara())
+            Context.GuideObjectManager().selectObjects.Filter(go => !set.Contains(go))
                 .Foreach(go => Record(go));
         }
 

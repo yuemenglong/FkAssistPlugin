@@ -132,6 +132,7 @@ namespace FkAssistPlugin
                         attach.Leader = b.Transform;
                         attach.Follower = _follower;
                         attach.Pos = attach.Follower.Transform.position - attach.Leader.position;
+                        _attachRecords.Add(attach);
                         ClearSelectorMarker();
                         EnableLimbMarker();
 //                        AttachLimbMarker();
@@ -177,6 +178,11 @@ namespace FkAssistPlugin
                     b.GuideObject.TurnTo(r.LockedRot);
                 }
             }
+            _attachRecords.ForEach(r =>
+            {
+                var target = r.Leader.position + r.Pos;
+                r.Follower.GuideObject.MoveEnd(target);
+            });
         }
     }
 }

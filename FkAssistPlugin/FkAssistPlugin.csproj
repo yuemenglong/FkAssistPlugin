@@ -44,12 +44,12 @@
     <Compile Include="FkAssistPlugin.cs" />
     <Compile Include="FkBone\FkLimbRotater.cs" />
     <Compile Include="FkBone\TransformFkJoint.cs" />
-    <Compile Include="FkMonitor.cs" />
+    <Compile Include="FkLocker.cs" />
+    <Compile Include="FkSelector.cs" />
     <Compile Include="Fp.cs" />
     <Compile Include="HSStudioNEOAddno\BaseMgr.cs" />
     <Compile Include="HSStudioNEOAddno\BoneMarker.cs" />
     <Compile Include="HSStudioNEOAddno\ShaderUtil.cs" />
-    <Compile Include="ObjMoveRotAssistMgr.cs" />
     <Compile Include="Context.cs" />
     <Compile Include="Patch\PatchMgr.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />

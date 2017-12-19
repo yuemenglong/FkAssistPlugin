@@ -7,7 +7,14 @@ namespace FkAssistPlugin.Util
 {
     public static class Tracer
     {
-        static FileStream fs = new FileStream("D:/hs-log.txt", FileMode.Append);
+        static FileStream fs;
+
+        static Tracer()
+        {
+#if DEBUG
+            fs = new FileStream("D:/hs-log.txt", FileMode.Append);
+#endif
+        }
 
         public static void Log(params object[] ss)
         {
@@ -48,9 +55,11 @@ namespace FkAssistPlugin.Util
             var msg = "[FkPlugin] " + String.Join(", ", list.ToArray());
             Debug.Log(msg);
 
+#if DEBUG
             byte[] data = System.Text.Encoding.Default.GetBytes(msg + "\n");
             fs.Write(data, 0, data.Length);
             fs.Flush();
+#endif
         }
     }
 }

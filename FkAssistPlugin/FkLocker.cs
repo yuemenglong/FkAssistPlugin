@@ -16,15 +16,16 @@ namespace FkAssistPlugin
 
     struct AttachRecord
     {
-        public Transform Leader;
+        public FkBone.FkBone Leader;
         public FkBone.FkBone Follower;
         public BoneMarker Marker;
         public Vector3 Pos;
     }
 
-    public class FkMonitor : BaseMgr<FkMonitor>
+    public class FkLocker : BaseMgr<FkLocker>
     {
         private static Color _lockedColor = new Color(0.8f, 0f, 0f, 0.4f);
+        private static Color _selectorColor = new Color(0.0f, 0.0f, 0.8f, 0.4f);
 
         private bool _isMarkerEnable = false;
         private List<BoneMarker> _limbMarkers = new List<BoneMarker>();
@@ -41,10 +42,6 @@ namespace FkAssistPlugin
 
         private void Update()
         {
-            if (Input.GetKeyDown(KeyCode.P))
-            {
-                return;
-            }
             try
             {
                 InnerUpdate();
@@ -83,6 +80,10 @@ namespace FkAssistPlugin
         private void AttachLimbMarker()
         {
             var chara = FkCharaMgr.FindSelectChara();
+            if (chara == null)
+            {
+                return;
+            }
             chara.Limbs().Foreach(b =>
             {
                 var marker = BoneMarker.Create(b.Transform);
@@ -95,7 +96,8 @@ namespace FkAssistPlugin
                 };
                 marker.OnMidClick = (m) =>
                 {
-                    ClearLimbMarker();
+//                    ClearLimbMarker();
+                    DisableLimbMarker();
                     _follower = b;
                     AttachSelectorMarker();
                 };
@@ -103,12 +105,16 @@ namespace FkAssistPlugin
                 marker.OnLeftDown = (m) => { UndoRedoHelper.Record(); };
                 marker.OnLeftUp = (m) => { UndoRedoHelper.Finish(); };
             });
-            chara.Legs().Foreach(b =>
-            {
-                var marker = BoneMarker.Create(b.Transform);
-                _limbMarkers.Add(marker);
-                marker.OnRightClick = (m) => { ToggleLockBone(b, m); };
-            });
+        }
+
+        private void DisableLimbMarker()
+        {
+            _limbMarkers.ForEach(m => m.SetActive(false));
+        }
+
+        private void EnableLimbMarker()
+        {
+            _limbMarkers.ForEach(m => m.SetActive(true));
         }
 
         private void AttachSelectorMarker()
@@ -119,16 +125,25 @@ namespace FkAssistPlugin
                 c.Bones().Foreach(b =>
                 {
                     var marker = BoneMarker.Create(b.Transform);
+                    marker.SetColor(_selectorColor);
                     _selectorMarkers.Add(marker);
                     marker.OnLeftClick = (m) =>
                     {
                         var attach = new AttachRecord();
-                        attach.Leader = b.Transform;
+                        attach.Leader = b;
                         attach.Follower = _follower;
-                        attach.Pos = attach.Follower.Transform.position - attach.Leader.position;
-                        ClearSelectorMarker();
-                        AttachLimbMarker();
+                        if (attach.Leader.Transform == attach.Follower.Transform)
+                        {
+                            attach.Pos = attach.Leader.Transform.position;
+                            Tracer.Log("Self Attach", attach.Pos);
+                        }
+                        else
+                        {
+                            attach.Pos = attach.Follower.Transform.position - attach.Leader.Transform.position;
+                        }
                         _attachRecords.Add(attach);
+                        ClearSelectorMarker();
+                        EnableLimbMarker();
                     };
                 });
             });
@@ -136,7 +151,6 @@ namespace FkAssistPlugin
 
         private void ClearSelectorMarker()
         {
-            Tracer.Log("ClearSelectorMarker");
             _selectorMarkers.ForEach(m => m.Destroy());
             _selectorMarkers.Clear();
             _dicLockRecords.Clear();
@@ -174,11 +188,18 @@ namespace FkAssistPlugin
                     b.GuideObject.TurnTo(r.LockedRot);
                 }
             }
-            // attach
             _attachRecords.ForEach(r =>
             {
-                var pos = r.Leader.position + r.Pos;
-                FkJointAssist.MoveEnd(r.Follower.GuideObject, pos);
+                if (r.Leader.Transform == r.Follower.Transform)
+                {
+                    var vec = r.Pos - r.Leader.Transform.position;
+                    r.Leader.Chara.Root.GuideObject.Move(vec);
+                }
+                else
+                {
+                    var target = r.Leader.Transform.position + r.Pos;
+                    r.Follower.GuideObject.MoveEnd(target);
+                }
             });
         }
     }

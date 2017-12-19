@@ -29,35 +29,27 @@ namespace FkAssistPlugin
 
         private void InnerUpdate()
         {
-            if (Input.GetKey(KeyCode.LeftShift) && Input.GetMouseButtonDown(2))
+            if (Input.GetKey(KeyCode.LeftShift) && Input.GetMouseButtonDown(0))
             {
-                Tracer.Log("Mouse Middle");
-                var go = Context.GuideObjectManager().selectObject;
-                if (go != null)
+                var minDist = double.MaxValue;
+                FkBone.FkBone minBone = null;
+                FkCharaMgr.FindSelectCharas().Foreach(c =>
                 {
-                    go.SetActive(false);
+                    c.Bones().Foreach(b =>
+                    {
+                        var screenPoint = CameraMgr.MainCamera().WorldToScreenPoint(b.Transform.position);
+                        var dist = (screenPoint - Input.mousePosition).magnitude;
+                        if (dist < minDist)
+                        {
+                            minDist = dist;
+                            minBone = b;
+                        }
+                    });
+                });
+                if (minBone != null)
+                {
+                    Context.GuideObjectManager().SetSelectObject(minBone.GuideObject, false);
                 }
-//                var minDist = double.MaxValue;
-//                FkBone.FkBone minBone = null;
-//                FkCharaMgr.FindSelectCharas().Foreach(c =>
-//                {
-//                    c.Bones().Foreach(b =>
-//                    {
-//                        b.GuideObject.SetActive(false);
-//                        var screenPoint = CameraMgr.MainCamera().WorldToScreenPoint(b.Transform.position);
-//                        var dist = (screenPoint - Input.mousePosition).magnitude;
-//                        Tracer.Log(b.Transform.name, dist);
-//                        if (dist < minDist)
-//                        {
-//                            minDist = dist;
-//                            minBone = b;
-//                        }
-//                    });
-//                });
-//                if (minBone != null)
-//                {
-//                    minBone.GuideObject.SetActive(true);
-//                }
             }
         }
     }

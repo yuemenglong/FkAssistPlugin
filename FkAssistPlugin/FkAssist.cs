@@ -19,16 +19,6 @@ namespace FkAssistPlugin
 
         private void Update()
         {
-            if (Input.GetKeyDown(KeyCode.P))
-            {
-//                var go = Context.GuideObjectManager().selectObject;
-//                var chara = FkCharaMgr.CreateChara(go.transformTarget);
-//                var bone = chara.DicGuideBones[go];
-//                bone.ActiveMarker();
-//                bone.Parent.ActiveMarker();
-//                bone.Parent.Parent.ActiveMarker();
-                return;
-            }
             try
             {
                 InnerUpdate();

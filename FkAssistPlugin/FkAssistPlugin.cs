@@ -36,7 +36,8 @@ namespace FkAssistPlugin
             if (Context.Studio() == null)
                 return;
             BaseMgr<FkAssist>.Install(new GameObject("FkPlugin"));
-            BaseMgr<FkMonitor>.Install(new GameObject("FkMonitor"));
+            BaseMgr<FkLocker>.Install(new GameObject("FkLocker"));
+            BaseMgr<FkSelector>.Install(new GameObject("FkSelector"));
             Tracer.Log("OnLevelWasInitialized, " + level);
         }
 

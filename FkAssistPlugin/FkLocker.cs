@@ -21,7 +21,7 @@ namespace FkAssistPlugin
         public Vector3 Pos;
     }
 
-    public class FkMonitor : BaseMgr<FkMonitor>
+    public class FkLocker : BaseMgr<FkLocker>
     {
         private static Color _lockedColor = new Color(0.8f, 0f, 0f, 0.4f);
         private static Color _selectorColor = new Color(0.0f, 0.0f, 0.8f, 0.4f);
@@ -41,10 +41,6 @@ namespace FkAssistPlugin
 
         private void Update()
         {
-            if (Input.GetKeyDown(KeyCode.P))
-            {
-                return;
-            }
             try
             {
                 InnerUpdate();
@@ -83,9 +79,14 @@ namespace FkAssistPlugin
         private void AttachLimbMarker()
         {
             var chara = FkCharaMgr.FindSelectChara();
+            if (chara == null)
+            {
+                return;
+            }
             chara.Limbs().Foreach(b =>
             {
                 var marker = BoneMarker.Create(b.Transform);
+                _limbMarkers.Add(marker);
                 marker.OnDrag = (m) =>
                 {
                     var screenVec = m.MouseEndPos - m.MouseStartPos;
@@ -95,6 +96,7 @@ namespace FkAssistPlugin
                 marker.OnMidClick = (m) =>
                 {
 //                    ClearLimbMarker();
+                    DisableLimbMarker();
                     _follower = b;
                     AttachSelectorMarker();
                 };
@@ -102,6 +104,16 @@ namespace FkAssistPlugin
                 marker.OnLeftDown = (m) => { UndoRedoHelper.Record(); };
                 marker.OnLeftUp = (m) => { UndoRedoHelper.Finish(); };
             });
+        }
+
+        private void DisableLimbMarker()
+        {
+            _limbMarkers.ForEach(m => m.SetActive(false));
+        }
+
+        private void EnableLimbMarker()
+        {
+            _limbMarkers.ForEach(m => m.SetActive(true));
         }
 
         private void AttachSelectorMarker()
@@ -113,6 +125,7 @@ namespace FkAssistPlugin
                 {
                     var marker = BoneMarker.Create(b.Transform);
                     marker.SetColor(_selectorColor);
+                    _selectorMarkers.Add(marker);
                     marker.OnLeftClick = (m) =>
                     {
                         var attach = new AttachRecord();
@@ -120,6 +133,7 @@ namespace FkAssistPlugin
                         attach.Follower = _follower;
                         attach.Pos = attach.Follower.Transform.position - attach.Leader.position;
                         ClearSelectorMarker();
+                        EnableLimbMarker();
 //                        AttachLimbMarker();
                     };
                 });

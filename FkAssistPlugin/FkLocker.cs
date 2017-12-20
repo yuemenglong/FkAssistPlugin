@@ -14,6 +14,12 @@ namespace FkAssistPlugin
         public Quaternion LockedRot;
     }
 
+    struct HangRecord
+    {
+        public FkBone.FkBone Bone;
+        public Vector3 Pos;
+    }
+
     struct AttachRecord
     {
         public FkBone.FkBone Leader;
@@ -26,14 +32,18 @@ namespace FkAssistPlugin
     {
         private static Color _lockedColor = new Color(0.8f, 0f, 0f, 0.4f);
         private static Color _selectorColor = new Color(0.0f, 0.0f, 0.8f, 0.4f);
+        private static Color _hangColor = new Color(0.5f, 0.0f, 0.5f, 0.4f);
 
-        private bool _isMarkerEnable = false;
+        private bool _isLockerEnable = false;
         private List<BoneMarker> _limbMarkers = new List<BoneMarker>();
         private Dictionary<FkBone.FkBone, LockRecord> _dicLockRecords = new Dictionary<FkBone.FkBone, LockRecord>();
 
         private List<BoneMarker> _selectorMarkers = new List<BoneMarker>();
+        private List<BoneMarker> _hangMarkers = new List<BoneMarker>();
         private List<AttachRecord> _attachRecords = new List<AttachRecord>();
         private FkBone.FkBone _follower = null;
+
+        private List<HangRecord> _hangRecords = new List<HangRecord>();
 
         public override void Init()
         {
@@ -132,15 +142,7 @@ namespace FkAssistPlugin
                         var attach = new AttachRecord();
                         attach.Leader = b;
                         attach.Follower = _follower;
-                        if (attach.Leader.Transform == attach.Follower.Transform)
-                        {
-                            attach.Pos = attach.Leader.Transform.position;
-                            Tracer.Log("Self Attach", attach.Pos);
-                        }
-                        else
-                        {
-                            attach.Pos = attach.Follower.Transform.position - attach.Leader.Transform.position;
-                        }
+                        attach.Pos = attach.Follower.Transform.position - attach.Leader.Transform.position;
                         _attachRecords.Add(attach);
                         ClearSelectorMarker();
                         EnableLimbMarker();
@@ -156,24 +158,59 @@ namespace FkAssistPlugin
             _dicLockRecords.Clear();
         }
 
+        private void AttachHangMarker()
+        {
+            DisableLimbMarker();
+            FkCharaMgr.FindSelectChara().Bones().Foreach(b =>
+            {
+                var marker = BoneMarker.Create(b.Transform);
+                marker.SetColor(_hangColor);
+                _hangMarkers.Add(marker);
+                marker.OnLeftClick = m =>
+                {
+                    var r = new HangRecord();
+                    r.Bone = b;
+                    r.Pos = b.Transform.position;
+                    _hangRecords.Add(r);
+                    ClearHangMarker();
+                    EnableLimbMarker();
+                };
+            });
+        }
+
+        private void ClearHangMarker()
+        {
+            _hangMarkers.ForEach(m => m.Destroy());
+            _hangMarkers.Clear();
+        }
+
         private void InnerUpdate()
         {
-            if (Input.GetKeyDown(KeyCode.T))
+            if (Input.GetKeyDown(KeyCode.T) && Input.GetKey(KeyCode.LeftShift))
             {
-                if (_isMarkerEnable)
+                if (_isLockerEnable)
                 {
-                    _isMarkerEnable = false;
+                    AttachHangMarker();
+                }
+            }
+            else if (Input.GetKeyDown(KeyCode.T))
+            {
+                if (_isLockerEnable)
+                {
+                    _isLockerEnable = false;
                     ClearLimbMarker();
                     ClearSelectorMarker();
-                    CameraMgr.Unlock();
+                    ClearHangMarker();
                     _attachRecords.Clear();
+                    _hangRecords.Clear();
+                    CameraMgr.Unlock();
                 }
                 else
                 {
-                    _isMarkerEnable = true;
+                    _isLockerEnable = true;
                     AttachLimbMarker();
                 }
-                Tracer.Log(_isMarkerEnable);
+                Tracer.Log(_isLockerEnable);
             }
             // 移动到Lock的位置
             foreach (var pair in _dicLockRecords)
@@ -189,18 +226,26 @@ namespace FkAssistPlugin
                     b.GuideObject.TurnTo(r.LockedRot);
                 }
             }
+            _hangRecords.ForEach(r =>
+            {
+                var vec = r.Pos - r.Bone.Transform.position;
+                if (vec != Vector3.zero)
+                {
+                    r.Bone.Chara.Root.GuideObject.Move(vec);
+                }
+            });
             _attachRecords.ForEach(r =>
             {
-                if (r.Leader.Transform == r.Follower.Transform)
-                {
-                    var vec = r.Pos - r.Leader.Transform.position;
-                    r.Leader.Chara.Root.GuideObject.Move(vec);
-                }
-                else
-                {
-                    var target = r.Leader.Transform.position + r.Pos;
-                    r.Follower.GuideObject.MoveEnd(target);
-                }
+//                if (r.Leader.Transform == r.Follower.Transform)
+//                {
+//                    var vec = r.Pos - r.Leader.Transform.position;
+//                    r.Leader.Chara.Root.GuideObject.Move(vec);
+//                }
+//                else
+//                {
+                var target = r.Leader.Transform.position + r.Pos;
+                r.Follower.GuideObject.MoveEnd(target);
+//                }
             });
         }
     }

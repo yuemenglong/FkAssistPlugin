@@ -165,6 +165,7 @@ namespace FkAssistPlugin
                     _isMarkerEnable = false;
                     ClearLimbMarker();
                     ClearSelectorMarker();
+                    CameraMgr.Unlock();
                     _attachRecords.Clear();
                 }
                 else

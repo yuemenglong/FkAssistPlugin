@@ -75,6 +75,10 @@ namespace FkAssistPlugin.FkBone
 
         private FkBone CreateBone(Transform transform)
         {
+            if (!Context.DicGuideObject().ContainsKey(transform))
+            {
+                Tracer.Log("Not Contains", transform);
+            }
             GuideObject go = Context.DicGuideObject()[transform];
             return new FkBone(go, this);
         }

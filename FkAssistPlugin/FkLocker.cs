@@ -4,6 +4,7 @@ using System.Runtime.InteropServices;
 using FkAssistPlugin.FkBone;
 using FkAssistPlugin.HSStudioNEOAddno;
 using FkAssistPlugin.Util;
+using RootMotion.FinalIK;
 using UnityEngine;
 
 namespace FkAssistPlugin
@@ -18,13 +19,13 @@ namespace FkAssistPlugin
     {
         public FkBone.FkBone Bone;
         public Vector3 Pos;
+        public Quaternion Rot;
     }
 
     struct AttachRecord
     {
         public FkBone.FkBone Leader;
         public FkBone.FkBone Follower;
-        public BoneMarker Marker;
         public Vector3 Pos;
     }
 
@@ -171,6 +172,7 @@ namespace FkAssistPlugin
                     var r = new HangRecord();
                     r.Bone = b;
                     r.Pos = b.Transform.position;
+                    r.Rot = b.Transform.rotation;
                     _hangRecords.Add(r);
                     ClearHangMarker();
                     EnableLimbMarker();
@@ -232,6 +234,10 @@ namespace FkAssistPlugin
                 if (vec != Vector3.zero)
                 {
                     r.Bone.Chara.Root.GuideObject.Move(vec);
+                }
+                if (r.Rot != r.Bone.Transform.rotation)
+                {
+                    r.Bone.GuideObject.TurnTo(r.Rot);
                 }
             });
             _attachRecords.ForEach(r =>

@@ -33,7 +33,7 @@ namespace FkAssistPlugin
 
         public void OnLevelWasInitialized(int level)
         {
-            if (Context.GetStudio() == null)
+            if (Context.Studio() == null)
                 return;
             BaseMgr<FkAssist>.Install(new GameObject("FkPlugin"));
             BaseMgr<FkLocker>.Install(new GameObject("FkLocker"));

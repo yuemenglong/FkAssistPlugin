@@ -185,7 +185,7 @@ namespace FkAssistPlugin.FkBone
                 // not need fix
                 return false;
             }
-            var go = Context.SafeGetGuideObject(_root.Transform);
+            var go = Context.DicGuideObject()[_root.Transform];
             if (go == null || !(go.IsArm() || go.IsLeg()))
             {
                 return false;

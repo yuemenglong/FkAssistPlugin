@@ -75,7 +75,7 @@ namespace FkAssistPlugin.Util
 
         public static GuideObject GuideObject(this Transform transform)
         {
-            return Context.SafeGetGuideObject(transform);
+            return Context.DicGuideObject()[transform];
         }
 
         public static void Rotate(this GuideObject guideObject, float z, float y, float x)

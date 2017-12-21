@@ -9,7 +9,7 @@ namespace FkAssistPlugin
 {
     public class Context : MonoBehaviour
     {
-        public static Studio.Studio GetStudio()
+        public static Studio.Studio Studio()
         {
             return Singleton<Studio.Studio>.Instance;
         }
@@ -24,16 +24,6 @@ namespace FkAssistPlugin
             return GuideObjectManager().GetPrivateField<Dictionary<Transform, GuideObject>>("dicGuideObject");
         }
 
-        public static GuideObject SafeGetGuideObject(Transform transform)
-        {
-            if (DicGuideObject().ContainsKey(transform))
-            {
-                return DicGuideObject()[transform];
-            }
-            Tracer.Log("Not Contains GuideObject");
-            return GuideObjectManager().Add(transform, Studio.Studio.GetNewIndex());
-        }
-
         public static UndoRedoManager UndoRedoManager()
         {
             return Singleton<UndoRedoManager>.Instance;
@@ -42,7 +32,7 @@ namespace FkAssistPlugin
         public static OCIChar[] Characters()
         {
             var list = new List<OCIChar>();
-            foreach (var objectCtrlInfo in GetStudio().dicInfo.Values)
+            foreach (var objectCtrlInfo in Studio().dicInfo.Values)
             {
                 if (objectCtrlInfo.kind == 0)
                 {
@@ -58,7 +48,7 @@ namespace FkAssistPlugin
 
         private static List<TreeNodeObject> GetCharaNodes<CharaType>()
         {
-            var studio = GetStudio();
+            var studio = Studio();
             var treeNodeCtrl = studio.treeNodeCtrl;
             List<TreeNodeObject> charaNodes = new List<TreeNodeObject>();
 

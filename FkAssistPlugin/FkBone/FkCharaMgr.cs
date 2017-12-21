@@ -25,10 +25,10 @@ namespace FkAssistPlugin.FkBone
                     return null;
                 }
             }
-//            if (!Context.DicGuideObject().ContainsKey(root))
-//            {
-//                return null;
-//            }
+            if (!Context.DicGuideObject().ContainsKey(root))
+            {
+                return null;
+            }
             return new FkChara(root);
         }
 
@@ -48,10 +48,10 @@ namespace FkAssistPlugin.FkBone
                     return null;
                 }
             }
-//            if (!Context.DicGuideObject().ContainsKey(transform))
-//            {
-//                return null;
-//            }
+            if (!Context.DicGuideObject().ContainsKey(transform))
+            {
+                return null;
+            }
             return new FkChara(transform);
         }
 
@@ -73,11 +73,11 @@ namespace FkAssistPlugin.FkBone
                         continue;
                     }
                 }
-//                if (!Context.DicGuideObject().ContainsKey(transform))
-//                {
-//                    continue;
-//                }
-                set.Add(Context.SafeGetGuideObject(transform));
+                if (!Context.DicGuideObject().ContainsKey(transform))
+                {
+                    continue;
+                }
+                set.Add(Context.DicGuideObject()[transform]);
             }
             var list = new List<FkChara>();
             foreach (var guideObject in set)

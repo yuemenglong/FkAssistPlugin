@@ -39,7 +39,7 @@ namespace FkAssistPlugin
 
         public static Camera MainCamera()
         {
-            return Context.GetStudio().cameraCtrl.mainCmaera;
+            return Context.Studio().cameraCtrl.mainCmaera;
         }
     }
 }

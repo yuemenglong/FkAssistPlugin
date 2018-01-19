@@ -188,7 +188,7 @@ namespace FkAssistPlugin
 
         private void InnerUpdate()
         {
-            if (Input.GetKeyDown(KeyCode.T) && Input.GetKey(KeyCode.LeftShift))
+            if (Input.GetKeyDown(KeyCode.T) && Input.GetKey(KeyCode.LeftControl))
             {
                 if (_isLockerEnable)
                 {
@@ -213,6 +213,10 @@ namespace FkAssistPlugin
                     AttachLimbMarker();
                 }
                 Tracer.Log(_isLockerEnable);
+            }
+            else if (Input.GetKeyDown(KeyCode.P))
+            {
+                CameraMgr.Toggle();
             }
             // 移动到Lock的位置
             foreach (var pair in _dicLockRecords)

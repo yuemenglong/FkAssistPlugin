@@ -42,6 +42,8 @@ namespace FkAssistPlugin.FkBone
         private FkBone _toes01L; //cm_J_Toes01_L
         private FkBone _toes01R; //cm_J_Toes01_R
 
+        private List<FkBone> _fingers = new List<FkBone>();
+
         #endregion
 
         public Dictionary<GuideObject, FkBone> DicGuideBones = new Dictionary<GuideObject, FkBone>();
@@ -69,7 +71,12 @@ namespace FkAssistPlugin.FkBone
             {
                 throw new Exception("Invalid Root");
             }
-            LoopChildren(root);
+            var hips = root.Find("BodyTop/p_cf_anim/cf_J_Root/cf_N_height/cf_J_Hips");
+            if (hips == null)
+            {
+                hips = root.Find("BodyTop/p_cm_anim/cm_J_Root/cm_N_height/cm_J_Hips");
+            }
+            LoopChildren(hips);
             AttachRelation();
         }
 
@@ -77,7 +84,8 @@ namespace FkAssistPlugin.FkBone
         {
             if (!Context.DicGuideObject().ContainsKey(transform))
             {
-                Tracer.Log("Not Contains", transform);
+//                Tracer.Log("Not Contains", transform);
+                return null;
             }
             GuideObject go = Context.DicGuideObject()[transform];
             return new FkBone(go, this);
@@ -104,6 +112,11 @@ namespace FkAssistPlugin.FkBone
             _foot01R.Parent = _legLow01R;
             _legLow01R.Parent = _legUp00R;
 
+//            _fingers.ToArray().Filter(f => f != null && !f.Name.Contains("01")).Foreach(f =>
+//            {
+//                f.Parent = DicTransBones[f.Transform.parent];
+//            });
+
             Bones().Foreach(b =>
             {
                 DicGuideBones.Add(b.GuideObject, b);
@@ -129,6 +142,7 @@ namespace FkAssistPlugin.FkBone
 
                 _spine02,
                 _spine01,
+                _hips,
                 _kosi01,
 
                 _legUp00L,
@@ -139,7 +153,7 @@ namespace FkAssistPlugin.FkBone
                 _foot01R,
                 _toes01L,
                 _toes01R,
-            };
+            }.Concat(_fingers.ToArray()).Filter(b => b != null);
         }
 
         public GuideObject[] GuideObjects()
@@ -157,13 +171,22 @@ namespace FkAssistPlugin.FkBone
             return new[] {_handL, _handR, _foot01L, _foot01R};
         }
 
-        public FkBone[] Legs()
+        private void CheckFinger(Transform transform)
         {
-            return new[] {_legUp00L, _legUp00R};
+            var names = new String[] {"Thumb", "Index", "Middle", "Ring", "Little"}.Map(n =>
+                String.Format("Hand_{0}", n));
+            if (names.Filter(n => transform.name.IndexOf(n, StringComparison.Ordinal) > 0).Length == 1)
+            {
+                _fingers.Add(CreateBone(transform));
+            }
         }
 
         private void LoopChildren(Transform transform)
         {
+            if (transform.name == "pcAnimator")
+            {
+                return;
+            }
             switch (transform.name)
             {
                 case "cm_J_Head":
@@ -254,49 +277,14 @@ namespace FkAssistPlugin.FkBone
                 case "cf_J_Toes01_R":
                     _toes01R = CreateBone(transform);
                     break;
+                default:
+                    CheckFinger(transform);
+                    break;
             }
             for (var i = 0; i < transform.childCount; i++)
             {
                 LoopChildren(transform.GetChild(i));
             }
         }
-
-//        public void MoveLocked()
-//        {
-//            Limbs().Filter(b => { return b.IsLocked; }).Foreach(b =>
-//            {
-//                if (b.Transform.position != b.LockedPos)
-//                {
-//                    if (b.GuideObject.IsLimb())
-//                    {
-//                        FkJointAssist.FkJointRotater(b.GuideObject).MoveTo(b.LockedPos);
-//                    }
-//                }
-//                if (b.Transform.rotation != b.LockedRot)
-//                {
-//                    b.GuideObject.TurnTo(b.LockedRot);
-//                }
-//            });
-//            Legs().Filter(b => b.IsLocked).Foreach(b =>
-//            {
-//                if (b.Transform.rotation != b.LockedRot)
-//                {
-//                    b.GuideObject.TurnTo(b.LockedRot);
-//                }
-//            });
-//        }
-
-//        public void Destroy()
-//        {
-//            Bones().Foreach(b =>
-//            {
-//                if (b.Marker != null)
-//                {
-//                    b.Marker.Destroy();
-//                    b.Marker = null;
-//                    b.IsLocked = false;
-//                }
-//            });
-//        }
     }
 }

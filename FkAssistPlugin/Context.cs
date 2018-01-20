@@ -23,6 +23,11 @@ namespace FkAssistPlugin
         {
             return GuideObjectManager().GetPrivateField<Dictionary<Transform, GuideObject>>("dicGuideObject");
         }
+        
+        public static HashSet<GuideObject> HashSelectObject()
+        {
+            return GuideObjectManager().GetPrivateField<HashSet<GuideObject>>("hashSelectObject");
+        }
 
         public static UndoRedoManager UndoRedoManager()
         {

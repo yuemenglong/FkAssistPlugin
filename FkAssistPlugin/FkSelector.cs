@@ -29,7 +29,7 @@ namespace FkAssistPlugin
 
         private void InnerUpdate()
         {
-            if (Input.GetKey(KeyCode.LeftShift) && Input.GetMouseButtonDown(0))
+            if (Input.GetKey(KeyCode.LeftControl) && Input.GetMouseButtonDown(0))
             {
                 var minDist = double.MaxValue;
                 FkBone.FkBone minBone = null;

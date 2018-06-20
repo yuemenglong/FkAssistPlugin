@@ -21,7 +21,13 @@ namespace FkAssistPlugin
         {
             try
             {
+                if (Input.GetKeyDown(KeyCode.P))
+                {
+                    var go = Context.GuideObjectManager().selectObject;
+                    Tracer.Log(go.transformTarget);
+                }
                 InnerUpdate();
+
             }
             catch (Exception e)
             {
@@ -36,8 +42,8 @@ namespace FkAssistPlugin
             {
                 return;
             }
-            float angle = 0.5f;
-            float dist = 0.002f;
+            float angle = 1.0f;
+            float dist = 0.003f;
             if (Input.anyKeyDown)
             {
                 UndoRedoHelper.Record();

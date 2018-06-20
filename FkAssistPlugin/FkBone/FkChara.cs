@@ -51,12 +51,12 @@ namespace FkAssistPlugin.FkBone
 
         public bool IsMale()
         {
-            return _root.Name.StartsWith("chaM");
+            return _root.Name.StartsWith("Male");
         }
 
         public bool IsFemale()
         {
-            return _root.Name.StartsWith("chaF");
+            return _root.Name.StartsWith("Female");
         }
 
         public FkBone Root
@@ -71,11 +71,22 @@ namespace FkAssistPlugin.FkBone
             {
                 throw new Exception("Invalid Root");
             }
-            var hips = root.Find("BodyTop/p_cf_anim/cf_J_Root/cf_N_height/cf_J_Hips");
+
+            Transform hips = null;
+            if (IsFemale())
+            {
+                hips = root.Find("p_cf_anim/cf_J_Root/cf_N_height/cf_J_Hips");
+            }
+            else
+            {
+                hips = root.Find("p_cm_anim/cm_J_Root/cm_N_height/cm_J_Hips");
+            }
+
             if (hips == null)
             {
-                hips = root.Find("BodyTop/p_cm_anim/cm_J_Root/cm_N_height/cm_J_Hips");
+                throw new Exception("Can't Find Hips");
             }
+
             LoopChildren(hips);
             AttachRelation();
         }
@@ -87,6 +98,7 @@ namespace FkAssistPlugin.FkBone
 //                Tracer.Log("Not Contains", transform);
                 return null;
             }
+
             GuideObject go = Context.DicGuideObject()[transform];
             return new FkBone(go, this);
         }
@@ -163,6 +175,7 @@ namespace FkAssistPlugin.FkBone
             {
                 list.Add(fkBone.GuideObject);
             }
+
             return list.ToArray();
         }
 
@@ -187,6 +200,7 @@ namespace FkAssistPlugin.FkBone
             {
                 return;
             }
+
             switch (transform.name)
             {
                 case "cm_J_Head":
@@ -281,6 +295,7 @@ namespace FkAssistPlugin.FkBone
                     CheckFinger(transform);
                     break;
             }
+
             for (var i = 0; i < transform.childCount; i++)
             {
                 LoopChildren(transform.GetChild(i));

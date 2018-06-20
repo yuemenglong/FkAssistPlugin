@@ -75,17 +75,5 @@ namespace FkAssistPlugin.FkBone
         {
             RotateAround(Transform.position, axis, angle);
         }
-
-//        public void ActiveMarker()
-//        {
-//            Marker = BoneMarker.Create(Transform);
-//        }
-
-//        public void DestroyMarker()
-//        {
-//            Marker.Destroy();
-//            Marker = null;
-//            IsLocked = false;
-//        }
     }
 }

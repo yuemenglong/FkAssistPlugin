@@ -69,8 +69,8 @@ namespace FkAssistPlugin
             {
                 return new[]
                 {
-                    "StudioNEO_32",
-                    "StudioNEO_64",
+                    "PlayHome64bit",
+                    "PlayHomeStudio64bit"
                 };
             }
         }

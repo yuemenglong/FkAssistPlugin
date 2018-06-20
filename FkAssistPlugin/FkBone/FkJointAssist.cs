@@ -15,6 +15,7 @@ namespace FkAssistPlugin.FkBone
             {
                 return new FkLimbRotater(point.Parent.Parent, point.Parent);
             }
+
             if (go.IsArm())
             {
 //                var root = new TransformFkJoint(point.Parent.Parent.Transform, point.Parent.Transform);
@@ -23,6 +24,7 @@ namespace FkAssistPlugin.FkBone
                 var ano = point.Parent.Children.Filter(c => c != point)[0];
                 return new FkArmRotater(point.Parent.Parent, point.Parent, point, ano);
             }
+
             return null;
         }
 
@@ -54,18 +56,24 @@ namespace FkAssistPlugin.FkBone
         {
             if (go.IsLimb() || go.IsArm())
                 FkJointRotater(go).MoveTo(go.transformTarget.position + new Vector3(dist, 0, 0));
+            else if (go.IsChara())
+                go.Move(new Vector3(dist * 4, 0, 0));
         }
 
         public static void MoveEndY(this GuideObject go, float dist)
         {
             if (go.IsLimb() || go.IsArm())
                 FkJointRotater(go).MoveTo(go.transformTarget.position + new Vector3(0, dist, 0));
+            else if (go.IsChara())
+                go.Move(new Vector3(0, dist * 4, 0));
         }
 
         public static void MoveEndZ(this GuideObject go, float dist)
         {
             if (go.IsLimb() || go.IsArm())
                 FkJointRotater(go).MoveTo(go.transformTarget.position + new Vector3(0, 0, dist));
+            else if (go.IsChara())
+                go.Move(new Vector3(0, 0, dist * 4));
         }
 
         public static void MoveEnd(this GuideObject go, Vector3 pos)

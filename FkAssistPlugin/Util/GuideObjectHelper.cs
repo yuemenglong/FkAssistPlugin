@@ -9,13 +9,13 @@ namespace FkAssistPlugin.Util
         public static bool IsMale(this GuideObject go)
         {
             var name = go.transformTarget.name;
-            return name.StartsWith("cm");
+            return name.StartsWith("MaleBody");
         }
 
         public static bool IsFemale(this GuideObject go)
         {
             var name = go.transformTarget.name;
-            return name.StartsWith("cf");
+            return name.StartsWith("FemaleBody");
         }
 
         public static bool IsChara(this GuideObject go)

@@ -35,7 +35,7 @@ namespace FkAssistPlugin
                 FkBone.FkBone minBone = null;
                 FkCharaMgr.FindSelectCharas().Foreach(c =>
                 {
-                    c.Bones().Foreach(b =>
+                    c.MainBones().Foreach(b =>
                     {
                         var screenPoint = CameraMgr.MainCamera().WorldToScreenPoint(b.Transform.position);
                         var dist = (screenPoint - Input.mousePosition).magnitude;

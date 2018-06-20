@@ -133,7 +133,7 @@ namespace FkAssistPlugin
             var chars = FkCharaMgr.FindSelectCharas();
             chars.Foreach(c =>
             {
-                c.Bones().Foreach(b =>
+                c.MainBones().Foreach(b =>
                 {
                     var marker = BoneMarker.Create(b.Transform);
                     marker.SetColor(_selectorColor);
@@ -162,7 +162,7 @@ namespace FkAssistPlugin
         private void AttachHangMarker()
         {
             DisableLimbMarker();
-            FkCharaMgr.FindSelectChara().Bones().Foreach(b =>
+            FkCharaMgr.FindSelectChara().MainBones().Foreach(b =>
             {
                 var marker = BoneMarker.Create(b.Transform);
                 marker.SetColor(_hangColor);

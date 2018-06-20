@@ -96,7 +96,7 @@ namespace FkAssistPlugin.Util
             }
         }
 
-        public static void RotateAround(this GuideObject guideObject, Vector3 axis, float angle)
+        public static void RotateSelf(this GuideObject guideObject, Vector3 axis, float angle)
         {
             RotateAround(guideObject, guideObject.transformTarget.position, axis, angle);
         }

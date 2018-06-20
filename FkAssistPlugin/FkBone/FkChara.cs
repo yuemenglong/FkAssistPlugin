@@ -129,14 +129,14 @@ namespace FkAssistPlugin.FkBone
 //                f.Parent = DicTransBones[f.Transform.parent];
 //            });
 
-            Bones().Foreach(b =>
+            MainBones().Foreach(b =>
             {
                 DicGuideBones.Add(b.GuideObject, b);
                 DicTransBones.Add(b.Transform, b);
             });
         }
 
-        public FkBone[] Bones()
+        public FkBone[] MainBones()
         {
             return new[]
             {
@@ -165,18 +165,7 @@ namespace FkAssistPlugin.FkBone
                 _foot01R,
                 _toes01L,
                 _toes01R,
-            }.Concat(_fingers.ToArray()).Filter(b => b != null);
-        }
-
-        public GuideObject[] GuideObjects()
-        {
-            var list = new List<GuideObject>();
-            foreach (var fkBone in Bones())
-            {
-                list.Add(fkBone.GuideObject);
-            }
-
-            return list.ToArray();
+            }.Filter(b => b != null);
         }
 
         public FkBone[] Limbs()

@@ -54,6 +54,7 @@
     <Compile Include="Patch\PatchMgr.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="UndoRedoHelper.cs" />
+    <Compile Include="Unused.cs" />
     <Compile Include="Util\GameObjectHelper.cs" />
     <Compile Include="Util\GuideObjectHelper.cs" />
     <Compile Include="Util\Kit.cs" />

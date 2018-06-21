@@ -13,16 +13,13 @@ namespace FkAssistPlugin.FkBone
             var point = chara.DicTransBones[go.transformTarget];
             if (go.IsLimb())
             {
-                return new FkLimbRotater(point.Parent.Parent, point.Parent);
+                return new FkLimbRotater(point.Parent.Parent, point.Parent,point);
             }
 
             if (go.IsArm())
             {
-//                var root = new TransformFkJoint(point.Parent.Parent.Transform, point.Parent.Transform);
-//                var end = new TransformFkJoint(point.Parent.Transform, point.Transform);
-//                return new FkLimbRotater(root, end);
                 var ano = point.Parent.Children.Filter(c => c != point)[0];
-                return new FkArmRotater(point.Parent.Parent, point.Parent, point, ano);
+                return new FkShoulderRotater(point.Parent.Parent, point.Parent, point, ano);
             }
 
             return null;

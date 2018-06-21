@@ -13,113 +13,14 @@ namespace FkAssistPlugin.FkBone
         void Normals(float angle);
     }
 
-    public static class FkJointRotater
-    {
-        public static void MoveTo(IFkJoint root, IFkJoint end, Vector3 pos)
-        {
-            var vec = root.Vector + end.Vector;
-            var target = pos - root.Transform.position;
-            var max = root.Vector.magnitude + end.Vector.magnitude;
-            if (max < target.magnitude)
-            {
-                return;
-            }
-            var angle = Vector3.Angle(vec, target);
-            var axis = Vector3.Cross(vec, target).normalized;
-            root.RotateAround(root.Transform.position, axis, angle);
-            Forward(root, end, target.magnitude - vec.magnitude);
-        }
-
-        public static void Forward(IFkJoint root, IFkJoint end, float value)
-        {
-            var vec = root.Vector + end.Vector;
-            var target = vec.magnitude + value;
-            if (target > root.Vector.magnitude + end.Vector.magnitude)
-            {
-                return;
-            }
-            {
-                var old = Kit.Angle(root.Vector.magnitude, vec.magnitude, end.Vector.magnitude);
-                var now = Kit.Angle(root.Vector.magnitude, target, end.Vector.magnitude);
-                var angle = old - now;
-                var axis = Vector3.Cross(root.Vector, end.Vector).normalized;
-                root.RotateAround(root.Transform.position, axis, angle);
-            }
-            {
-                var old = Kit.Angle(root.Vector.magnitude, end.Vector.magnitude, vec.magnitude);
-                var now = Kit.Angle(root.Vector.magnitude, end.Vector.magnitude, target);
-                var angle = old - now;
-                var axis = Vector3.Cross(root.Vector, end.Vector).normalized;
-                end.RotateAround(end.Transform.position, axis, angle);
-            }
-        }
-
-        public static void Revolution(IFkJoint root, IFkJoint end, float angle)
-        {
-            var vec = root.Vector + end.Vector;
-            root.RotateAround(root.Transform.position, vec, angle);
-        }
-
-        public static void Tangent(IFkJoint root, IFkJoint end, float angle)
-        {
-            var axis = Vector3.Cross(root.Vector, end.Vector);
-            root.RotateAround(root.Transform.position, axis, angle);
-        }
-
-        public static void Normals(IFkJoint root, IFkJoint end, float angle)
-        {
-            var vec = root.Vector + end.Vector;
-            var tan = Vector3.Project(root.Vector, vec);
-            var nor = root.Vector - tan;
-            root.RotateAround(root.Transform.position, nor, angle);
-        }
-    }
-
-    public class FkHeadRotater : IFkJointRotater
-    {
-        private FkBone _spine1;
-        private FkBone _spine2;
-        private FkBone _neck;
-
-        public FkHeadRotater(FkBone spine1, FkBone spine2, FkBone neck)
-        {
-            _spine1 = spine1;
-            _spine2 = spine2;
-            _neck = neck;
-        }
-
-        public void MoveTo(Vector3 pos)
-        {
-        }
-
-        public void Forward(float value)
-        {
-        }
-
-        public void Revolution(float angle)
-        {
-            //旋转
-        }
-
-        public void Tangent(float angle)
-        {
-            //切向
-        }
-
-        public void Normals(float angle)
-        {
-            //法向
-        }
-    }
-
-    public class FkArmRotater : IFkJointRotater
+    public class FkShoulderRotater : IFkJointRotater
     {
         private FkBone _spine1;
         private FkBone _spine2;
         private FkBone _arm;
         private FkBone _armAno;
 
-        public FkArmRotater(FkBone spine1, FkBone spine2, FkBone arm, FkBone armAno)
+        public FkShoulderRotater(FkBone spine1, FkBone spine2, FkBone arm, FkBone armAno)
         {
             _spine1 = spine1;
             _spine2 = spine2;
@@ -145,7 +46,7 @@ namespace FkAssistPlugin.FkBone
 
         public void Revolution(float angle)
         {
-            new FkArmRotater(_spine1, _spine2, _armAno, _arm).Normals(angle);
+            new FkShoulderRotater(_spine1, _spine2, _armAno, _arm).Normals(angle);
         }
 
         public void Tangent(float angle)
@@ -169,18 +70,20 @@ namespace FkAssistPlugin.FkBone
     public class FkLimbRotater : IFkJointRotater
     {
         private IFkJoint _root;
+        private IFkJoint _mid;
         private IFkJoint _end;
 
-        public FkLimbRotater(IFkJoint root, IFkJoint end)
+        public FkLimbRotater(IFkJoint root, IFkJoint mid,IFkJoint end)
         {
             _root = root;
+            _mid = mid;
             _end = end;
         }
 
         public bool Fix()
         {
-            var vec = _root.Vector + _end.Vector;
-            if (vec.magnitude < _root.Vector.magnitude + _end.Vector.magnitude)
+            var vec = _root.Vector + _mid.Vector;
+            if (vec.magnitude < _root.Vector.magnitude + _mid.Vector.magnitude)
             {
                 // not need fix
                 return false;
@@ -192,33 +95,33 @@ namespace FkAssistPlugin.FkBone
             }
             if (go.IsArm() && go.transformTarget.name.Contains("_L"))
             {
-                _end.Rotate(_end.Transform.up, 1f);
+                _mid.Rotate(_mid.Transform.up, 1f);
             }
             else if (go.IsArm() && go.transformTarget.name.Contains("_R"))
             {
-                _end.Rotate(_end.Transform.up, -1f);
+                _mid.Rotate(_mid.Transform.up, -1f);
             }
             else if (go.IsLeg())
             {
-                _end.Rotate(Vector3.left, -1f);
+                _mid.Rotate(Vector3.left, -1f);
             }
             return true;
         }
 
         public Vector3 Vector
         {
-            get { return _root.Vector + _end.Vector; }
+            get { return _root.Vector + _mid.Vector; }
         }
 
         public float Angel
         {
-            get { return 180.0f - Vector3.Angle(_root.Vector, _end.Vector); }
+            get { return 180.0f - Vector3.Angle(_root.Vector, _mid.Vector); }
         }
 
         public void MoveTo(Vector3 pos)
         {
             var target = pos - _root.Transform.position;
-            var max = _root.Vector.magnitude + _end.Vector.magnitude;
+            var max = _root.Vector.magnitude + _mid.Vector.magnitude;
             if (max < target.magnitude)
             {
 //                Tracer.Log("Reach Max");
@@ -232,9 +135,9 @@ namespace FkAssistPlugin.FkBone
 
         public void Forward(float value)
         {
-            var vec = _root.Vector + _end.Vector;
+            var vec = _root.Vector + _mid.Vector;
             var target = vec.magnitude + value;
-            if (target > _root.Vector.magnitude + _end.Vector.magnitude)
+            if (target > _root.Vector.magnitude + _mid.Vector.magnitude)
             {
                 return;
             }
@@ -243,36 +146,36 @@ namespace FkAssistPlugin.FkBone
                 return;
             }
             {
-                var old = Kit.Angle(_root.Vector.magnitude, vec.magnitude, _end.Vector.magnitude);
-                var now = Kit.Angle(_root.Vector.magnitude, target, _end.Vector.magnitude);
+                var old = Kit.Angle(_root.Vector.magnitude, vec.magnitude, _mid.Vector.magnitude);
+                var now = Kit.Angle(_root.Vector.magnitude, target, _mid.Vector.magnitude);
                 var angle = old - now;
-                var axis = Vector3.Cross(_root.Vector, _end.Vector).normalized;
+                var axis = Vector3.Cross(_root.Vector, _mid.Vector).normalized;
                 _root.RotateAround(_root.Transform.position, axis, angle);
             }
             {
-                var old = Kit.Angle(_root.Vector.magnitude, _end.Vector.magnitude, vec.magnitude);
-                var now = Kit.Angle(_root.Vector.magnitude, _end.Vector.magnitude, target);
+                var old = Kit.Angle(_root.Vector.magnitude, _mid.Vector.magnitude, vec.magnitude);
+                var now = Kit.Angle(_root.Vector.magnitude, _mid.Vector.magnitude, target);
                 var angle = old - now;
-                var axis = Vector3.Cross(_root.Vector, _end.Vector).normalized;
-                _end.RotateAround(_end.Transform.position, axis, angle);
+                var axis = Vector3.Cross(_root.Vector, _mid.Vector).normalized;
+                _mid.RotateAround(_mid.Transform.position, axis, angle);
             }
         }
 
         public void Revolution(float angle)
         {
-            var vec = _root.Vector + _end.Vector;
+            var vec = _root.Vector + _mid.Vector;
             _root.RotateAround(_root.Transform.position, vec, angle);
         }
 
         public void Tangent(float angle)
         {
-            var axis = Vector3.Cross(_root.Vector, _end.Vector);
+            var axis = Vector3.Cross(_root.Vector, _mid.Vector);
             _root.RotateAround(_root.Transform.position, axis, angle);
         }
 
         public void Normals(float angle)
         {
-            var vec = _root.Vector + _end.Vector;
+            var vec = _root.Vector + _mid.Vector;
             var tan = Vector3.Project(_root.Vector, vec);
             var nor = _root.Vector - tan;
             _root.RotateAround(_root.Transform.position, nor, angle);

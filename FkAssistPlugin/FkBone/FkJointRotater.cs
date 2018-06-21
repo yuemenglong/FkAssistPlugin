@@ -6,10 +6,19 @@ namespace FkAssistPlugin.FkBone
 {
     public interface IFkJointRotater
     {
+        // 移动末端到指定位置
         void MoveTo(Vector3 pos);
+
+        // 伸展
         void Forward(float value);
+
+        // 法线方向移动
         void Revolution(float angle);
+
+        // 切线方向移动
         void Tangent(float angle);
+
+        // 自身旋转
         void Normals(float angle);
     }
 
@@ -73,7 +82,7 @@ namespace FkAssistPlugin.FkBone
         private IFkJoint _mid;
         private IFkJoint _end;
 
-        public FkLimbRotater(IFkJoint root, IFkJoint mid,IFkJoint end)
+        public FkLimbRotater(IFkJoint root, IFkJoint mid, IFkJoint end)
         {
             _root = root;
             _mid = mid;
@@ -88,11 +97,13 @@ namespace FkAssistPlugin.FkBone
                 // not need fix
                 return false;
             }
+
             var go = Context.DicGuideObject()[_root.Transform];
             if (go == null || !(go.IsArm() || go.IsLeg()))
             {
                 return false;
             }
+
             if (go.IsArm() && go.transformTarget.name.Contains("_L"))
             {
                 _mid.Rotate(_mid.Transform.up, 1f);
@@ -105,6 +116,7 @@ namespace FkAssistPlugin.FkBone
             {
                 _mid.Rotate(Vector3.left, -1f);
             }
+
             return true;
         }
 
@@ -124,13 +136,15 @@ namespace FkAssistPlugin.FkBone
             var max = _root.Vector.magnitude + _mid.Vector.magnitude;
             if (max < target.magnitude)
             {
-//                Tracer.Log("Reach Max");
                 return;
             }
+
+            var oldRot = _end.Transform.rotation;
             var angle = Vector3.Angle(Vector, target);
             var axis = Vector3.Cross(Vector, target).normalized;
             _root.RotateAround(_root.Transform.position, axis, angle);
             Forward(target.magnitude - Vector.magnitude);
+            _end.TurnTo(oldRot);
         }
 
         public void Forward(float value)
@@ -141,10 +155,13 @@ namespace FkAssistPlugin.FkBone
             {
                 return;
             }
+
             if (Fix())
             {
                 return;
             }
+
+            // 利用三角函数计算出要移动的角度，相对法线进行移动
             {
                 var old = Kit.Angle(_root.Vector.magnitude, vec.magnitude, _mid.Vector.magnitude);
                 var now = Kit.Angle(_root.Vector.magnitude, target, _mid.Vector.magnitude);
@@ -178,7 +195,9 @@ namespace FkAssistPlugin.FkBone
             var vec = _root.Vector + _mid.Vector;
             var tan = Vector3.Project(_root.Vector, vec);
             var nor = _root.Vector - tan;
+            var oldRot = _end.Transform.rotation;
             _root.RotateAround(_root.Transform.position, nor, angle);
+            _end.TurnTo(oldRot);
         }
     }
 }

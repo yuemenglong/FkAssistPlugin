@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using FkAssistPlugin.Util;
 using Studio;
 using UnityEngine;
 
@@ -76,15 +77,9 @@ namespace FkAssistPlugin.FkBone
             RotateAround(Transform.position, axis, angle);
         }
 
-        public Quaternion GetQuaternion()
+        public void TurnTo(Quaternion q)
         {
-            return GuideObject.transformTarget.rotation;
-        }
-
-        public void setQuaternion(Quaternion q)
-        {
-            GuideObject.transformTarget.rotation = q;
-            GuideObject.changeAmount.rot = GuideObject.transformTarget.localEulerAngles;
+            GuideObject.TurnTo(q);
         }
     }
 }

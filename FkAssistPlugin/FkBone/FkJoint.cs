@@ -11,9 +11,7 @@ namespace FkAssistPlugin.FkBone
         void Rotate(Vector3 axis, float angle, Space relativeTo = Space.Self);
         // 围绕某个点转，轴可以是标准向量
         void RotateAround(Vector3 point, Vector3 axis, float angle);
-
-        Quaternion GetQuaternion();
-
-        void setQuaternion(Quaternion q);
+        // 转向方向，方向可以从guideObject.transformTarget.rotation拿到
+        void TurnTo(Quaternion rot);
     }
 }

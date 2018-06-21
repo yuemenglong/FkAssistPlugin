@@ -75,5 +75,16 @@ namespace FkAssistPlugin.FkBone
         {
             RotateAround(Transform.position, axis, angle);
         }
+
+        public Quaternion GetQuaternion()
+        {
+            return GuideObject.transformTarget.rotation;
+        }
+
+        public void setQuaternion(Quaternion q)
+        {
+            GuideObject.transformTarget.rotation = q;
+            GuideObject.changeAmount.rot = GuideObject.transformTarget.localEulerAngles;
+        }
     }
 }

@@ -40,7 +40,22 @@ namespace FkAssistPlugin
 
         private void InnerUpdate()
         {
-            if (Input.GetKeyDown(KeyCode.T) && Input.GetKey(KeyCode.LeftShift))
+            if (Input.GetKeyDown(KeyCode.T) && Input.GetKey(KeyCode.LeftAlt))
+            {
+                var chara = FkCharaMgr.FindSelectChara();
+                if (chara != null)
+                {
+                    chara.Limbs().Foreach(bone =>
+                    {
+                        var r = new HangRecord();
+                        r.Bone = bone;
+                        r.Pos = bone.Transform.position;
+                        r.Rot = bone.Transform.rotation;
+                        _hangRecords.Add(r);
+                    });
+                }
+            }
+            else if (Input.GetKeyDown(KeyCode.T) && Input.GetKey(KeyCode.LeftShift))
             {
                 var go = Context.GuideObjectManager().selectObject;
                 if (go != null && go.IsLimb())

@@ -57,6 +57,7 @@ namespace FkAssistPlugin
             if (Input.GetKey(KeyCode.LeftShift) && Input.GetKeyDown(KeyCode.R))
             {
                 go.Reset();
+                go.SetSelected();
             }
             //
             else if (Input.GetKey(KeyCode.E) && Input.GetMouseButton(0))

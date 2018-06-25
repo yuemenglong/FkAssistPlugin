@@ -110,6 +110,11 @@ namespace FkAssistPlugin.Util
             }
         }
 
+        public static void SetSelected(this GuideObject go)
+        {
+            Context.GuideObjectManager().SetSelectObject(go, false);
+        }
+
         public static void Move(this GuideObject guideObject, float x, float y, float z)
         {
             Move(guideObject, new Vector3(x, y, z));

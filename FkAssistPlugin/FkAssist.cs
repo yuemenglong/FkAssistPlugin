@@ -11,6 +11,7 @@ namespace FkAssistPlugin
     public class FkAssist : BaseMgr<FkAssist>
     {
         private int _counter;
+        private bool _lightEnabled = true;
 
         public override void Init()
         {
@@ -21,13 +22,7 @@ namespace FkAssistPlugin
         {
             try
             {
-                if (Input.GetKeyDown(KeyCode.P))
-                {
-                    var go = Context.GuideObjectManager().selectObject;
-                    Tracer.Log(go.transformTarget);
-                }
                 InnerUpdate();
-
             }
             catch (Exception e)
             {
@@ -160,7 +155,6 @@ namespace FkAssistPlugin
                 _counter = 0;
 //                _oldRot = CollectOldRot();
             }
-
         }
     }
 }

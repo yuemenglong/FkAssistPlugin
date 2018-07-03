@@ -13,7 +13,7 @@ namespace FkAssistPlugin.FkBone
             var point = chara.DicTransBones[go.transformTarget];
             if (go.IsLimb())
             {
-                return new FkLimbRotater(point.Parent.Parent, point.Parent,point);
+                return new FkLimbRotater(point.Parent.Parent, point.Parent, point);
             }
 
             if (go.IsArm())
@@ -53,7 +53,7 @@ namespace FkAssistPlugin.FkBone
         {
             if (go.IsLimb() || go.IsArm())
                 FkJointRotater(go).MoveTo(go.transformTarget.position + new Vector3(dist, 0, 0));
-            else if (go.IsChara())
+            else
                 go.Move(new Vector3(dist * 4, 0, 0));
         }
 
@@ -61,7 +61,7 @@ namespace FkAssistPlugin.FkBone
         {
             if (go.IsLimb() || go.IsArm())
                 FkJointRotater(go).MoveTo(go.transformTarget.position + new Vector3(0, dist, 0));
-            else if (go.IsChara())
+            else
                 go.Move(new Vector3(0, dist * 4, 0));
         }
 
@@ -69,7 +69,7 @@ namespace FkAssistPlugin.FkBone
         {
             if (go.IsLimb() || go.IsArm())
                 FkJointRotater(go).MoveTo(go.transformTarget.position + new Vector3(0, 0, dist));
-            else if (go.IsChara())
+            else
                 go.Move(new Vector3(0, 0, dist * 4));
         }
 

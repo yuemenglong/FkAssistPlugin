@@ -39,6 +39,7 @@ namespace FkAssistPlugin
             BaseMgr<FkLocker>.Install(new GameObject("FkLocker"));
             BaseMgr<FkSelector>.Install(new GameObject("FkSelector"));
             BaseMgr<LightAssist>.Install(new GameObject("LightAssist"));
+            BaseMgr<CameraAssist>.Install(new GameObject("CameraAssist"));
             Tracer.Log("OnLevelWasInitialized, " + level);
         }
 

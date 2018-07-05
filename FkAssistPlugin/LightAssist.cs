@@ -58,7 +58,6 @@ namespace FkAssistPlugin
                 var w_5 = GUILayout.Width(_windowRect.width * 0.05f);
                 var w1 = GUILayout.Width(_windowRect.width * 0.1f);
                 var w2 = GUILayout.Width(_windowRect.width * 0.2f);
-                var w3 = GUILayout.Width(_windowRect.width * 0.3f);
                 var h1 = GUILayout.Height(_windowRect.height * 0.05f);
                 var h2 = GUILayout.Height(_windowRect.height * 0.04f);
 
@@ -66,6 +65,22 @@ namespace FkAssistPlugin
                 s1.normal.textColor = Color.white;
                 s1.fontSize = (int) (_windowRect.height * 0.035);
                 s1.alignment = TextAnchor.MiddleCenter;
+
+                GUILayout.BeginHorizontal(h1);
+                //0 Direct 1 Point 2 Spot
+                if (GUILayout.Button("平", w_5, h2))
+                {
+                    Singleton<Studio.Studio>.Instance.AddLight(0);
+                }
+                if (GUILayout.Button("点", w_5, h2))
+                {
+                    Singleton<Studio.Studio>.Instance.AddLight(1);
+                }
+                if (GUILayout.Button("聚", w_5, h2))
+                {
+                    Singleton<Studio.Studio>.Instance.AddLight(2);
+                }
+                GUILayout.EndHorizontal();
 
                 _scrollPos = GUILayout.BeginScrollView(_scrollPos);
                 GetLights().Foreach(l =>

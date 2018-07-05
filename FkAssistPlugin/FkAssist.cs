@@ -84,10 +84,10 @@ namespace FkAssistPlugin
 
             float angle = 1.0f;
             float dist = 0.003f;
-            if (Input.anyKeyDown)
-            {
-                UndoRedoHelper.Record();
-            }
+//            if (Input.anyKeyDown)
+//            {
+//                UndoRedoHelper.Record();
+//            }
 
             if (Input.GetKey(KeyCode.LeftShift))
             {
@@ -95,7 +95,7 @@ namespace FkAssistPlugin
                 dist /= 4;
             }
 
-            _counter++;
+//            _counter++;
             if (Input.GetKey(KeyCode.LeftShift) && Input.GetKeyDown(KeyCode.R))
             {
                 go.Reset();
@@ -192,17 +192,17 @@ namespace FkAssistPlugin
                 FkJointAssist.MoveEndZ(go, -dist);
             }
             //
-            else
-            {
-                if (_counter > 1)
-                {
-                    UndoRedoHelper.Finish();
-//                    FinishRotate();
-                }
-
-                _counter = 0;
-//                _oldRot = CollectOldRot();
-            }
+//            else
+//            {
+//                if (_counter > 1)
+//                {
+//                    UndoRedoHelper.Finish();
+////                    FinishRotate();
+//                }
+//
+//                _counter = 0;
+////                _oldRot = CollectOldRot();
+//            }
         }
 
         private Vector2 GetMousePos()

@@ -29,6 +29,7 @@ namespace FkAssistPlugin.FkBone
             {
                 return null;
             }
+            Tracer.Log(root);
             return new FkChara(root);
         }
 

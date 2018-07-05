@@ -1,26 +1,23 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Security.Principal;
-using FkAssistPlugin.FkBone;
 using FkAssistPlugin.HSStudioNEOAddno;
 using FkAssistPlugin.Util;
-using Studio;
 using UnityEngine;
 
 namespace FkAssistPlugin
 {
     public class LightAssist : BaseMgr<LightAssist>
     {
-        private bool _lightEnabled = true;
         private bool _show;
+        private bool _allEnabled = true;
 
-        private Rect _windowRect = new Rect(Screen.width * 0.5f, Screen.height * 0.64f, Screen.width * 0.33f,
-            Screen.height * 0.45f);
+        private Rect _windowRect = new Rect(Screen.width * 0.2f, Screen.height * 0.4f, Screen.width * 0.5f,
+            Screen.height * 0.59f);
 //        private Rect _windowRect = new Rect(50, 50, 300, 500);
 
         private GUIStyle _windowStyle = new GUIStyle(GUI.skin.window);
 
         private int wid = 17539;
+        private Vector2 _scrollPos = Vector2.zero;
 
         public override void Init()
         {
@@ -29,13 +26,19 @@ namespace FkAssistPlugin
 
         private void OnGUI()
         {
-            _show = GUI.Toggle(new Rect(10, 10, 100, 23), _show, "是否显示窗体");
+            _show = GUI.Toggle(new Rect(0, 0, 20, 20), _show, "");
             if (_show)
             {
                 _windowRect = GUI.Window(wid, _windowRect, ShowWindow, "我的窗口");
             }
         }
 
+        Light[] GetLights()
+        {
+            var lights = FindObjectsOfType(typeof(Light)) as Light[];
+            Array.Sort(lights, (l1, l2) => String.Compare(l1.name, l2.name, StringComparison.Ordinal));
+            return lights;
+        }
 
         private void ShowWindow(int id)
         {
@@ -51,54 +54,73 @@ namespace FkAssistPlugin
                     CameraAssist.windowdragflag = false;
                 }
 
-                var lights = FindObjectsOfType(typeof(Light)) as Light[];
-                var w1 = GUILayout.Width(_windowRect.width * 0.2f);
-                var w2 = GUILayout.Width(_windowRect.width * 0.6f);
-                lights.Foreach(l =>
-                {
-                    GUILayout.Label(l.name);
+                GUI.backgroundColor = Color.gray;
+                var w_5 = GUILayout.Width(_windowRect.width * 0.05f);
+                var w1 = GUILayout.Width(_windowRect.width * 0.1f);
+                var w2 = GUILayout.Width(_windowRect.width * 0.2f);
+                var w3 = GUILayout.Width(_windowRect.width * 0.3f);
+                var h1 = GUILayout.Height(_windowRect.height * 0.05f);
+                var h2 = GUILayout.Height(_windowRect.height * 0.04f);
 
-                    GUILayout.BeginHorizontal();
-                    GUILayout.Label(l.intensity + "", w1);
-                    l.intensity = GUILayout.HorizontalSlider(l.intensity, 0, 10, w2);
-                    if (GUILayout.Button("<"))
+                var s1 = new GUIStyle();
+                s1.normal.textColor = Color.white;
+                s1.fontSize = (int) (_windowRect.height * 0.035);
+                s1.alignment = TextAnchor.MiddleCenter;
+
+                _scrollPos = GUILayout.BeginScrollView(_scrollPos);
+                GetLights().Foreach(l =>
+                {
+                    GUILayout.BeginHorizontal(h1);
+                    GUILayout.Label(l.name, s1, w2);
+                    GUILayout.Label(l.enabled ? "O" : "", s1, w_5);
+                    if (GUILayout.Button("S", w_5, h2))
                     {
-                        l.intensity -= 0.1f;
+                        l.enabled = !l.enabled;
+                    }
+//                    GUILayout.EndHorizontal();
+
+//                    GUILayout.BeginHorizontal();
+                    GUILayout.Label(l.intensity.ToString("F2"), s1, w1);
+//                    l.intensity = GUILayout.HorizontalSlider(l.intensity, 0, 10, w2);
+                    if (GUILayout.RepeatButton("<", w_5, h2))
+                    {
+                        l.intensity -= 0.01f;
                     }
 
-                    if (GUILayout.Button("O"))
+                    if (GUILayout.Button("O", w_5, h2))
                     {
                         l.intensity = 1f;
                     }
 
-                    if (GUILayout.Button(">"))
+                    if (GUILayout.RepeatButton(">", w_5, h2))
                     {
-                        l.intensity += 0.1f;
+                        l.intensity += 0.01f;
                     }
 
-                    GUILayout.EndHorizontal();
+//                    GUILayout.EndHorizontal();
 
-                    GUILayout.BeginHorizontal();
-                    GUILayout.Label(l.range + "", w1);
-                    l.range = GUILayout.HorizontalSlider(l.range, 0, 100, w2);
-                    if (GUILayout.Button("<"))
+//                    GUILayout.BeginHorizontal(h1);
+                    GUILayout.Label(l.range.ToString("F2"), s1, w1);
+//                    l.range = GUILayout.HorizontalSlider(l.range, 0, 100, w2);
+                    if (GUILayout.RepeatButton("<", w_5, h2))
                     {
                         l.range -= 0.1f;
                     }
 
-                    if (GUILayout.Button("O"))
+                    if (GUILayout.Button("O", w_5, h2))
                     {
                         l.range = 10f;
                     }
 
 
-                    if (GUILayout.Button(">"))
+                    if (GUILayout.RepeatButton(">", w_5, h2))
                     {
                         l.range += 0.1f;
                     }
 
                     GUILayout.EndHorizontal();
                 });
+                GUILayout.EndScrollView();
             }
             catch (Exception e)
             {
@@ -122,36 +144,14 @@ namespace FkAssistPlugin
         {
             if (Input.GetKeyDown(KeyCode.P))
             {
-                Tracer.Log(Context.GuideObjectManager().selectObject.transformTarget);
-                var lights = FindObjectsOfType(typeof(Light)) as Light[];
-//                    var mainLight = lights.Filter(l => l.name == "MainLight")[0];
-                if (Input.GetKey(KeyCode.LeftAlt) || Input.GetKey(KeyCode.RightAlt))
+                if (Input.GetKey(KeyCode.LeftAlt))
                 {
-                    _lightEnabled = !_lightEnabled;
-                    lights.Foreach(l =>
-                    {
-                        if (l.name != "MainLight" && l.name != "CharaLight_back")
-                        {
-                            l.enabled = _lightEnabled;
-                        }
-                    });
+                    _allEnabled = !_allEnabled;
+                    GetLights().Foreach(l => l.enabled = _allEnabled);
                 }
                 else
                 {
-                    lights.Foreach(l =>
-                    {
-                        var value = l.intensity;
-                        if (Input.GetKey(KeyCode.RightShift) || Input.GetKey(KeyCode.LeftShift))
-                        {
-                            value += 0.1f;
-                        }
-                        else
-                        {
-                            value -= 0.1f;
-                        }
-
-                        l.intensity = value;
-                    });
+                    _show = !_show;
                 }
             }
         }

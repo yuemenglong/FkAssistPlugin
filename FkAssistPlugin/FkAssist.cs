@@ -12,6 +12,7 @@ namespace FkAssistPlugin
     {
         private int _counter;
         private bool _lightEnabled = true;
+        private Vector2 lastMousePos;
 
         public override void Init()
         {
@@ -22,7 +23,8 @@ namespace FkAssistPlugin
         {
             try
             {
-                InnerUpdate();
+                Rotate();
+                Move();
             }
             catch (Exception e)
             {
@@ -30,24 +32,69 @@ namespace FkAssistPlugin
             }
         }
 
-        private void InnerUpdate()
+        private void Move(Vector3 delta)
+        {
+            var go = Context.GuideObjectManager().selectObject;
+            if (go == null || !go.enablePos)
+            {
+                return;
+            }
+
+            Camera camera = CameraAssist.MainCamera();
+            if (camera == null)
+            {
+                return;
+            }
+
+            Vector3 vector31 = new Vector3(Screen.width * 0.5f, Screen.height * 0.5f, Input.mousePosition.z);
+            Ray ray = camera.ScreenPointToRay(vector31);
+            ray.direction = new Vector3(ray.direction.x, 0, ray.direction.z);
+            Vector3 vector32 = ray.direction * -1 * delta.z;
+            ray.direction = Quaternion.LookRotation(ray.direction) * Vector3.right;
+            Vector3 vector33 = vector32 + ray.direction * -1 * delta.x;
+            vector33.y = delta.y;
+            delta = vector33;
+            delta = delta * 2.0f;
+            go.Move(delta);
+        }
+
+        private void Move()
+        {
+            Vector2 sub = GetMousePos() - lastMousePos;
+            if (Input.GetKey(KeyCode.G))
+            {
+                Vector3 delta = new Vector3(-sub.x, 0, -sub.y);
+                Move(delta);
+            }
+            else if (Input.GetKey(KeyCode.H))
+            {
+                Vector3 delta = new Vector3(0, sub.y, 0);
+                Move(delta);
+            }
+            lastMousePos = GetMousePos();
+        }
+
+        private void Rotate()
         {
             var go = Context.GuideObjectManager().selectObject;
             if (go == null)
             {
                 return;
             }
+
             float angle = 1.0f;
             float dist = 0.003f;
             if (Input.anyKeyDown)
             {
                 UndoRedoHelper.Record();
             }
+
             if (Input.GetKey(KeyCode.LeftShift))
             {
                 angle /= 4;
                 dist /= 4;
             }
+
             _counter++;
             if (Input.GetKey(KeyCode.LeftShift) && Input.GetKeyDown(KeyCode.R))
             {
@@ -152,9 +199,16 @@ namespace FkAssistPlugin
                     UndoRedoHelper.Finish();
 //                    FinishRotate();
                 }
+
                 _counter = 0;
 //                _oldRot = CollectOldRot();
             }
+        }
+
+        private Vector2 GetMousePos()
+        {
+            Vector2 vector2 = Input.mousePosition;
+            return new Vector2(vector2.x / Screen.width, vector2.y / Screen.height);
         }
     }
 }

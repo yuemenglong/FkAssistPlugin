@@ -42,6 +42,10 @@ namespace FkAssistPlugin
             return windowdragflag;
         }
 
+        public static Camera MainCamera()
+        {
+            return Context.Studio().cameraCtrl.mainCmaera;
+        }
 
         public static bool windowdragflag = false;
         bool previouswindowdragflag = false;

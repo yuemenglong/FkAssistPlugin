@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Runtime.InteropServices;
 using FkAssistPlugin.HSStudioNEOAddno;
 using FkAssistPlugin.Util;
 using UnityEngine;
@@ -10,11 +11,11 @@ namespace FkAssistPlugin
         private bool _show;
         private bool _allEnabled = true;
 
-        private Rect _windowRect = new Rect(Screen.width * 0.2f, Screen.height * 0.4f, Screen.width * 0.5f,
+        private Rect _windowRect = new Rect(
+            Screen.width * 0.2f,
+            Screen.height * 0.4f,
+            Screen.width * 0.5f,
             Screen.height * 0.59f);
-//        private Rect _windowRect = new Rect(50, 50, 300, 500);
-
-        private GUIStyle _windowStyle = new GUIStyle(GUI.skin.window);
 
         private int wid = 17539;
         private Vector2 _scrollPos = Vector2.zero;
@@ -80,6 +81,11 @@ namespace FkAssistPlugin
                 {
                     Singleton<Studio.Studio>.Instance.AddLight(2);
                 }
+                var lights = GetLights();
+                if (GUILayout.Button("S", w_5, h2))
+                {
+                    lights.Foreach(l => { l.enabled = !l.enabled; });
+                }
                 GUILayout.EndHorizontal();
 
                 _scrollPos = GUILayout.BeginScrollView(_scrollPos);
@@ -135,7 +141,38 @@ namespace FkAssistPlugin
 
                     GUILayout.EndHorizontal();
                 });
+
                 GUILayout.EndScrollView();
+                GUIX.Horizontal(() =>
+                {
+                    GUIX.Button("你好");
+                    GUIX.Toggle(true, "lalal");
+                });
+                GUIX.Horizontal(() =>
+                {
+                    GUIX.Button("你好");
+                    GUIX.Toggle(true, "lalal");
+                });
+//                GUIX.Label("GUIX");
+
+//                GUIX.BeginHorizontal();
+//                GUIX.Label("GUIX");
+//                GUIX.EndHorizontal();
+//
+//                GUIX.BeginHorizontal();
+//                GUIX.Label("GUIX");
+//                GUIX.EndHorizontal();
+//
+//                GUIX.Horizontal(() =>
+//                {
+//                    GUIX.Label("GUIX");
+//                    GUIX.Button("你好");
+//                });
+//                GUIX.Horizontal(() =>
+//                {
+//                    GUIX.Label("GUIX");
+//                    GUIX.Label("GUIX");
+//                });
             }
             catch (Exception e)
             {

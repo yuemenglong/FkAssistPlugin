@@ -10,11 +10,9 @@ namespace FkAssistPlugin
 {
     public static class GUIX
     {
-        private static int WIDTH = 60;
-        private static int HEIGHT = 40;
-        private static int FONTSIZE= 30;
+        private static int WIDTH = 80;
+        private static int FONTSIZE = 30;
         private static GUILayoutOption[] _w;
-        private static GUILayoutOption _h;
         private static Vector2 _pos = Vector2.zero;
 
         static GUIX()
@@ -24,7 +22,6 @@ namespace FkAssistPlugin
             {
                 _w[i] = GUILayout.Width(WIDTH * (i + 1));
             }
-            _h = GUILayout.Height(HEIGHT);
 
             GUI.skin.label.fontSize = FONTSIZE;
             GUI.skin.label.normal.textColor = Color.white;
@@ -71,6 +68,11 @@ namespace FkAssistPlugin
             return GUILayout.Button(text, _w[n - 1]);
         }
 
+        public static bool RepeatButton(String text, int n = 1)
+        {
+            return GUILayout.RepeatButton(text, _w[n - 1]);
+        }
+
         public static void ScrollView(Action action)
         {
             BeginScrollView();
@@ -80,7 +82,7 @@ namespace FkAssistPlugin
 
         public static void BeginScrollView()
         {
-            GUILayout.BeginScrollView(_pos);
+            _pos = GUILayout.BeginScrollView(_pos);
         }
 
         public static void EndScrollView()
@@ -89,7 +91,7 @@ namespace FkAssistPlugin
             _pos = Vector2.zero;
         }
 
-        public static bool Toggle(bool value, String text)
+        public static bool Toggle(bool value, String text, int n = 1)
         {
             if (value)
             {
@@ -97,9 +99,9 @@ namespace FkAssistPlugin
             }
             else
             {
-                text = "-" + text;
+                text = "_" + text;
             }
-            return GUILayout.Toggle(value, text);
+            return GUILayout.Toggle(value, text, _w[n - 1]);
         }
     }
 }

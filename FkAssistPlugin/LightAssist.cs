@@ -18,10 +18,14 @@ namespace FkAssistPlugin
             Screen.height * 0.59f);
 
         private int wid = 17539;
+//        private GameObject probeGameObject;
+//        private ReflectionProbe probeComponent;
 
         public override void Init()
         {
             Tracer.Log("FkAssistPlugin Init");
+//            probeGameObject = new GameObject("YMLRealtimeReflectionProbe");
+//            probeComponent = probeGameObject.AddComponent<ReflectionProbe>() as ReflectionProbe;
         }
 
         private void OnGUI()
@@ -73,6 +77,40 @@ namespace FkAssistPlugin
                 {
                     lights.Foreach(l => { l.enabled = !l.enabled; });
                 }
+                if (GUIX.Button("N"))
+                {
+                    lights.Foreach(l => l.intensity = 0.3f);
+                }
+                GUIX.Label("反射");
+                var refProbes = GameObject.FindObjectsOfType<ReflectionProbe>();
+                if (refProbes.Length >= 1)
+                {
+                    var r = refProbes[0];
+                    if (GUIX.Button("<"))
+                    {
+                        r.intensity -= 0.1f;
+                    }
+                    if (GUIX.Button(r.intensity.ToString("F2")))
+                    {
+                        r.intensity = 1f;
+                    }
+                    if (GUIX.Button(">"))
+                    {
+                        r.intensity += 0.1f;
+                    }
+                }
+//                if (GUIX.RepeatButton("<"))
+//                {
+//                    probeComponent.intensity -= 0.01f;
+//                }
+//                if (GUIX.Button(probeComponent.intensity.ToString("F2")))
+//                {
+//                    probeComponent.intensity = 1f;
+//                }
+//                if (GUIX.RepeatButton(">"))
+//                {
+//                    probeComponent.intensity += 0.01f;
+//                }
                 GUIX.EndHorizontal();
 
 //                _scrollPos = GUILayout.BeginScrollView(_scrollPos);
@@ -88,7 +126,7 @@ namespace FkAssistPlugin
                     }
                     if (GUIX.Button(l.intensity.ToString("F2")))
                     {
-                        l.intensity = 1f;
+                        l.intensity = 0.3f;
                     }
                     if (GUIX.RepeatButton(">"))
                     {

@@ -71,7 +71,6 @@ namespace FkAssistPlugin
             {
                 return new[]
                 {
-                    "PlayHome64bit",
                     "PlayHomeStudio64bit"
                 };
             }

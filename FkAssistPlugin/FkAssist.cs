@@ -34,11 +34,11 @@ namespace FkAssistPlugin
 
         private void Move(Vector3 delta)
         {
-            var go = Context.GuideObjectManager().selectObject;
-            if (go == null || !go.enablePos)
-            {
-                return;
-            }
+//            var go = Context.GuideObjectManager().selectObject;
+            //            if (go == null || !go.enablePos)
+            //            {
+            //                return;
+            //            }
 
             Camera camera = CameraAssist.MainCamera();
             if (camera == null)
@@ -55,7 +55,14 @@ namespace FkAssistPlugin
             vector33.y = delta.y;
             delta = vector33;
             delta = delta * 2.0f;
-            go.Move(delta);
+            Context.GuideObjectManager().selectObjects.Foreach(go =>
+            {
+                if (!go.enablePos)
+                {
+                    return;
+                }
+                go.Move(delta);
+            });
         }
 
         private void Move()

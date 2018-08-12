@@ -48,6 +48,7 @@ namespace FkAssistPlugin
         {
             try
             {
+                var lights = GetLights();
                 if (Event.current.type == EventType.MouseDown)
                 {
                     GUI.FocusWindow(wid);
@@ -63,16 +64,21 @@ namespace FkAssistPlugin
                 if (GUIX.Button("平"))
                 {
                     Singleton<Studio.Studio>.Instance.AddLight(0);
+                    var obj = Context.GuideObjectManager().selectObject.transformTarget.gameObject;
+                    obj.name = "D" + lights.Length;
                 }
                 if (GUIX.Button("点"))
                 {
                     Singleton<Studio.Studio>.Instance.AddLight(1);
+                    var obj = Context.GuideObjectManager().selectObject.transformTarget.gameObject;
+                    obj.name = "P" + lights.Length;
                 }
                 if (GUIX.Button("聚"))
                 {
                     Singleton<Studio.Studio>.Instance.AddLight(2);
+                    var obj = Context.GuideObjectManager().selectObject.transformTarget.gameObject;
+                    obj.name = "S" + lights.Length;
                 }
-                var lights = GetLights();
                 if (GUIX.Button("S"))
                 {
                     lights.Foreach(l => { l.enabled = !l.enabled; });
@@ -99,6 +105,15 @@ namespace FkAssistPlugin
                         r.intensity += 0.1f;
                     }
                 }
+                GUIX.Label("全部");
+                if (GUIX.RepeatButton("<"))
+                {
+                    lights.Foreach(l => l.intensity -= 0.01f);
+                }
+                if (GUIX.RepeatButton(">"))
+                {
+                    lights.Foreach(l => l.intensity += 0.01f);
+                }
 //                if (GUIX.RepeatButton("<"))
 //                {
 //                    probeComponent.intensity -= 0.01f;
@@ -115,7 +130,7 @@ namespace FkAssistPlugin
 
 //                _scrollPos = GUILayout.BeginScrollView(_scrollPos);
                 GUIX.BeginScrollView();
-                GetLights().Foreach(l =>
+                lights.Foreach(l =>
                 {
                     GUIX.BeginHorizontal();
                     GUIX.Label(l.name, 3);

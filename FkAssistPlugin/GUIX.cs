@@ -22,13 +22,20 @@ namespace FkAssistPlugin
             {
                 _w[i] = GUILayout.Width(WIDTH * (i + 1));
             }
+        }
 
+        public static void initDefault()
+        {
             GUI.skin.label.fontSize = FONTSIZE;
             GUI.skin.label.normal.textColor = Color.white;
             GUI.skin.label.alignment = TextAnchor.MiddleCenter;
 
             GUI.skin.button.fontSize = FONTSIZE;
             GUI.skin.toggle.fontSize = FONTSIZE;
+        }
+
+        public static void resetDefalut()
+        {
         }
 
         public static void Label(String text, int span = 1)

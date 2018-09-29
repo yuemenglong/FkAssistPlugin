@@ -49,15 +49,15 @@ namespace FkAssistPlugin
             try
             {
                 var lights = GetLights();
-                if (Event.current.type == EventType.MouseDown)
-                {
-                    GUI.FocusWindow(wid);
-                    CameraAssist.windowdragflag = true;
-                }
-                else if (Event.current.type == EventType.MouseUp)
-                {
-                    CameraAssist.windowdragflag = false;
-                }
+//                if (Event.current.type == EventType.MouseDown)
+//                {
+//                    GUI.FocusWindow(wid);
+//                    CameraAssist.windowdragflag = true;
+//                }
+//                else if (Event.current.type == EventType.MouseUp)
+//                {
+//                    CameraAssist.windowdragflag = false;
+//                }
 
                 GUIX.BeginHorizontal();
                 //0 Direct 1 Point 2 Spot

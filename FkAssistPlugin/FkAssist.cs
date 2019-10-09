@@ -10,8 +10,8 @@ namespace FkAssistPlugin
 {
     public class FkAssist : BaseMgr<FkAssist>
     {
-        private int _counter;
-        private bool _lightEnabled = true;
+//        private int _counter;
+//        private bool _lightEnabled = true;
         private Vector2 lastMousePos;
 
         public override void Init()
@@ -57,11 +57,21 @@ namespace FkAssistPlugin
             delta = delta * 2.0f;
             Context.GuideObjectManager().selectObjects.Foreach(go =>
             {
-                if (!go.enablePos)
+                if (!go.enablePos && !go.IsLimb())
                 {
                     return;
                 }
-                go.Move(delta);
+
+                if (!go.enablePos)
+                {
+                    var chara = FkCharaMgr.FindSelectChara();
+                    var bone = chara.DicGuideBones[go];
+                    bone.Move(delta);
+                }
+                else
+                {
+                    go.Move(delta);
+                }
             });
         }
 

@@ -88,5 +88,12 @@ namespace FkAssistPlugin.FkBone
             var helper = new FkLimbRotater(point.Parent.Parent, point.Parent,point);
             helper.MoveTo(pos);
         }
+
+        public void Move(Vector3 value)
+        {
+            var point = this;
+            var helper = new FkLimbRotater(point.Parent.Parent, point.Parent, point);
+            helper.MoveTo(Transform.position + value);
+        }
     }
 }

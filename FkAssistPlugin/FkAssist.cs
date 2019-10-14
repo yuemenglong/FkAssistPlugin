@@ -31,6 +31,10 @@ namespace FkAssistPlugin
                 Tracer.Log(e);
             }
         }
+        public static Camera MainCamera()
+        {
+            return Context.Studio().cameraCtrl.mainCmaera;
+        }
 
         private void Move(Vector3 delta)
         {
@@ -40,7 +44,7 @@ namespace FkAssistPlugin
             //                return;
             //            }
 
-            Camera camera = CameraAssist.MainCamera();
+            Camera camera = MainCamera();
             if (camera == null)
             {
                 return;

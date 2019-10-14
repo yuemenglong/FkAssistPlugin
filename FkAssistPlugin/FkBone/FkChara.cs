@@ -89,12 +89,12 @@ namespace FkAssistPlugin.FkBone
 
         public bool IsMale()
         {
-            return _root.Name.StartsWith("Male");
+            return _root.Name.StartsWith("chaM");
         }
 
         public bool IsFemale()
         {
-            return _root.Name.StartsWith("Female");
+            return _root.Name.StartsWith("chaF");
         }
 
         public FkBone Root
@@ -113,11 +113,11 @@ namespace FkAssistPlugin.FkBone
             Transform hips = null;
             if (IsFemale())
             {
-                hips = root.Find("p_cf_anim/cf_J_Root/cf_N_height/cf_J_Hips");
+                hips = root.Find("BodyTop/p_cf_anim/cf_J_Root/cf_N_height/cf_J_Hips");
             }
             else
             {
-                hips = root.Find("p_cm_anim/cm_J_Root/cm_N_height/cm_J_Hips");
+                hips = root.Find("BodyTop/p_cm_anim/cm_J_Root/cm_N_height/cm_J_Hips");
             }
 
             if (hips == null)

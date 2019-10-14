@@ -11,7 +11,7 @@ namespace FkAssistPlugin.FkBone
     {
 //        public static FkChara[] Charas = new FkChara[0];
 //        public static bool IsMarkerEnabled = false;
-        private static string regex = @"^((Fem)|(M))aleBody.*$";
+        private static string regex = @"^cha[FM]\d{2}$";
 
         public static FkChara BuildChara(Transform transform)
         {

@@ -125,7 +125,6 @@ namespace FkAssistPlugin
             }
             else if (Input.GetKey(KeyCode.E) && Input.GetMouseButton(1))
             {
-//                go.Rotate(-angle, 0, 0);
                 go.Rotate(-angle, 0, 0);
             }
             //

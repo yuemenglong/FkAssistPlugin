@@ -38,8 +38,8 @@ namespace FkAssistPlugin
             BaseMgr<FkAssist>.Install(new GameObject("FkPlugin"));
             BaseMgr<FkLocker>.Install(new GameObject("FkLocker"));
             BaseMgr<FkSelector>.Install(new GameObject("FkSelector"));
-            BaseMgr<LightAssist>.Install(new GameObject("LightAssist"));
-            BaseMgr<CameraAssist>.Install(new GameObject("CameraAssist"));
+//            BaseMgr<LightAssist>.Install(new GameObject("LightAssist"));
+//            BaseMgr<CameraAssist>.Install(new GameObject("CameraAssist"));
             Tracer.Log("OnLevelWasInitialized, " + level);
         }
 
@@ -71,7 +71,8 @@ namespace FkAssistPlugin
             {
                 return new[]
                 {
-                    "PlayHomeStudio64bit"
+                    "StudioNEO_32",
+                    "StudioNEO_64",
                 };
             }
         }

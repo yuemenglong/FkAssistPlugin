@@ -25,10 +25,12 @@ namespace FkAssistPlugin.Util
             {
                 return null;
             }
+
             if (Regex.IsMatch(transform.name, pattern))
             {
                 return transform;
             }
+
             for (int i = 0; i < transform.childCount; i++)
             {
                 var child = FindChildLoopByRegex(transform.GetChild(i), pattern);
@@ -37,6 +39,7 @@ namespace FkAssistPlugin.Util
                     return child;
                 }
             }
+
             return null;
         }
     }

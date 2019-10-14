@@ -33,6 +33,7 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <ItemGroup>
+    <Compile Include="CameraAssist.cs" />
     <Compile Include="FkBone\FkBone.cs" />
     <Compile Include="FkBone\FkCharaMgr.cs" />
     <Compile Include="FkBone\FkChara.cs" />
@@ -42,18 +43,20 @@
     <Compile Include="Camera\CameraPatch.cs" />
     <Compile Include="FKAssist.cs" />
     <Compile Include="FkAssistPlugin.cs" />
-    <Compile Include="FkBone\FkLimbRotater.cs" />
-    <Compile Include="FkBone\TransformFkJoint.cs" />
+    <Compile Include="FkBone\FkJointRotater.cs" />
     <Compile Include="FkLocker.cs" />
     <Compile Include="FkSelector.cs" />
     <Compile Include="Fp.cs" />
+    <Compile Include="GUIX.cs" />
     <Compile Include="HSStudioNEOAddno\BaseMgr.cs" />
     <Compile Include="HSStudioNEOAddno\BoneMarker.cs" />
     <Compile Include="HSStudioNEOAddno\ShaderUtil.cs" />
     <Compile Include="Context.cs" />
+    <Compile Include="LightAssist.cs" />
     <Compile Include="Patch\PatchMgr.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="UndoRedoHelper.cs" />
+    <Compile Include="Unused.cs" />
     <Compile Include="Util\GameObjectHelper.cs" />
     <Compile Include="Util\GuideObjectHelper.cs" />
     <Compile Include="Util\Kit.cs" />

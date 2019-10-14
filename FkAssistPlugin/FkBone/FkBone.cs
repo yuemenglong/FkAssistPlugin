@@ -1,7 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
-using FkAssistPlugin.HSStudioNEOAddno;
-using RootMotion.Demos;
+using FkAssistPlugin.Util;
 using Studio;
 using UnityEngine;
 
@@ -78,16 +77,23 @@ namespace FkAssistPlugin.FkBone
             RotateAround(Transform.position, axis, angle);
         }
 
-//        public void ActiveMarker()
-//        {
-//            Marker = BoneMarker.Create(Transform);
-//        }
+        public void TurnTo(Quaternion q)
+        {
+            GuideObject.TurnTo(q);
+        }
 
-//        public void DestroyMarker()
-//        {
-//            Marker.Destroy();
-//            Marker = null;
-//            IsLocked = false;
-//        }
+        public void MoveTo(Vector3 pos)
+        {
+            var point = this;
+            var helper = new FkLimbRotater(point.Parent.Parent, point.Parent,point);
+            helper.MoveTo(pos);
+        }
+
+        public void Move(Vector3 value)
+        {
+            var point = this;
+            var helper = new FkLimbRotater(point.Parent.Parent, point.Parent, point);
+            helper.MoveTo(Transform.position + value);
+        }
     }
 }

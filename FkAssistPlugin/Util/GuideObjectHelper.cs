@@ -9,13 +9,13 @@ namespace FkAssistPlugin.Util
         public static bool IsMale(this GuideObject go)
         {
             var name = go.transformTarget.name;
-            return name.StartsWith("cm");
+            return name.StartsWith("MaleBody");
         }
 
         public static bool IsFemale(this GuideObject go)
         {
             var name = go.transformTarget.name;
-            return name.StartsWith("cf");
+            return name.StartsWith("FemaleBody");
         }
 
         public static bool IsChara(this GuideObject go)
@@ -96,7 +96,7 @@ namespace FkAssistPlugin.Util
             }
         }
 
-        public static void RotateAround(this GuideObject guideObject, Vector3 axis, float angle)
+        public static void RotateSelf(this GuideObject guideObject, Vector3 axis, float angle)
         {
             RotateAround(guideObject, guideObject.transformTarget.position, axis, angle);
         }
@@ -108,6 +108,11 @@ namespace FkAssistPlugin.Util
                 guideObject.transformTarget.rotation = rot;
                 guideObject.changeAmount.rot = guideObject.transformTarget.localEulerAngles;
             }
+        }
+
+        public static void SetSelected(this GuideObject go)
+        {
+            Context.GuideObjectManager().SetSelectObject(go, false);
         }
 
         public static void Move(this GuideObject guideObject, float x, float y, float z)

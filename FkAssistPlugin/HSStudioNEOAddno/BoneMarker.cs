@@ -1,7 +1,6 @@
 ﻿using System;
 using System.Diagnostics;
 using FkAssistPlugin.Util;
-using RootMotion.Demos;
 using UnityEngine;
 using UnityEngine.Rendering;
 

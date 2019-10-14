@@ -1,6 +1,4 @@
-﻿using System.Threading;
-using FkAssistPlugin.HSStudioNEOAddno;
-using FkAssistPlugin.Util;
+﻿using FkAssistPlugin.Util;
 using UnityEngine;
 
 namespace FkAssistPlugin
@@ -30,11 +28,6 @@ namespace FkAssistPlugin
         {
             IsLock = !IsLock;
             Tracer.Log("CameraLock", IsLock);
-        }
-
-        public static CameraControl CameraControl()
-        {
-            return MainCamera().GetComponent<CameraControl>();
         }
 
         public static Camera MainCamera()

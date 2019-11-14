@@ -24,7 +24,7 @@ namespace FkAssistPlugin
             try
             {
                 Rotate();
-                Move();
+//                Move();
             }
             catch (Exception e)
             {
@@ -61,18 +61,7 @@ namespace FkAssistPlugin
             delta = delta * 2.0f;
             Context.GuideObjectManager().selectObjects.Foreach(go =>
             {
-                if (!go.enablePos && !go.IsLimb())
-                {
-                    return;
-                }
-
-                if (!go.enablePos)
-                {
-                    var chara = FkCharaMgr.FindSelectChara();
-                    var bone = chara.DicGuideBones[go];
-                    bone.Move(delta);
-                }
-                else
+                if (go.enablePos && go.IsLimb())
                 {
                     go.Move(delta);
                 }

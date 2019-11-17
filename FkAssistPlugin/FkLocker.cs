@@ -74,7 +74,7 @@ namespace FkAssistPlugin
             if (Input.GetKeyDown(KeyCode.T) && Input.GetKey(KeyCode.LeftShift))
             {
                 var chara = FkCharaMgr.FindSelectChara();
-                if (chara == null)
+                if (chara == null || !chara.Head.GuideObject.enableRot)
                 {
                     return;
                 }

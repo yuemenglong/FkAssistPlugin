@@ -231,6 +231,11 @@ namespace FkAssistPlugin.FkBone
             return new[] {_handL, _handR, _foot01L, _foot01R};
         }
 
+        public FkBone Head
+        {
+            get => _head;
+        }
+
 //        private void CheckFinger(Transform transform)
 //        {
 //            var names = new[] {"Thumb", "Index", "Middle", "Ring", "Little"}.Map(n =>

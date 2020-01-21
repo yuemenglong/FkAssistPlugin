@@ -13,7 +13,7 @@ namespace FkAssistPlugin
 {
     public class FkLocker : BaseMgr<FkLocker>
     {
-        private FkChara selectChara;
+        private List<FkChara> selectChara = new List<FkChara>();
 
         public override void Init()
         {
@@ -35,21 +35,24 @@ namespace FkAssistPlugin
         private void InnerUpdate()
         {
             Camera camera = CameraMgr.MainCamera();
-            if (selectChara != null)
+            if (!selectChara.IsNullOrEmpty())
             {
-                var chara = selectChara;
-                var go = new GameObject();
-                var target = camera.transform.position - chara.Head.Transform.position;
-                var v1 = go.transform.forward;
-                var v2 = new Vector3(target.x, 0, target.z);
-                var axis = Vector3.Cross(v1, v2);
-                var angel = Vector3.Angle(v1, v2);
-                go.transform.RotateAround(go.transform.position, axis, angel);
-                axis = Vector3.Cross(v2, target);
-                angel = Vector3.Angle(v2, target);
-                go.transform.RotateAround(go.transform.position, axis, angel);
-                chara.Head.TurnTo(go.transform.rotation);
-                go.Destroy();
+                for (int i = 0; i < selectChara.Count; i++)
+                {
+                    var chara = selectChara[i];
+                    var go = new GameObject();
+                    var target = camera.transform.position - chara.Head.Transform.position;
+                    var v1 = go.transform.forward;
+                    var v2 = new Vector3(target.x, 0, target.z);
+                    var axis = Vector3.Cross(v1, v2);
+                    var angel = Vector3.Angle(v1, v2);
+                    go.transform.RotateAround(go.transform.position, axis, angel);
+                    axis = Vector3.Cross(v2, target);
+                    angel = Vector3.Angle(v2, target);
+                    go.transform.RotateAround(go.transform.position, axis, angel);
+                    chara.Head.TurnTo(go.transform.rotation);
+                    go.Destroy();
+                }
             }
 
 //            if (selectChara != null)
@@ -79,11 +82,16 @@ namespace FkAssistPlugin
                     return;
                 }
 
-                selectChara = chara;
+                if (selectChara.Contains(chara))
+                {
+                    return;
+                }
+
+                selectChara.Add(chara);
             }
             else if (Input.GetKeyDown(KeyCode.T))
             {
-                selectChara = null;
+                selectChara.Clear();
             }
         }
     }

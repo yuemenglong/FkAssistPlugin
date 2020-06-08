@@ -43,7 +43,8 @@
     <Compile Include="FKAssist.cs" />
     <Compile Include="FkAssistPlugin.cs" />
     <Compile Include="FkBone\FkJointRotater.cs" />
-    <Compile Include="FkLocker.cs" />
+    <Compile Include="FkHeadLocker.cs" />
+    <Compile Include="FkLimbLocker.cs" />
     <Compile Include="FkSelector.cs" />
     <Compile Include="Fp.cs" />
     <Compile Include="GUIX.cs" />

@@ -11,7 +11,7 @@ using UnityEngine;
 
 namespace FkAssistPlugin
 {
-    public class FkLocker : BaseMgr<FkLocker>
+    public class FkHeadLocker : BaseMgr<FkHeadLocker>
     {
         private List<FkChara> selectChara = new List<FkChara>();
 

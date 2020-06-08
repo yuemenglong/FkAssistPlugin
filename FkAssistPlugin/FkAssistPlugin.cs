@@ -36,7 +36,7 @@ namespace FkAssistPlugin
             if (Context.Studio() == null)
                 return;
             BaseMgr<FkAssist>.Install(new GameObject("FkPlugin"));
-            BaseMgr<FkLocker>.Install(new GameObject("FkLocker"));
+            BaseMgr<FkHeadLocker>.Install(new GameObject("FkLocker"));
             BaseMgr<FkSelector>.Install(new GameObject("FkSelector"));
 //            BaseMgr<LightAssist>.Install(new GameObject("LightAssist"));
 //            BaseMgr<CameraAssist>.Install(new GameObject("CameraAssist"));

@@ -63,16 +63,16 @@ namespace FkAssistPlugin.FkBone
             var v1 = _arm.Transform.position - _spine1.Transform.position;
             var v2 = _armAno.Transform.position - _spine1.Transform.position;
             var axis = Vector3.Cross(v1, v2);
-            _spine1.RotateSelf(axis, angle / 3 * 1);
-            _spine2.RotateSelf(axis, angle / 3 * 2);
+            _spine1.RotateAroundSelf(axis, angle / 3 * 1);
+            _spine2.RotateAroundSelf(axis, angle / 3 * 2);
         }
 
         public void Normals(float angle)
         {
             var axis1 = _armAno.Transform.position - _spine1.Transform.position;
             var axis2 = _armAno.Transform.position - _spine2.Transform.position;
-            _spine1.RotateSelf(axis1, angle / 3 * 1);
-            _spine2.RotateSelf(axis2, angle / 3 * 2);
+            _spine1.RotateAroundSelf(axis1, angle / 3 * 1);
+            _spine2.RotateAroundSelf(axis2, angle / 3 * 2);
         }
     }
 

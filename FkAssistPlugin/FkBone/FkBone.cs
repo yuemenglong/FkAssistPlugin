@@ -72,7 +72,7 @@ namespace FkAssistPlugin.FkBone
             GuideObject.changeAmount.rot = GuideObject.transformTarget.localEulerAngles;
         }
 
-        public void RotateSelf(Vector3 axis, float angle)
+        public void RotateAroundSelf(Vector3 axis, float angle)
         {
             RotateAround(Transform.position, axis, angle);
         }

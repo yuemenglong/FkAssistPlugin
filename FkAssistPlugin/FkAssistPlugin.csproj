@@ -45,6 +45,7 @@
     <Compile Include="FkBone\FkJointRotater.cs" />
     <Compile Include="FkHeadLocker.cs" />
     <Compile Include="FkLimbLocker.cs" />
+    <Compile Include="FkLimbPos.cs" />
     <Compile Include="FkSelector.cs" />
     <Compile Include="Fp.cs" />
     <Compile Include="GUIX.cs" />

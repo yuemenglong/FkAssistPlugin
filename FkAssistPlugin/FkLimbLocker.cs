@@ -73,6 +73,7 @@ namespace FkAssistPlugin
             if (Input.GetKeyDown(KeyCode.P) &&
                 (Input.GetKey(KeyCode.LeftAlt) || Input.GetKey(KeyCode.RightAlt)))
             {
+                // 整个四肢
                 var chara = FkCharaMgr.FindSelectChara();
                 if (chara != null)
                 {
@@ -92,6 +93,7 @@ namespace FkAssistPlugin
                 var go = Context.GuideObjectManager().selectObject;
                 if (go != null && go.IsLimb())
                 {
+                    // 某个四肢
                     var chara = FkCharaMgr.FindSelectChara();
                     var bone = chara.DicGuideBones[go];
                     var r = new HangRecord();

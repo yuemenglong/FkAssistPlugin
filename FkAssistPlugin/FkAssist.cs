@@ -10,8 +10,8 @@ namespace FkAssistPlugin
 {
     public class FkAssist : BaseMgr<FkAssist>
     {
-//        private int _counter;
-//        private bool _lightEnabled = true;
+        //        private int _counter;
+        //        private bool _lightEnabled = true;
         private Vector2 lastMousePos;
 
         public override void Init()
@@ -24,7 +24,7 @@ namespace FkAssistPlugin
             try
             {
                 Rotate();
-//                Move();
+                //                Move();
             }
             catch (Exception e)
             {
@@ -38,7 +38,7 @@ namespace FkAssistPlugin
 
         private void Move(Vector3 delta)
         {
-//            var go = Context.GuideObjectManager().selectObject;
+            //            var go = Context.GuideObjectManager().selectObject;
             //            if (go == null || !go.enablePos)
             //            {
             //                return;
@@ -94,10 +94,10 @@ namespace FkAssistPlugin
 
             float angle = 1.0f;
             float dist = 0.003f;
-//            if (Input.anyKeyDown)
-//            {
-//                UndoRedoHelper.Record();
-//            }
+            //            if (Input.anyKeyDown)
+            //            {
+            //                UndoRedoHelper.Record();
+            //            }
 
             if (Input.GetKey(KeyCode.LeftShift))
             {
@@ -105,7 +105,7 @@ namespace FkAssistPlugin
                 dist /= 4;
             }
 
-//            _counter++;
+            //            _counter++;
             if (Input.GetKey(KeyCode.LeftShift) && Input.GetKeyDown(KeyCode.R))
             {
                 go.Reset();
@@ -174,45 +174,45 @@ namespace FkAssistPlugin
             {
                 FkJointAssist.Revolution(go, -angle);
             }
+            // //
+            // else if (Input.GetKey(KeyCode.G) && Input.GetMouseButton(0))
+            // {
+            //     FkJointAssist.MoveEndX(go, dist);
+            // }
+            // else if (Input.GetKey(KeyCode.G) && Input.GetMouseButton(1))
+            // {
+            //     FkJointAssist.MoveEndX(go, -dist);
+            // }
+            // //
+            // else if (Input.GetKey(KeyCode.Y) && Input.GetMouseButton(0))
+            // {
+            //     FkJointAssist.MoveEndY(go, dist);
+            // }
+            // else if (Input.GetKey(KeyCode.Y) && Input.GetMouseButton(1))
+            // {
+            //     FkJointAssist.MoveEndY(go, -dist);
+            // }
+            // //
+            // else if (Input.GetKey(KeyCode.H) && Input.GetMouseButton(0))
+            // {
+            //     FkJointAssist.MoveEndZ(go, dist);
+            // }
+            // else if (Input.GetKey(KeyCode.H) && Input.GetMouseButton(1))
+            // {
+            //     FkJointAssist.MoveEndZ(go, -dist);
+            // }
             //
-            else if (Input.GetKey(KeyCode.G) && Input.GetMouseButton(0))
-            {
-                FkJointAssist.MoveEndX(go, dist);
-            }
-            else if (Input.GetKey(KeyCode.G) && Input.GetMouseButton(1))
-            {
-                FkJointAssist.MoveEndX(go, -dist);
-            }
+            //            else
+            //            {
+            //                if (_counter > 1)
+            //                {
+            //                    UndoRedoHelper.Finish();
+            ////                    FinishRotate();
+            //                }
             //
-            else if (Input.GetKey(KeyCode.Y) && Input.GetMouseButton(0))
-            {
-                FkJointAssist.MoveEndY(go, dist);
-            }
-            else if (Input.GetKey(KeyCode.Y) && Input.GetMouseButton(1))
-            {
-                FkJointAssist.MoveEndY(go, -dist);
-            }
-            //
-            else if (Input.GetKey(KeyCode.H) && Input.GetMouseButton(0))
-            {
-                FkJointAssist.MoveEndZ(go, dist);
-            }
-            else if (Input.GetKey(KeyCode.H) && Input.GetMouseButton(1))
-            {
-                FkJointAssist.MoveEndZ(go, -dist);
-            }
-            //
-//            else
-//            {
-//                if (_counter > 1)
-//                {
-//                    UndoRedoHelper.Finish();
-////                    FinishRotate();
-//                }
-//
-//                _counter = 0;
-////                _oldRot = CollectOldRot();
-//            }
+            //                _counter = 0;
+            ////                _oldRot = CollectOldRot();
+            //            }
         }
 
         private Vector2 GetMousePos()

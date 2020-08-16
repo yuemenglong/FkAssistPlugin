@@ -50,7 +50,7 @@ namespace FkAssistPlugin
             Vector3 vector33 = vector32 + ray.direction * -1 * delta.x;
             vector33.y = delta.y;
             delta = vector33;
-            delta = delta * 20.0f;
+            delta = delta * 2;
             if (Input.GetKeyDown(KeyCode.LeftShift))
             {
                 delta = delta / 4;

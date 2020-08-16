@@ -38,6 +38,7 @@ namespace FkAssistPlugin
             BaseMgr<FkAssist>.Install(new GameObject("FkPlugin"));
             BaseMgr<FkHeadLocker>.Install(new GameObject("FkHeadLocker"));
             BaseMgr<FkLimbLocker>.Install(new GameObject("FkLimbLocker"));
+            BaseMgr<FkLimbPos>.Install(new GameObject("FkLimbPos"));
             BaseMgr<FkSelector>.Install(new GameObject("FkSelector"));
 //            BaseMgr<LightAssist>.Install(new GameObject("LightAssist"));
 //            BaseMgr<CameraAssist>.Install(new GameObject("CameraAssist"));
